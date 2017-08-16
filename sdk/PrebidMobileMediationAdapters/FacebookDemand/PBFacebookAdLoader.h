@@ -14,10 +14,12 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "PBBannerMediationAdapterDelegate.h"
 
-@interface PBCommonMediationAdapter : NSObject
+@interface PBFacebookAdLoader : NSObject
 
-- (instancetype)initWithCacheId:(NSString *)cacheId andBidder:(NSString *)bidder;
-- (void)requestAdmAndLoadAd;
+- (void)fbLoadAd:(NSDictionary *)info;
+
+@property (nonatomic, weak) id<PBBannerMediationAdapterDelegate> delegate;
 
 @end

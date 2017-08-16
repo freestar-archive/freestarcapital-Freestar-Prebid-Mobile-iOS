@@ -25,7 +25,8 @@
 		C2521E491F310F3B00492C9B /* PrebidMobileMoPubMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2521E391F310E5000492C9B /* PrebidMobileMoPubMediationAdapter.m */; };
 		C256243E1F326C5900A2EE45 /* PBCommonMediationAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = C2289AF61F3220ED003501F6 /* PBCommonMediationAdapter.h */; };
 		C256243F1F326C5900A2EE45 /* PBCommonMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2289AF71F3220ED003501F6 /* PBCommonMediationAdapter.m */; };
-		C25624401F326C5900A2EE45 /* PBMediationAdapterDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F7CB161F2FB53100FEC637 /* PBMediationAdapterDelegate.h */; };
+		C25624401F326C5900A2EE45 /* PBBannerMediationAdapterDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F7CB161F2FB53100FEC637 /* PBBannerMediationAdapterDelegate.h */; };
+		C26BF6971F44E80F00650677 /* PBInterstitialMediationAdapterDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C26BF6961F44E80F00650677 /* PBInterstitialMediationAdapterDelegate.h */; };
 		C281E1811EE5EAF700F2F4A9 /* PrebidMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B16E1B1EE1BE69006304C0 /* PrebidMobile.framework */; };
 		C281E1991EE5F2AD00F2F4A9 /* PBAdUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C281E1941EE5F2AD00F2F4A9 /* PBAdUnitTests.m */; };
 		C281E19A1EE5F2AD00F2F4A9 /* PBBidManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C281E1951EE5F2AD00F2F4A9 /* PBBidManagerTests.m */; };
@@ -113,6 +114,7 @@
 		C2521E401F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrebidMobileMoPubMediationForFacebookDemand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2521E421F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileMoPubMediationForFacebookDemand.h; sourceTree = "<group>"; };
 		C2521E431F310F3200492C9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C26BF6961F44E80F00650677 /* PBInterstitialMediationAdapterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBInterstitialMediationAdapterDelegate.h; sourceTree = "<group>"; };
 		C281E17C1EE5EAF700F2F4A9 /* PrebidMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrebidMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C281E1941EE5F2AD00F2F4A9 /* PBAdUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBAdUnitTests.m; sourceTree = "<group>"; };
 		C281E1951EE5F2AD00F2F4A9 /* PBBidManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBBidManagerTests.m; sourceTree = "<group>"; };
@@ -179,7 +181,7 @@
 		C2F7CAF41F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrebidMobileDFPMediationForFacebookDemand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2F7CAF61F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDFPMediationForFacebookDemand.h; sourceTree = "<group>"; };
 		C2F7CAF71F2BDA0B00FEC637 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C2F7CB161F2FB53100FEC637 /* PBMediationAdapterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMediationAdapterDelegate.h; sourceTree = "<group>"; };
+		C2F7CB161F2FB53100FEC637 /* PBBannerMediationAdapterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBBannerMediationAdapterDelegate.h; sourceTree = "<group>"; };
 		EFD3C940519B957467FE94E6 /* libPods-PrebidMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PrebidMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -228,17 +230,29 @@
 		C2521E411F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand */ = {
 			isa = PBXGroup;
 			children = (
-				C2521E421F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand.h */,
 				C2521E431F310F3200492C9B /* Info.plist */,
+				C2521E421F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand.h */,
 			);
 			path = PrebidMobileMoPubMediationForFacebookDemand;
+			sourceTree = "<group>";
+		};
+		C26BF6981F44E81A00650677 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C2F7CB161F2FB53100FEC637 /* PBBannerMediationAdapterDelegate.h */,
+				C2289AF61F3220ED003501F6 /* PBCommonMediationAdapter.h */,
+				C2289AF71F3220ED003501F6 /* PBCommonMediationAdapter.m */,
+				C26BF6961F44E80F00650677 /* PBInterstitialMediationAdapterDelegate.h */,
+			);
+			name = Common;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */ = {
 			isa = PBXGroup;
 			children = (
-				C281E1931EE5F2AD00F2F4A9 /* PrebidMobileCoreTests */,
 				C281E1AF1EE5F2E500F2F4A9 /* MockObjects */,
+				C281E1931EE5F2AD00F2F4A9 /* PrebidMobileCoreTests */,
 				C281E19E1EE5F2DA00F2F4A9 /* Resources */,
 				C281E1A21EE5F2DA00F2F4A9 /* Stubbing */,
 			);
@@ -251,8 +265,8 @@
 				C281E1941EE5F2AD00F2F4A9 /* PBAdUnitTests.m */,
 				C281E1951EE5F2AD00F2F4A9 /* PBBidManagerTests.m */,
 				C281E1961EE5F2AD00F2F4A9 /* PBBidResponseTests.m */,
-				C281E1981EE5F2AD00F2F4A9 /* PBTargetingParamsTests.m */,
 				C29238D81F3E38D100217075 /* PBServerAdapterTests.m */,
+				C281E1981EE5F2AD00F2F4A9 /* PBTargetingParamsTests.m */,
 			);
 			path = PrebidMobileCoreTests;
 			sourceTree = "<group>";
@@ -260,9 +274,9 @@
 		C281E19E1EE5F2DA00F2F4A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C281E1A11EE5F2DA00F2F4A9 /* PCKeywordsManagerPriceIntervals.txt */,
 				C281E19F1EE5F2DA00F2F4A9 /* pbs_request.json */,
 				C281E1A01EE5F2DA00F2F4A9 /* pbs_response.json */,
-				C281E1A11EE5F2DA00F2F4A9 /* PCKeywordsManagerPriceIntervals.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -270,10 +284,10 @@
 		C281E1A21EE5F2DA00F2F4A9 /* Stubbing */ = {
 			isa = PBXGroup;
 			children = (
-				C281E1A31EE5F2DA00F2F4A9 /* ANHTTPStubbingManager.h */,
-				C281E1A41EE5F2DA00F2F4A9 /* ANHTTPStubbingManager.m */,
 				C281E1A51EE5F2DA00F2F4A9 /* ANHTTPStubURLProtocol.h */,
 				C281E1A61EE5F2DA00F2F4A9 /* ANHTTPStubURLProtocol.m */,
+				C281E1A31EE5F2DA00F2F4A9 /* ANHTTPStubbingManager.h */,
+				C281E1A41EE5F2DA00F2F4A9 /* ANHTTPStubbingManager.m */,
 				C281E1A71EE5F2DA00F2F4A9 /* ANURLConnectionStub.h */,
 				C281E1A81EE5F2DA00F2F4A9 /* ANURLConnectionStub.m */,
 			);
@@ -292,13 +306,13 @@
 		C2B16E111EE1BE69006304C0 = {
 			isa = PBXGroup;
 			children = (
-				C2B16E1D1EE1BE69006304C0 /* PrebidMobile */,
-				C2B16E881EE1BF1A006304C0 /* PrebidServerAdapter */,
-				C2F7CAE01F2BD90D00FEC637 /* PrebidMobileMediationAdapters */,
-				C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */,
-				C2F7CAF51F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand */,
-				C2521E411F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand */,
 				C2B16EA21EE1BF8A006304C0 /* Frameworks */,
+				C2B16E1D1EE1BE69006304C0 /* PrebidMobile */,
+				C2F7CAF51F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand */,
+				C2F7CAE01F2BD90D00FEC637 /* PrebidMobileMediationAdapters */,
+				C2521E411F310F3200492C9B /* PrebidMobileMoPubMediationForFacebookDemand */,
+				C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */,
+				C2B16E881EE1BF1A006304C0 /* PrebidServerAdapter */,
 				C2B16E1C1EE1BE69006304C0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -348,12 +362,12 @@
 			children = (
 				C2B16E4B1EE1BEC4006304C0 /* NSDictionary+Extension.h */,
 				C2B16E4C1EE1BEC4006304C0 /* NSDictionary+Extension.m */,
+				C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */,
+				C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */,
 				C2B16E4D1EE1BEC4006304C0 /* NSString+Extension.h */,
 				C2B16E4E1EE1BEC4006304C0 /* NSString+Extension.m */,
 				C2B16E4F1EE1BEC4006304C0 /* NSTimer+Extension.h */,
 				C2B16E501EE1BEC4006304C0 /* NSTimer+Extension.m */,
-				C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */,
-				C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -415,16 +429,15 @@
 		C2F7CAE01F2BD90D00FEC637 /* PrebidMobileMediationAdapters */ = {
 			isa = PBXGroup;
 			children = (
-				C2521E381F310E5000492C9B /* PrebidMobileMoPubMediationAdapter.h */,
-				C2521E391F310E5000492C9B /* PrebidMobileMoPubMediationAdapter.m */,
+				C26BF6981F44E81A00650677 /* Common */,
+				C2F7CAE11F2BD92200FEC637 /* FacebookDemand */,
 				C2F7CAE21F2BD93D00FEC637 /* PrebidMobileDFPMediationAdapter.h */,
 				C2F7CAE31F2BD93D00FEC637 /* PrebidMobileDFPMediationAdapter.m */,
-				C2289AF61F3220ED003501F6 /* PBCommonMediationAdapter.h */,
-				C2289AF71F3220ED003501F6 /* PBCommonMediationAdapter.m */,
-				C2F7CB161F2FB53100FEC637 /* PBMediationAdapterDelegate.h */,
-				C2F7CAE11F2BD92200FEC637 /* FacebookDemand */,
+				C2521E381F310E5000492C9B /* PrebidMobileMoPubMediationAdapter.h */,
+				C2521E391F310E5000492C9B /* PrebidMobileMoPubMediationAdapter.m */,
 			);
 			name = PrebidMobileMediationAdapters;
+			path = PrebidMobileMediationAdapters;
 			sourceTree = "<group>";
 		};
 		C2F7CAE11F2BD92200FEC637 /* FacebookDemand */ = {
@@ -436,13 +449,14 @@
 				C2F7CAE91F2BD97B00FEC637 /* PBFacebookRequestExtras.m */,
 			);
 			name = FacebookDemand;
+			path = FacebookDemand;
 			sourceTree = "<group>";
 		};
 		C2F7CAF51F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand */ = {
 			isa = PBXGroup;
 			children = (
-				C2F7CAF61F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand.h */,
 				C2F7CAF71F2BDA0B00FEC637 /* Info.plist */,
+				C2F7CAF61F2BDA0B00FEC637 /* PrebidMobileDFPMediationForFacebookDemand.h */,
 			);
 			path = PrebidMobileDFPMediationForFacebookDemand;
 			sourceTree = "<group>";
@@ -465,13 +479,14 @@
 			files = (
 				C2B16E391EE1BEA6006304C0 /* PBException.h in Headers */,
 				C2B16E341EE1BEA6006304C0 /* PBBannerAdUnit.h in Headers */,
-				C25624401F326C5900A2EE45 /* PBMediationAdapterDelegate.h in Headers */,
+				C25624401F326C5900A2EE45 /* PBBannerMediationAdapterDelegate.h in Headers */,
 				C2B16E481EE1BEB6006304C0 /* PBBidResponse.h in Headers */,
 				C2B16E381EE1BEA6006304C0 /* PBBidResponseDelegate.h in Headers */,
 				C2B16E3F1EE1BEA6006304C0 /* PBTargetingParams.h in Headers */,
 				C23FCCEA1EE5E3F500CFFEF0 /* PBLogging.h in Headers */,
 				C2B16E3D1EE1BEA6006304C0 /* PBKeywordsManager.h in Headers */,
 				C23FCCEE1EE5E41E00CFFEF0 /* PBLogManager.h in Headers */,
+				C26BF6971F44E80F00650677 /* PBInterstitialMediationAdapterDelegate.h in Headers */,
 				C23386DA1EE5DCDB002FD404 /* PBServerAdapter.h in Headers */,
 				C23386D61EE5DC95002FD404 /* PBAdUnit.h in Headers */,
 				C23386D21EE5DBFB002FD404 /* PrebidMobile.h in Headers */,

@@ -13,12 +13,9 @@
  limitations under the License.
  */
 
-@import Foundation;
-@import GoogleMobileAds;
+#import "MPBannerCustomEvent.h"
+#import "PBBannerMediationAdapterDelegate.h"
 
-#import "PBMediationAdapterDelegate.h"
-#import "PBCommonMediationAdapter.h"
-
-@interface PrebidMobileDFPMediationAdapter : PBCommonMediationAdapter<GADCustomEventBanner, PBMediationAdapterDelegate>
+@interface PrebidMobileMoPubMediationAdapter : MPBannerCustomEvent<PBBannerMediationAdapterDelegate>
 
 @end

@@ -21,21 +21,23 @@ static NSString *const kPrebidCacheEndpoint = @"https://prebid.adnxs.com/pbc/v1/
 
 @property (strong, nonatomic) NSString *cacheId;
 @property (strong, nonatomic) NSString *bidder;
+@property (strong, nonatomic) id mediationAdatperClass;
 
 @end
 
 @implementation PBCommonMediationAdapter
 
-- (instancetype)initWithCacheId:(NSString *)cacheId andBidder:(NSString *)bidder {
+- (instancetype)initWithCacheId:(NSString *)cacheId andBidder:(NSString *)bidder andMediationAdapterClass:(id)medclass {
     self = [super init];
     if (self) {
         self.cacheId = cacheId;
         self.bidder = bidder;
+        self.mediationAdatperClass = medclass;
     }
     return self;
 }
 
-- (void)requestAdmAndLoadAd {
+- (id)requestAdmAndLoadAd {
 //    NSString *cacheURL = [kPrebidCacheEndpoint stringByAppendingString:self.cacheId];
 //    
 //    NSMutableURLRequest *cacheRequest = [[NSMutableURLRequest alloc] init];
@@ -57,21 +59,24 @@ static NSString *const kPrebidCacheEndpoint = @"https://prebid.adnxs.com/pbc/v1/
 //    }];
 //    [dataTask resume];
     
-    [self loadAd:@{}];
+    return [self loadAd:@{}];
 }
 
-- (void)loadAd:(NSDictionary *)responseDict {
+- (id)loadAd:(NSDictionary *)responseDict {
+    id adLoader;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     //if ([self.bidder isEqualToString:@"audienceNetwork"] && NSClassFromString(@"PBFacebookAdLoader")) {
         Class fbAdLoaderClass = NSClassFromString(@"PBFacebookAdLoader");
-        id fbAdLoader = [[fbAdLoaderClass alloc] init];
-        SEL setDelegate = NSSelectorFromString(@"setPbDelegate:");
-        [fbAdLoader performSelector:setDelegate withObject:self];
+        adLoader = [[fbAdLoaderClass alloc] init];
+        SEL setDelegate = NSSelectorFromString(@"setDelegate:");
+        [adLoader performSelector:setDelegate withObject:self.mediationAdatperClass];
         SEL fbLoadAd = NSSelectorFromString(@"fbLoadAd:");
-        [fbAdLoader performSelector:fbLoadAd withObject:responseDict];
+        [adLoader performSelector:fbLoadAd withObject:responseDict];
     //}
 #pragma clang diagnostic pop
+    
+    return adLoader;
 }
 
 @end

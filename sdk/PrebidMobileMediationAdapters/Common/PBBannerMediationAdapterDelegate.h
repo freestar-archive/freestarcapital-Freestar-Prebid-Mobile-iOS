@@ -13,13 +13,17 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
-#import "PBMediationAdapterDelegate.h"
+#import <UIKit/UIKit.h>
 
-@interface PBFacebookAdLoader : NSObject
+@protocol PBBannerMediationAdapterDelegate<NSObject>
 
-- (void)fbLoadAd:(NSDictionary *)info;
+@property(nonatomic, readonly) UIViewController *viewControllerForPresentingModalView;
 
-@property (nonatomic, weak) id<PBMediationAdapterDelegate> pbDelegate;
+@optional
+- (void)didLoadAd:(UIView *)adView;
+- (void)ad:(UIView *)adView didFailWithError:(NSError *)error;
+- (void)trackImpression;
+- (void)didClickAd:(UIView *)adView;
+- (void)didFinishHandlingClick:(UIView *)adView;
 
 @end

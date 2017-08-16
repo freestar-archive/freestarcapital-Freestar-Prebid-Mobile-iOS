@@ -17,6 +17,12 @@
 
 static NSString *const customEventErrorDomain = @"org.prebid.PrebidMobileMediationAdapter";
 
+@interface PrebidMobileDFPMediationAdapter()
+
+@property (strong, nonatomic) id adLoader;
+
+@end
+
 @implementation PrebidMobileDFPMediationAdapter
 
 @synthesize delegate;
@@ -39,14 +45,13 @@ static NSString *const customEventErrorDomain = @"org.prebid.PrebidMobileMediati
             bidder = splitValue[1];
         }
     }
-    //PBCommonMediationAdapter *commonMediationAdapter = [[PBCommonMediationAdapter alloc] initWithCacheId:cacheId andBidder:bidder];
-    [self requestAdmAndLoadAd];
+    PBCommonMediationAdapter *commonMediationAdapter = [[PBCommonMediationAdapter alloc] initWithCacheId:cacheId andBidder:bidder andMediationAdapterClass:self];
+    self.adLoader = [commonMediationAdapter requestAdmAndLoadAd];
 }
 
 #pragma mark - PBDFPMediationDelegate methods
 
 - (void)didLoadAd:(UIView *)adView {
-    [adView setFrame:CGRectMake(0, 10, 300, 250)];
     [self.delegate customEventBanner:self didReceiveAd:adView];
 }
 
@@ -58,8 +63,12 @@ static NSString *const customEventErrorDomain = @"org.prebid.PrebidMobileMediati
     [self.delegate customEventBannerWasClicked:self];
 }
 
-//#pragma mark - Custom Event for Interstitials
-//
+- (void)trackImpression {
+    
+}
+
+#pragma mark - Custom Event for Interstitials
+
 //- (void)requestInterstitialAdWithParameter:(NSString *)serverParameter
 //                                     label:(NSString *)serverLabel
 //                                   request:(GADCustomEventRequest *)request {
@@ -71,9 +80,6 @@ static NSString *const customEventErrorDomain = @"org.prebid.PrebidMobileMediati
 ////    adRequest.keywords = request.userKeywords;
 ////    [self.interstitial fetchAd:adRequest];
 //}
-
-/// Constant for Sample Ad Network custom event error domain.
-//static NSString *const customEventErrorDomain = @"com.google.CustomEvent";
 //
 //// Sent when an interstitial ad has loaded.
 //- (void)interstitialDidLoad:(SampleInterstitial *)interstitial {

@@ -48,55 +48,60 @@
 //    }
 
     [FBAdSettings setLogLevel:FBAdLogLevelVerbose];
-//    //[FBAdSettings addTestDevice:[FBAdSettings testDeviceHash]];
-//    self.fbAdView = [[FBAdView alloc] initWithPlacementID:@"1995257847363113_1997038003851764" adSize:kFBAdSizeHeight250Rectangle rootViewController:(UIViewController *)[NSObject new]];
-//    self.fbAdView.frame = CGRectMake(0, 20, self.fbAdView.bounds.size.width, self.fbAdView.bounds.size.height);
-//    self.fbAdView.delegate = self;
-//    [self.fbAdView loadAdWithBidPayload:bidPayload];
     
-    FBAdView *adView = [[FBAdView alloc] initWithPlacementID:@"1995257847363113_1997038003851764"
+    self.fbAdView = [[FBAdView alloc] initWithPlacementID:[self parsePlacementIdFromBidPayload:bidPayload]
                                                       adSize:kFBAdSizeHeight250Rectangle
                                           rootViewController:(UIViewController *)[NSObject new]];
-    adView.frame = CGRectMake(0, 20, adView.bounds.size.width, adView.bounds.size.height);
-    adView.delegate = self;
-    [adView loadAdWithBidPayload:bidPayload];
+    self.fbAdView.frame = CGRectMake(0, 0, self.fbAdView.bounds.size.width, self.fbAdView.bounds.size.height);
+    self.fbAdView.delegate = self;
+    CGRect fbAdFrame = self.fbAdView.frame;
+    fbAdFrame.size = CGSizeMake(300, 250);//adSize;
+    self.fbAdView.frame = fbAdFrame;
+    [self.fbAdView loadAdWithBidPayload:bidPayload];
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *topView = window.rootViewController.view;
-    [topView addSubview:adView];
-    [self.pbDelegate didLoadAd:adView];
-    //[adView loadAd];
+    [topView addSubview:self.fbAdView];
+}
+
+- (NSString *)parsePlacementIdFromBidPayload:(NSString *)bidPayload {
+    NSError *jsonError;
+    NSData *objectData = [bidPayload dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&jsonError];
+    return [json objectForKey:@"placement_id"];
 }
 
 #pragma mark FBAdViewDelegate methods
 
 - (void)adView:(FBAdView *)adView didFailWithError:(NSError *)error {
     NSLog(@"Facebook mediated ad failed to load with error: %@", error);
-    [self.pbDelegate ad:adView didFailWithError:error];
+    [self.delegate ad:adView didFailWithError:error];
 }
 
 - (void)adViewDidLoad:(FBAdView *)adView {
     NSLog(@"Ad was loaded and ready to be displayed22");
     NSLog(@"Facebook mediated ad did load.");
-    [self.pbDelegate didLoadAd:adView];
+    [self.delegate didLoadAd:adView];
 }
 
 - (void)adViewWillLogImpression:(FBAdView *)adView {
     NSLog(@"Facebook mediated ad will log impression.");
-    [self.pbDelegate trackImpression];
+    [self.delegate trackImpression];
 }
 
 - (void)adViewDidClick:(FBAdView *)adView {
     NSLog(@"Facebook mediated ad did click.");
-    [self.pbDelegate didClickAd:adView];
+    [self.delegate didClickAd:adView];
 }
 
 - (void)adViewDidFinishHandlingClick:(FBAdView *)adView {
     NSLog(@"Facebook mediated ad did finish handling click.");
-    [self.pbDelegate didFinishHandlingClick:adView];
+    [self.delegate didFinishHandlingClick:adView];
 }
 
 - (UIViewController *)viewControllerForPresentingModalView {
-    return [self.pbDelegate viewControllerForPresentingModalView];
+    return [self.delegate viewControllerForPresentingModalView];
 }
 
 @end

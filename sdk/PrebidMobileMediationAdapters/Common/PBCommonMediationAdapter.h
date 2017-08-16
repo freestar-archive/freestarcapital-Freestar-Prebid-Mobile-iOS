@@ -13,9 +13,11 @@
  limitations under the License.
  */
 
-#import "MPBannerCustomEvent.h"
-#import "PBMediationAdapterDelegate.h"
+#import <Foundation/Foundation.h>
 
-@interface PrebidMobileMoPubMediationAdapter : MPBannerCustomEvent<PBMediationAdapterDelegate>
+@interface PBCommonMediationAdapter : NSObject
+
+- (instancetype)initWithCacheId:(NSString *)cacheId andBidder:(NSString *)bidder andMediationAdapterClass:(id)medclass;
+- (id)requestAdmAndLoadAd;
 
 @end
