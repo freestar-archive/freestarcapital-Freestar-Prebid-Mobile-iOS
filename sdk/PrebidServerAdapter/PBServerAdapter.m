@@ -88,15 +88,13 @@ static NSString *const kPrebidMobileVersion = @"0.0.2";
 - (NSURLRequest *)buildRequestForAdUnits:(NSArray<PBAdUnit *> *)adUnits {
     NSURL *url = [NSURL URLWithString:@"https://prebid.adnxs.com/pbs/v1/auction"];
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:url
-                                                                       cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                                       cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                                    timeoutInterval:1000];
     [mutableRequest setHTTPMethod:@"POST"];
     NSError *error;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:[self requestBodyForAdUnits:adUnits]
                                                        options:kNilOptions
                                                          error:&error];
-    NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
-    [mutableRequest setAllHTTPHeaderFields:headers];
     if (!error) {
         [mutableRequest setHTTPBody:postData];
         return [mutableRequest copy];

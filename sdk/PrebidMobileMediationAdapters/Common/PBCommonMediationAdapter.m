@@ -67,13 +67,20 @@ static NSString *const kPrebidCacheEndpoint = @"https://prebid.adnxs.com/pbc/v1/
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     //if ([self.bidder isEqualToString:@"audienceNetwork"] && NSClassFromString(@"PBFacebookAdLoader")) {
-        Class fbAdLoaderClass = NSClassFromString(@"PBFacebookAdLoader");
-        adLoader = [[fbAdLoaderClass alloc] init];
-        SEL setDelegate = NSSelectorFromString(@"setDelegate:");
-        [adLoader performSelector:setDelegate withObject:self.mediationAdatperClass];
-        SEL fbLoadAd = NSSelectorFromString(@"fbLoadAd:");
-        [adLoader performSelector:fbLoadAd withObject:responseDict];
+//        Class fbAdLoaderClass = NSClassFromString(@"PBFacebookAdLoader");
+//        adLoader = [[fbAdLoaderClass alloc] init];
+//        SEL setDelegate = NSSelectorFromString(@"setDelegate:");
+//        [adLoader performSelector:setDelegate withObject:self.mediationAdatperClass];
+//        SEL fbLoadAd = NSSelectorFromString(@"fbLoadAd:");
+//        [adLoader performSelector:fbLoadAd withObject:responseDict];
     //}
+    
+    Class fbintAdLoaderClass = NSClassFromString(@"PBFacebookInterstitialAdLoader");
+    adLoader = [[fbintAdLoaderClass alloc] init];
+    SEL setDelegate = NSSelectorFromString(@"setDelegate:");
+    [adLoader performSelector:setDelegate withObject:self.mediationAdatperClass];
+    SEL fbLoadAd = NSSelectorFromString(@"fbLoadAd:");
+    [adLoader performSelector:fbLoadAd withObject:responseDict];
 #pragma clang diagnostic pop
     
     return adLoader;

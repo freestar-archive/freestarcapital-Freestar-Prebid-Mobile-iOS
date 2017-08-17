@@ -71,7 +71,6 @@
 }
 
 - (void)interstitialDidFailToLoadAd:(MPInterstitialAdController *)interstitial {
-    
 }
 
 - (void)interstitialDidExpire:(MPInterstitialAdController *)interstitial {
@@ -86,6 +85,11 @@
     }else {
         NSLog(@"Ad wasn't ready");
     }
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"DFP FAILED TO LOAD AD ");
+    NSLog(@"\n ERROR IS %@ ", error);
 }
 
 /*

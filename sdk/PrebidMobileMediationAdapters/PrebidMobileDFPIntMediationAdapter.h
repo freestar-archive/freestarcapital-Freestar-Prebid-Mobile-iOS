@@ -19,6 +19,6 @@
 #import "PBBannerMediationAdapterDelegate.h"
 #import "PBCommonMediationAdapter.h"
 
-@interface PrebidMobileDFPMediationAdapter : NSObject<GADCustomEventBanner, PBBannerMediationAdapterDelegate, GADCustomEventInterstitial>
+@interface PrebidMobileDFPIntMediationAdapter : NSObject<GADCustomEventInterstitial, PBBannerMediationAdapterDelegate>
 
 @end

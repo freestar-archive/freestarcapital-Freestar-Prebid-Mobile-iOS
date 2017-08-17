@@ -48,16 +48,27 @@
 //    }
 
     [FBAdSettings setLogLevel:FBAdLogLevelVerbose];
+    [self loadBannerAd];
     
+    NSString *instlBidPayload = @"{\"type\":\"ID\",\"bid_id\":\"1711944616674078449\",\"placement_id\":\"1995257847363113_1997038003851764\",\"sdk_version\":\"4.25.0-appnexus.bidding\",\"device_id\":\"87ECBA49-908A-428F-9DE7-4B9CED4F486C\",\"template\":102,\"payload\":\"null\"}";
+    FBInterstitialAd *fbInstlAd = [[FBInterstitialAd alloc] initWithPlacementID:[self parsePlacementIdFromBidPayload:instlBidPayload]];
+    [fbInstlAd loadAdWithBidPayload:instlBidPayload];
+}
+
+- (void)loadBannerAd {
+    
+    NSString *bidPayload = @"{\"type\":\"ID\",\"bid_id\":\"4401013946958491377\",\"placement_id\":\"1995257847363113_1997038003851764\",\"sdk_version\":\"4.25.0-appnexus.bidding\",\"device_id\":\"87ECBA49-908A-428F-9DE7-4B9CED4F486C\",\"template\":7,\"payload\":\"null\"}";
+
     self.fbAdView = [[FBAdView alloc] initWithPlacementID:[self parsePlacementIdFromBidPayload:bidPayload]
-                                                      adSize:kFBAdSizeHeight250Rectangle
-                                          rootViewController:(UIViewController *)[NSObject new]];
+                                                   adSize:kFBAdSizeHeight250Rectangle
+                                       rootViewController:(UIViewController *)[NSObject new]];
     self.fbAdView.frame = CGRectMake(0, 0, self.fbAdView.bounds.size.width, self.fbAdView.bounds.size.height);
     self.fbAdView.delegate = self;
     CGRect fbAdFrame = self.fbAdView.frame;
     fbAdFrame.size = CGSizeMake(300, 250);//adSize;
     self.fbAdView.frame = fbAdFrame;
     [self.fbAdView loadAdWithBidPayload:bidPayload];
+
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *topView = window.rootViewController.view;
     [topView addSubview:self.fbAdView];

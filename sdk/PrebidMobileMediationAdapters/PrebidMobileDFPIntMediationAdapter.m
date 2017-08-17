@@ -13,73 +13,38 @@
  limitations under the License.
  */
 
-#import "PrebidMobileDFPMediationAdapter.h"
+#import "PrebidMobileDFPIntMediationAdapter.h"
 
 static NSString *const customEventErrorDomain = @"org.prebid.PrebidMobileMediationAdapter";
 
-@interface PrebidMobileDFPMediationAdapter()
+@interface PrebidMobileDFPIntMediationAdapter()
 
 @property (strong, nonatomic) id adLoader;
 
 @end
 
-@implementation PrebidMobileDFPMediationAdapter
+@implementation PrebidMobileDFPIntMediationAdapter
 
 @synthesize delegate;
 @synthesize viewControllerForPresentingModalView;
-
-- (void)requestBannerAd:(GADAdSize)adSize
-              parameter:(NSString *)serverParameter
-                  label:(NSString *)serverLabel
-                request:(GADCustomEventRequest *)request {
-    NSString *cacheId;
-    NSString *bidder;
-    NSArray *keywords = request.userKeywords;
-    for (NSString *keyword in keywords) {
-        if ([keyword containsString:@"hb_cache_id"]) {
-            NSArray *splitValue = [keyword componentsSeparatedByString:@":"];
-            cacheId = splitValue[1];
-        }
-        if ([keyword containsString:@"hb_bidder"]) {
-            NSArray *splitValue = [keyword componentsSeparatedByString:@":"];
-            bidder = splitValue[1];
-        }
-    }
-    PBCommonMediationAdapter *commonMediationAdapter = [[PBCommonMediationAdapter alloc] initWithCacheId:cacheId andBidder:bidder andMediationAdapterClass:self];
-    self.adLoader = [commonMediationAdapter requestAdmAndLoadAd];
-}
-
-#pragma mark - PBDFPMediationDelegate methods
-
-- (void)didLoadAd:(UIView *)adView {
-    [self.delegate customEventBanner:self didReceiveAd:adView];
-}
-
-- (void)ad:(UIView *)adView didFailWithError:(NSError *)error {
-    [self.delegate customEventBanner:self didFailAd:error];
-}
-
-- (void)didClickAd:(UIView *)adView {
-    [self.delegate customEventBannerWasClicked:self];
-}
-
-- (void)trackImpression {
-    
-}
-
-#pragma mark - Custom Event for Interstitials
 
 - (void)requestInterstitialAdWithParameter:(NSString *)serverParameter
                                      label:(NSString *)serverLabel
                                    request:(GADCustomEventRequest *)request {
     NSLog(@"got to mediation interstitial function");
-//    self.interstitial = [[SampleInterstitial alloc] init];
-//    self.interstitial.delegate = self;
-//    self.interstitial.adUnit = serverParameter;
-//    SampleAdRequest *adRequest = [[SampleAdRequest alloc] init];
-//    adRequest.testMode = request.isTesting;
-//    adRequest.keywords = request.userKeywords;
-//    [self.interstitial fetchAd:adRequest];
+    //    self.interstitial = [[SampleInterstitial alloc] init];
+    //    self.interstitial.delegate = self;
+    //    self.interstitial.adUnit = serverParameter;
+    //    SampleAdRequest *adRequest = [[SampleAdRequest alloc] init];
+    //    adRequest.testMode = request.isTesting;
+    //    adRequest.keywords = request.userKeywords;
+    //    [self.interstitial fetchAd:adRequest];
+    PBCommonMediationAdapter *commonMediationAdapter = [[PBCommonMediationAdapter alloc] initWithCacheId:@"test_cacheId" andBidder:@"TestBidder" andMediationAdapterClass:self];
+    self.adLoader = [commonMediationAdapter requestAdmAndLoadAd];
+}
+
+-(void)presentFromRootViewController:(UIViewController *)rootViewController {
+    NSLog(@"got here");
 }
 //
 //// Sent when an interstitial ad has loaded.
