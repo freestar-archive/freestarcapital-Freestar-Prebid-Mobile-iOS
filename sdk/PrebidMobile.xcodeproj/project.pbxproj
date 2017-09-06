@@ -77,6 +77,11 @@
 		C2F456841F5EE88C00A8AE17 /* PBCacheLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456821F5EE88C00A8AE17 /* PBCacheLoader.m */; };
 		C2F456881F5EFEC900A8AE17 /* PrebidMobileDemandSDKLoadSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456871F5EFEC900A8AE17 /* PrebidMobileDemandSDKLoadSettingsTests.m */; };
 		C2F4568A1F5EFEDB00A8AE17 /* PBCacheLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456891F5EFEDB00A8AE17 /* PBCacheLoaderTests.m */; };
+		C2F456991F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2F4569D1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F4568C1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */; };
+		C2F4569E1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F4568D1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m */; };
+		C2F4569F1F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */; };
+		C2F456A01F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F4568F1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m */; };
 		C2F5436E1F54762000C8F14D /* PBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F5436C1F54762000C8F14D /* PBConstants.h */; };
 		C2F5436F1F54762000C8F14D /* PBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F5436D1F54762000C8F14D /* PBConstants.m */; };
 		C2F543701F5479A300C8F14D /* PBFacebookBannerAdLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = C2452AD71F4F539D00452762 /* PBFacebookBannerAdLoader.h */; };
@@ -189,6 +194,9 @@
 		C2F4568D1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKAdapterForMoPub.m; sourceTree = "<group>"; };
 		C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.h; sourceTree = "<group>"; };
 		C2F4568F1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.m; sourceTree = "<group>"; };
+		C2F456951F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrebidMobileDemandSDKAdapterForMoPub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKAdapterForMoPub.h; sourceTree = "<group>"; };
+		C2F456981F6052CA00A8AE17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2F5436C1F54762000C8F14D /* PBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBConstants.h; sourceTree = "<group>"; };
 		C2F5436D1F54762000C8F14D /* PBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBConstants.m; sourceTree = "<group>"; };
 		C2F543741F548C9C00C8F14D /* PBCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCustomEventBannerDelegate.h; sourceTree = "<group>"; };
@@ -234,6 +242,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2F5437B1F54905700C8F14D /* PrebidMobile.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2F456911F6052CA00A8AE17 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +329,7 @@
 				C2B16E881EE1BF1A006304C0 /* PrebidServerAdapter */,
 				C2F7CAE01F2BD90D00FEC637 /* PrebidMobileDemandSDKAdapters */,
 				C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */,
+				C2F456961F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */,
 				C2B16EA21EE1BF8A006304C0 /* Frameworks */,
 				C2B16E1C1EE1BE69006304C0 /* Products */,
 			);
@@ -325,6 +341,7 @@
 				C2B16E1B1EE1BE69006304C0 /* PrebidMobile.framework */,
 				C281E17C1EE5EAF700F2F4A9 /* PrebidMobileTests.xctest */,
 				C2B91AB31F438C10009F75C8 /* PrebidMobileDemandSDKAdapterForDFP.framework */,
+				C2F456951F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,13 +494,22 @@
 			name = MoPub;
 			sourceTree = "<group>";
 		};
+		C2F456961F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */ = {
+			isa = PBXGroup;
+			children = (
+				C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */,
+				C2F456981F6052CA00A8AE17 /* Info.plist */,
+			);
+			path = PrebidMobileDemandSDKAdapterForMoPub;
+			sourceTree = "<group>";
+		};
 		C2F7CAE01F2BD90D00FEC637 /* PrebidMobileDemandSDKAdapters */ = {
 			isa = PBXGroup;
 			children = (
-				C2F4568B1F60501C00A8AE17 /* MoPub */,
 				C2F456801F58996B00A8AE17 /* Common */,
 				C2452AD61F4F534200452762 /* DemandSDKLoaders */,
 				C2F456851F5EFE5100A8AE17 /* DFP */,
+				C2F4568B1F60501C00A8AE17 /* MoPub */,
 				C2B91AB61F438C10009F75C8 /* Info.plist */,
 			);
 			name = PrebidMobileDemandSDKAdapters;
@@ -532,6 +558,16 @@
 			files = (
 				C2F543841F5759C200C8F14D /* PrebidMobileCustomEventInterstitial.h in Headers */,
 				C2B91ABB1F438C30009F75C8 /* PrebidMobileCustomEventBanner.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2F456921F6052CA00A8AE17 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2F4569D1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */,
+				C2F4569F1F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h in Headers */,
+				C2F456991F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +628,24 @@
 			productReference = C2B91AB31F438C10009F75C8 /* PrebidMobileDemandSDKAdapterForDFP.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		C2F456941F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2F4569A1F6052CA00A8AE17 /* Build configuration list for PBXNativeTarget "PrebidMobileDemandSDKAdapterForMoPub" */;
+			buildPhases = (
+				C2F456901F6052CA00A8AE17 /* Sources */,
+				C2F456911F6052CA00A8AE17 /* Frameworks */,
+				C2F456921F6052CA00A8AE17 /* Headers */,
+				C2F456931F6052CA00A8AE17 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrebidMobileDemandSDKAdapterForMoPub;
+			productName = PrebidMobileDemandSDKAdapterForMoPub;
+			productReference = C2F456951F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -616,6 +670,11 @@
 						DevelopmentTeam = HR94J6TSB3;
 						ProvisioningStyle = Automatic;
 					};
+					C2F456941F6052CA00A8AE17 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = HR94J6TSB3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = C2B16E151EE1BE69006304C0 /* Build configuration list for PBXProject "PrebidMobile" */;
@@ -633,6 +692,7 @@
 				C2B16E1A1EE1BE69006304C0 /* PrebidMobile */,
 				C281E17B1EE5EAF700F2F4A9 /* PrebidMobileTests */,
 				C2B91AB21F438C10009F75C8 /* PrebidMobileDemandSDKAdapterForDFP */,
+				C2F456941F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */,
 			);
 		};
 /* End PBXProject section */
@@ -656,6 +716,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2B91AB11F438C10009F75C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2F456931F6052CA00A8AE17 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -723,6 +790,15 @@
 			files = (
 				C2B91ABC1F438C30009F75C8 /* PrebidMobileCustomEventBanner.m in Sources */,
 				C2F543851F5759C200C8F14D /* PrebidMobileCustomEventInterstitial.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2F456901F6052CA00A8AE17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2F4569E1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m in Sources */,
+				C2F456A01F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,6 +1029,52 @@
 			};
 			name = Release;
 		};
+		C2F4569B1F6052CA00A8AE17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HR94J6TSB3;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				INFOPLIST_FILE = PrebidMobileDemandSDKAdapterForMoPub/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = AppNexus.PrebidMobileDemandSDKAdapterForMoPub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+			};
+			name = Debug;
+		};
+		C2F4569C1F6052CA00A8AE17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HR94J6TSB3;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				INFOPLIST_FILE = PrebidMobileDemandSDKAdapterForMoPub/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = AppNexus.PrebidMobileDemandSDKAdapterForMoPub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../externallibs/**";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -991,6 +1113,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		C2F4569A1F6052CA00A8AE17 /* Build configuration list for PBXNativeTarget "PrebidMobileDemandSDKAdapterForMoPub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2F4569B1F6052CA00A8AE17 /* Debug */,
+				C2F4569C1F6052CA00A8AE17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
