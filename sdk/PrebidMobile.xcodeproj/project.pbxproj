@@ -77,7 +77,6 @@
 		C2F456841F5EE88C00A8AE17 /* PBCacheLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456821F5EE88C00A8AE17 /* PBCacheLoader.m */; };
 		C2F456881F5EFEC900A8AE17 /* PrebidMobileDemandSDKLoadSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456871F5EFEC900A8AE17 /* PrebidMobileDemandSDKLoadSettingsTests.m */; };
 		C2F4568A1F5EFEDB00A8AE17 /* PBCacheLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F456891F5EFEDB00A8AE17 /* PBCacheLoaderTests.m */; };
-		C2F456991F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2F4569D1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F4568C1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */; };
 		C2F4569E1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F4568D1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m */; };
 		C2F4569F1F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */; };
@@ -195,8 +194,6 @@
 		C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.h; sourceTree = "<group>"; };
 		C2F4568F1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.m; sourceTree = "<group>"; };
 		C2F456951F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrebidMobileDemandSDKAdapterForMoPub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKAdapterForMoPub.h; sourceTree = "<group>"; };
-		C2F456981F6052CA00A8AE17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2F5436C1F54762000C8F14D /* PBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBConstants.h; sourceTree = "<group>"; };
 		C2F5436D1F54762000C8F14D /* PBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBConstants.m; sourceTree = "<group>"; };
 		C2F543741F548C9C00C8F14D /* PBCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCustomEventBannerDelegate.h; sourceTree = "<group>"; };
@@ -329,7 +326,6 @@
 				C2B16E881EE1BF1A006304C0 /* PrebidServerAdapter */,
 				C2F7CAE01F2BD90D00FEC637 /* PrebidMobileDemandSDKAdapters */,
 				C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */,
-				C2F456961F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */,
 				C2B16EA21EE1BF8A006304C0 /* Frameworks */,
 				C2B16E1C1EE1BE69006304C0 /* Products */,
 			);
@@ -494,15 +490,6 @@
 			name = MoPub;
 			sourceTree = "<group>";
 		};
-		C2F456961F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub */ = {
-			isa = PBXGroup;
-			children = (
-				C2F456971F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */,
-				C2F456981F6052CA00A8AE17 /* Info.plist */,
-			);
-			path = PrebidMobileDemandSDKAdapterForMoPub;
-			sourceTree = "<group>";
-		};
 		C2F7CAE01F2BD90D00FEC637 /* PrebidMobileDemandSDKAdapters */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,7 +554,6 @@
 			files = (
 				C2F4569D1F6052D000A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */,
 				C2F4569F1F6052D000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h in Headers */,
-				C2F456991F6052CA00A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1107,7 @@
 				C2F4569C1F6052CA00A8AE17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

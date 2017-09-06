@@ -15,9 +15,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MPBannerCustomEvent.h"
+#import "PBBannerDemandSDKAdapterDelegate.h"
 
-@protocol PBBannerMediationAdapterDelegate;
-
-@interface PrebidMobileDemandSDKAdapterForMoPub : MPBannerCustomEvent<PBBannerMediationAdapterDelegate>
+@interface PrebidMobileDemandSDKAdapterForMoPub : MPBannerCustomEvent<PBBannerDemandSDKAdapterDelegate>
 
 @end

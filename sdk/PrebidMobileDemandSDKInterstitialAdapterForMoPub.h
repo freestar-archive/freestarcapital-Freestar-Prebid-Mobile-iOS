@@ -13,10 +13,10 @@
  limitations under the License.
  */
 
-#import "PBInterstitialMediationAdapter.h"
 #import <Foundation/Foundation.h>
 #import "MPInterstitialCustomEvent.h"
+#import "PBInterstitialDemandSDKAdapterDelegate.h"
 
-@interface PrebidMobileDemandSDKInterstitialAdapterForMoPub : MPInterstitialCustomEvent<PBInterstitialMediationAdapterDelegate>
+@interface PrebidMobileDemandSDKInterstitialAdapterForMoPub : MPInterstitialCustomEvent<PBInterstitialDemandSDKAdapterDelegate>
 
 @end
