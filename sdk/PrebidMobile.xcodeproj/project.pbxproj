@@ -185,6 +185,10 @@
 		C2F456821F5EE88C00A8AE17 /* PBCacheLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCacheLoader.m; sourceTree = "<group>"; };
 		C2F456871F5EFEC900A8AE17 /* PrebidMobileDemandSDKLoadSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKLoadSettingsTests.m; sourceTree = "<group>"; };
 		C2F456891F5EFEDB00A8AE17 /* PBCacheLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCacheLoaderTests.m; sourceTree = "<group>"; };
+		C2F4568C1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKAdapterForMoPub.h; sourceTree = "<group>"; };
+		C2F4568D1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKAdapterForMoPub.m; sourceTree = "<group>"; };
+		C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.h; sourceTree = "<group>"; };
+		C2F4568F1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidMobileDemandSDKInterstitialAdapterForMoPub.m; sourceTree = "<group>"; };
 		C2F5436C1F54762000C8F14D /* PBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBConstants.h; sourceTree = "<group>"; };
 		C2F5436D1F54762000C8F14D /* PBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBConstants.m; sourceTree = "<group>"; };
 		C2F543741F548C9C00C8F14D /* PBCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCustomEventBannerDelegate.h; sourceTree = "<group>"; };
@@ -462,9 +466,21 @@
 			name = PrebidMobileDemandSDKAdapterTests;
 			sourceTree = "<group>";
 		};
+		C2F4568B1F60501C00A8AE17 /* MoPub */ = {
+			isa = PBXGroup;
+			children = (
+				C2F4568C1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.h */,
+				C2F4568D1F60512700A8AE17 /* PrebidMobileDemandSDKAdapterForMoPub.m */,
+				C2F4568E1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.h */,
+				C2F4568F1F60514000A8AE17 /* PrebidMobileDemandSDKInterstitialAdapterForMoPub.m */,
+			);
+			name = MoPub;
+			sourceTree = "<group>";
+		};
 		C2F7CAE01F2BD90D00FEC637 /* PrebidMobileDemandSDKAdapters */ = {
 			isa = PBXGroup;
 			children = (
+				C2F4568B1F60501C00A8AE17 /* MoPub */,
 				C2F456801F58996B00A8AE17 /* Common */,
 				C2452AD61F4F534200452762 /* DemandSDKLoaders */,
 				C2F456851F5EFE5100A8AE17 /* DFP */,
