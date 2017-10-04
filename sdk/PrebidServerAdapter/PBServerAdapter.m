@@ -291,15 +291,19 @@ static NSString *const kPrebidMobileVersion = @"0.1.1";
 }
 
 - (NSDictionary *)app {
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    if (version == nil) {
+        version = @"";
+    }
     if ([[PBTargetingParams sharedInstance] itunesID] != nil) {
         NSString *itunesid = [[PBTargetingParams sharedInstance] itunesID];
-        return @{ @"appid": itunesid, @"ver": kPrebidMobileVersion };
+        return @{ @"appid": itunesid, @"ver": version };
     } else {
         NSString *appId = [[NSBundle mainBundle] bundleIdentifier];
         if (appId == nil) {
             appId = @"";
         }
-        return @{ @"bundle": appId, @"ver": kPrebidMobileVersion };
+        return @{ @"bundle": appId, @"ver": version };
     }
 }
 
