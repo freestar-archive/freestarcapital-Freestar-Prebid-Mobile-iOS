@@ -23,6 +23,7 @@
 #import <PrebidMobile/PBException.h>
 #import <PrebidMobile/PBInterstitialAdUnit.h>
 #import <PrebidMobile/PrebidMobile.h>
+#import <PrebidMobile/PBBidManager.h>
 
 static NSString *const kSeeAdButtonTitle = @"See Ad";
 static NSString *const kAdSettingsTableViewReuseId = @"AdSettingsTableItem";
@@ -129,13 +130,35 @@ static CGFloat const kRightMargin = 15;
 
 - (BOOL)setupPrebidAndRegisterAdUnitsWithAdServer:(PBPrimaryAdServerType)adServer {
     @try {
-        PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:kAdUnit1Id andConfigId:kAdUnit1ConfigId];
-        PBInterstitialAdUnit *__nullable adUnit2 = [[PBInterstitialAdUnit alloc] initWithAdUnitIdentifier:kAdUnit2Id andConfigId:kAdUnit2ConfigId];
-        [adUnit1 addSize:CGSizeMake(300, 250)];
+        
+        NSMutableArray *adUnitsArray = [[NSMutableArray alloc] init];
+        @try {
+            [[PBBidManager sharedInstance] assertAdUnitRegistered:kAdUnit1Id];
+            
+        } @catch (PBException *ex){
+            PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:kAdUnit1Id andConfigId:kAdUnit1ConfigId];
+            [adUnit1 addSize:CGSizeMake(300, 250)];
+            [adUnitsArray addObject:adUnit1];
+           
+        }
+        
+        @try {
+            [[PBBidManager sharedInstance] assertAdUnitRegistered:kAdUnit2Id];
+            
+        } @catch (PBException *ex){
+            PBInterstitialAdUnit *__nullable adUnit2 = [[PBInterstitialAdUnit alloc] initWithAdUnitIdentifier:kAdUnit2Id andConfigId:kAdUnit2ConfigId];
+            
+            [adUnitsArray addObject:adUnit2];
+        } @finally {
+            
+        }
         
         [PrebidMobile shouldLoadOverSecureConnection:YES];
-
-        [PrebidMobile registerAdUnits:@[adUnit1, adUnit2] withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:adServer];
+        
+        if(adUnitsArray.count > 0)
+        {
+        [PrebidMobile registerAdUnits:adUnitsArray withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:adServer];
+        }
 
     } @catch (PBException *ex) {
         NSLog(@"%@",[ex reason]);

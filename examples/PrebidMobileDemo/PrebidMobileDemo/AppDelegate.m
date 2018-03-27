@@ -61,11 +61,47 @@
 
         PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:kAdUnit1Id andConfigId:kAdUnit1ConfigId];
         PBInterstitialAdUnit *__nullable adUnit2 = [[PBInterstitialAdUnit alloc] initWithAdUnitIdentifier:kAdUnit2Id andConfigId:kAdUnit2ConfigId];
+        
         [adUnit1 addSize:CGSizeMake(300, 250)];
+        [adUnit1 addSize:CGSizeMake(300, 50)];
+   
+   //     [self setPrebidTargetingParams];
 
-        [self setPrebidTargetingParams];
-
-        [PrebidMobile registerAdUnits:@[adUnit1, adUnit2] withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:PBPrimaryAdServerDFP];
+        [PrebidMobile registerAdUnits:@[adUnit1] withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:PBPrimaryAdServerDFP];
+        
+//        PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_1" andConfigId:@"a0ddc571-ab60-40da-b64e-053d3db1bcee"];
+//        [adUnit1 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit2 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_2" andConfigId:@"68939aa1-2348-4086-9d0f-d06bc3447644"];
+//        [adUnit2 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit3 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_3" andConfigId:@"959c1b56-4d0f-4c27-b0c1-b7943c62a95a"];
+//        [adUnit3 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit4 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_4" andConfigId:@"105a2f50-6977-4030-b54b-b9a0a51f6c5c"];
+//        [adUnit4 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit5 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_5" andConfigId:@"59265a1a-b4be-4a79-93e9-ea8aede48481"];
+//        [adUnit5 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit6 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"inline_article_ad_6" andConfigId:@"81049806-2a2a-48c1-b383-cfed920e433c"];
+//        [adUnit6 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit7 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"interstitial_1" andConfigId:@"e259bdc7-9965-4bc9-a1c8-34ac3596716a"];
+//        [adUnit7 addSize:CGSizeMake(320, 480)];
+//
+//        PBBannerAdUnit *__nullable adUnit8 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"mpu_comments_1" andConfigId:@"d2803717-a515-4a8b-9696-64f47bc763c6"];
+//        [adUnit8 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit9 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"mpu_comments_2" andConfigId:@"264d5bf7-e8f3-4912-b7cb-432f008c4fd6"];
+//        [adUnit9 addSize:CGSizeMake(300, 250)];
+//
+//        PBBannerAdUnit *__nullable adUnit10 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:@"puff_ad_1" andConfigId:@"3fb3665c-f5af-4b9b-8206-2c430ddb2f99"];
+//        [adUnit10 addSize:CGSizeMake(300, 250)];
+        
+        //[self setPrebidTargetingParams];
+        //[PrebidMobile registerAdUnits:@[adUnit1, adUnit2, adUnit3, adUnit4, adUnit5, adUnit6, adUnit7, adUnit8, adUnit9, adUnit10] withAccountId:@"ff48cb82-f3d0-4893-875b-1b44a96bf3e3" withHost:kPBServerHost andPrimaryAdServer:PBPrimaryAdServerDFP];
+        
     } @catch (PBException *ex) {
         NSLog(@"%@",[ex reason]);
     } @finally {
@@ -88,8 +124,8 @@
 - (void)setPrebidTargetingParams {
     [[PBTargetingParams sharedInstance] setAge:25];
     [[PBTargetingParams sharedInstance] setGender:PBTargetingParamsGenderFemale];
-    [[PBTargetingParams sharedInstance] setCustomTargeting:@"country" withValues:@[@"india", @"malaysia"]];
-    [[PBTargetingParams sharedInstance] setCustomTargeting:@"race" withValues:@[@"asian", @"hispanic", @"asian"]];
+    //[[PBTargetingParams sharedInstance] setCustomTargeting:@"state" withValues:@[@"NJ", @"CA"]];
+    
 }
 
 // Location Manager Delegate Methods
