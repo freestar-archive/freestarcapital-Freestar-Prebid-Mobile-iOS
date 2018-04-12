@@ -46,6 +46,7 @@ NSString *const kAccountId = @"aecd6ef7-b992-4e99-9bb8-65e2d984e1dd";
 NSString *const kAdUnit1ConfigId = @"c282633d-27e5-4772-ac37-53347aa26f6e";
 NSString *const kAdUnit2ConfigId = @"eebc307d-7f76-45d6-a7a7-68985169b138";
 NSUInteger const kPBServerHost = PBServerHostAppNexus;
+//NSUInteger const kPBServerHost = PBServerHostFreestar;
 
 NSString *const kAdUnit1Id = @"HomeScreen";
 NSString *const kAdUnit2Id = @"NavScreen";

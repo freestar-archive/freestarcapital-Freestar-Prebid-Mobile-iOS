@@ -25,6 +25,12 @@
 - (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier andConfigId:(nonnull NSString *)configId;
 
 /**
+ * Initializes the BannerAdUnit with an identifier
+ * @param identifier : the identifier is a developer specific identity given for each of the ad unit created
+ */
+- (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier;
+
+/**
  * addSize adds the size object to the BannerAdUnit object created
  * @param adSize : width & height of the ad that needs to be fetched
  */

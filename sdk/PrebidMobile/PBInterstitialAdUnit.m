@@ -26,6 +26,12 @@ static NSInteger const kSizeXY = 2;
     return interstitialAdUnit;
 }
 
+- (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier {
+    PBInterstitialAdUnit *interstitialAdUnit = [super initWithIdentifier:identifier andAdType:PBAdUnitTypeInterstitial];
+    [self addSizesToInterstitialAdUnit:interstitialAdUnit];
+    return interstitialAdUnit;
+}
+
 - (void)addSizesToInterstitialAdUnit:(PBInterstitialAdUnit *)adUnit {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     int size[kNumSizes][kSizeXY] = {{300, 250}, {300, 600}, {320, 250}, {254, 133}, {580, 400}, {320, 320}, {320, 160}, {320, 480}, {336, 280}, {320, 400}, {1, 1}};

@@ -21,7 +21,8 @@
 @property (nonatomic, readwrite, strong) NSString *__nonnull uuid;
 @property (nonatomic, readwrite, strong) NSString *__nonnull identifier;
 @property (nonatomic, readwrite, strong) NSString *__nonnull configId;
-@property (nonatomic, readwrite, strong) NSMutableArray<CGSize> *__nullable adSizes;
+@property (nonatomic, readwrite, strong) NSMutableArray<NSValue*> *__nullable adSizes;
+@property (nonatomic, readwrite, assign) NSTimeInterval adRefreshRate;
 
 @property (nonatomic, assign) PBAdUnitType adType;
 @property (nonatomic, assign) NSTimeInterval timeToExpireAllBids;
@@ -32,24 +33,30 @@
 
 #pragma mark Initialization
 - (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type andConfigId:(nonnull NSString *)configId {
-    if ((self = [super init])) {
-        [self generateUUID];
-        _identifier = [identifier copy];
-        _adType = type;
-        _timeToExpireAllBids = 0;
+    if (self = [self initWithIdentifier:identifier andAdType:type]) {
         _configId = configId;
     }
     return (self);
 }
 
+- (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type {
+    if ((self = [super init])) {
+        [self generateUUID];
+        _identifier = [identifier copy];
+        _adType = type;
+        _timeToExpireAllBids = 0;
+    }
+    return (self);
+}
+
 #pragma mark Methods
-- (NSArray<CGSize> *)adSizes {
+- (NSArray<NSValue*> *)adSizes {
     return _adSizes;
 }
 
 - (void)addSize:(CGSize)adSize {
     if (_adSizes == nil) {
-        _adSizes = [[NSMutableArray<CGSize> alloc] init];
+        _adSizes = [[NSMutableArray<NSValue*> alloc] init];
     }
     [_adSizes addObject:[NSValue valueWithCGSize:adSize]];
 }

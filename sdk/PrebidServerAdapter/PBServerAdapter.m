@@ -29,8 +29,6 @@
 
 static NSString *const kAPNAdServerCacheIdKey = @"hb_cache_id";
 
-static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
-static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
 static NSTimeInterval const kAdTimeoutInterval = 360;
 static int const kBatchCount = 10;
 
@@ -58,7 +56,11 @@ static int const kBatchCount = 10;
     if (self = [super init]) {
         _accountId = accountId;
         _isSecure = TRUE;
-        _shouldCacheLocal = TRUE;
+        if (host == PBServerHostFreestar) {
+            _shouldCacheLocal = FALSE;
+        } else {
+            _shouldCacheLocal = TRUE;
+        }
         _host = host;
     }
     return self;
@@ -67,12 +69,7 @@ static int const kBatchCount = 10;
 - (void)requestBidsWithAdUnits:(nullable NSArray<PBAdUnit *> *)adUnits
                   withDelegate:(nonnull id<PBBidResponseDelegate>)delegate {
     
-    NSURL *hostUrl = [self urlForHost:_host];
-    if (hostUrl == nil) {
-        @throw [PBException exceptionWithName:PBHostInvalidException];
-    }
-    
-    [[PBServerRequestBuilder sharedInstance] setHostURL:hostUrl];
+    [[PBServerRequestBuilder sharedInstance] setHost:_host];
     
     //batch the adunits to group of 10 & send to the server instead of this bulk request
     int adUnitsRemaining = (int)[adUnits count];
@@ -126,20 +123,4 @@ static int const kBatchCount = 10;
     }
 }
 
-- (NSURL *)urlForHost:(PBServerHost)host {
-    NSURL *url;
-    switch (host) {
-        case PBServerHostAppNexus:
-            url = [NSURL URLWithString:kAPNPrebidServerUrl];
-            break;
-        case PBServerHostRubicon:
-            url = [NSURL URLWithString:kRPPrebidServerUrl];
-            break;
-        default:
-            url = nil;
-            break;
-    }
-    
-    return url;
-}
 @end

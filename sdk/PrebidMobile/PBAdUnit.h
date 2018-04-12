@@ -15,8 +15,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CGSize;
-
 /**
  * A generic ad unit object that the user creates to configure the ad sizes. These are passed to the
  * prebid server adapter and ads are fetched for each ad unit
@@ -41,7 +39,13 @@
 /**
  * adSizes is a list of CGSizes (widths & heights) that needs to be fetched for the ad unit.
  */
-@property (nonatomic, readonly) NSArray<CGSize> *__nullable adSizes;
+@property (nonatomic, readonly) NSArray<NSValue*> *__nullable adSizes;
+
+/**
+ * ad refresh rate in seconds.
+ */
+@property (nonatomic, assign, readonly) NSTimeInterval adRefreshRate;
+
 
 /**
  * An enumeration object that holds different types of ad units available to be configured for
@@ -62,6 +66,13 @@ typedef NS_ENUM(NSInteger, PBAdUnitType) {
  * @param configId : config id for demand sources from prebid server
  */
 - (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type andConfigId:(nonnull NSString *)configId;
+
+/**
+ * initializes the PBAdUnit object with the identifier & the adUnit type
+ * @param identifier : identifier is the developer identity for the ad unit
+ * @param type : type of adUnit created. Can be banner, interstitial or native
+ */
+- (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type;
 
 /**
  * addSize adds the size object to the adUnit object created

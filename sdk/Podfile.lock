@@ -1,0 +1,21 @@
+PODS:
+  - FSCache (2.2.0)
+
+DEPENDENCIES:
+  - FSCache (from `https://github.com/freestarcapital/FSCache.git`)
+
+EXTERNAL SOURCES:
+  FSCache:
+    :git: https://github.com/freestarcapital/FSCache.git
+
+CHECKOUT OPTIONS:
+  FSCache:
+    :commit: 50f060fb7e0e2a4769d91a3141667af57b5e9ef0
+    :git: https://github.com/freestarcapital/FSCache.git
+
+SPEC CHECKSUMS:
+  FSCache: ffa790ccec80b1755e8998fd630ebf3038ca0c26
+
+PODFILE CHECKSUM: 8e80954448a44e9f6a2bab44c4ac8a06efaae3fe
+
+COCOAPODS: 1.5.0

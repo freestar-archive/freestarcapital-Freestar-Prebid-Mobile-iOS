@@ -15,12 +15,12 @@
 
 #import "AppDelegate.h"
 
-#import <PrebidMobile/PBBannerAdUnit.h>
-#import <PrebidMobile/PBException.h>
-#import <PrebidMobile/PBInterstitialAdUnit.h>
-#import <PrebidMobile/PBTargetingParams.h>
-#import <PrebidMobile/PrebidMobile.h>
-#import <PrebidMobile/PBLogging.h>
+#import <PrebidMobileFS/PBBannerAdUnit.h>
+#import <PrebidMobileFS/PBException.h>
+#import <PrebidMobileFS/PBInterstitialAdUnit.h>
+#import <PrebidMobileFS/PBTargetingParams.h>
+#import <PrebidMobileFS/PrebidMobile.h>
+#import <PrebidMobileFS/PBLogging.h>
 #import "Constants.h"
 #import "SettingsViewController.h"
 

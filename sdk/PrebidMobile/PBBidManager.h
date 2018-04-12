@@ -23,6 +23,8 @@ static int const kPCAttachTopBidMaxTimeoutMS = 1500;
 
 @interface PBBidManager : NSObject
 
+@property (nonatomic, assign) BOOL testMode;
+
 /**
  * shared instance of the PBBidManager class
  */

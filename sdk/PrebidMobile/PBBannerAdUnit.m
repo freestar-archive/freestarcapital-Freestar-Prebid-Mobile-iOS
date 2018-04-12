@@ -21,6 +21,10 @@
     return [super initWithIdentifier:identifier andAdType:PBAdUnitTypeBanner andConfigId:configId];
 }
 
+- (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier {
+    return [super initWithIdentifier:identifier andAdType:PBAdUnitTypeBanner];
+}
+
 - (void)addSize:(CGSize)adSize {
     [super addSize:adSize];
 }

@@ -15,10 +15,13 @@
 
 #import <Foundation/Foundation.h>
 #import "PBAdUnit.h"
+#import "PBHost.h"
 
 @interface PBServerRequestBuilder : NSObject
 
-@property (nonatomic, assign, readwrite) NSURL * _Nonnull hostURL;
+@property (nonatomic, assign, readonly) NSURL * _Nonnull hostURL;
+@property (nonatomic, assign, readwrite) PBServerHost host;
+@property (nonatomic, assign) BOOL testMode;
 
 + (instancetype _Nullable )sharedInstance;
 

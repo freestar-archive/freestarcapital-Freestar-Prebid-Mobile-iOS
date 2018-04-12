@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E0D6750C839E307A6E452CD /* Pods_PrebidMobileDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF58B72B0711115EDA021FE /* Pods_PrebidMobileDemo.framework */; };
+		93BAA114ED00E5C0F5D63807 /* Pods_PrebidMobileDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA1B787CC9760CFAF037F0A /* Pods_PrebidMobileDemoTests.framework */; };
 		C20A49CC1F82A17B0016078E /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20A49CB1F82A16B0016078E /* GoogleMobileAds.framework */; };
-		C23386CB1EE5DAC9002FD404 /* PrebidMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23386CA1EE5DAA7002FD404 /* PrebidMobile.framework */; };
 		C255C7311F44895D0089CB41 /* MPBannerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C255C5B61F44895C0089CB41 /* MPBannerAdManager.m */; };
 		C255C7321F44895D0089CB41 /* MPBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = C255C5B91F44895C0089CB41 /* MPBannerCustomEventAdapter.m */; };
 		C255C7331F44895D0089CB41 /* MPBaseBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = C255C5BB1F44895C0089CB41 /* MPBaseBannerAdapter.m */; };
@@ -235,27 +236,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C23386C91EE5DAA7002FD404 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2B16E1B1EE1BE69006304C0;
-			remoteInfo = PrebidMobile;
-		};
-		C23386CD1EE5DAC9002FD404 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C2B16E1A1EE1BE69006304C0;
-			remoteInfo = PrebidMobile;
-		};
-		C255C5B01F4489180089CB41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C281E17C1EE5EAF700F2F4A9;
-			remoteInfo = PrebidMobileTests;
-		};
 		C273C81F1E82DAAE003EF1AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C273C7FD1E82DAAD003EF1AB /* Project object */;
@@ -279,8 +259,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2EF58B72B0711115EDA021FE /* Pods_PrebidMobileDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrebidMobileDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CEE3CC9FB4E73314F5D762D /* Pods-PrebidMobileDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobileDemoTests/Pods-PrebidMobileDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		3F899FCDA954E8D39B68DADF /* Pods-PrebidMobileDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobileDemo/Pods-PrebidMobileDemo.release.xcconfig"; sourceTree = "<group>"; };
+		71A69F6696A53039DFC3784B /* Pods-PrebidMobileDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobileDemoTests/Pods-PrebidMobileDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BFA1B787CC9760CFAF037F0A /* Pods_PrebidMobileDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrebidMobileDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20A49CB1F82A16B0016078E /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PrebidMobile.xcodeproj; path = ../../sdk/PrebidMobile.xcodeproj; sourceTree = "<group>"; };
 		C255C5B51F44895C0089CB41 /* MPBannerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBannerAdManager.h; sourceTree = "<group>"; };
 		C255C5B61F44895C0089CB41 /* MPBannerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBannerAdManager.m; sourceTree = "<group>"; };
 		C255C5B71F44895C0089CB41 /* MPBannerAdManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBannerAdManagerDelegate.h; sourceTree = "<group>"; };
@@ -696,6 +680,7 @@
 		C2E809721E95425D00DC7732 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		C2E8097B1E95899800DC7732 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		C2E8097C1E95899800DC7732 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		E8942479AAC2E21C8DD055DA /* Pods-PrebidMobileDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobileDemo/Pods-PrebidMobileDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -711,7 +696,6 @@
 				C273CAA21E831442003EF1AB /* EventKit.framework in Frameworks */,
 				C273CAA31E831442003EF1AB /* EventKitUI.framework in Frameworks */,
 				C273CAA41E831442003EF1AB /* Foundation.framework in Frameworks */,
-				C23386CB1EE5DAC9002FD404 /* PrebidMobile.framework in Frameworks */,
 				C273CAA51E831442003EF1AB /* MediaPlayer.framework in Frameworks */,
 				C273CAA61E831442003EF1AB /* MediaToolbox.framework in Frameworks */,
 				C273CAA71E831442003EF1AB /* MessageUI.framework in Frameworks */,
@@ -728,6 +712,7 @@
 				C273CA911E831404003EF1AB /* CoreMedia.framework in Frameworks */,
 				C273CA921E831404003EF1AB /* CoreTelephony.framework in Frameworks */,
 				C273CA861E8313F3003EF1AB /* CoreBluetooth.framework in Frameworks */,
+				5E0D6750C839E307A6E452CD /* Pods_PrebidMobileDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,19 +720,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93BAA114ED00E5C0F5D63807 /* Pods_PrebidMobileDemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C23386C61EE5DAA7002FD404 /* Products */ = {
+		B0D8C03648C7C698E53A0492 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C23386CA1EE5DAA7002FD404 /* PrebidMobile.framework */,
-				C255C5B11F4489180089CB41 /* PrebidMobileTests.xctest */,
+				E8942479AAC2E21C8DD055DA /* Pods-PrebidMobileDemo.debug.xcconfig */,
+				3F899FCDA954E8D39B68DADF /* Pods-PrebidMobileDemo.release.xcconfig */,
+				71A69F6696A53039DFC3784B /* Pods-PrebidMobileDemoTests.debug.xcconfig */,
+				3CEE3CC9FB4E73314F5D762D /* Pods-PrebidMobileDemoTests.release.xcconfig */,
 			);
-			name = Products;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		C255C5B21F44895C0089CB41 /* MoPubSDK */ = {
@@ -1317,7 +1305,7 @@
 				C273C84F1E831300003EF1AB /* Frameworks */,
 				C273C8061E82DAAD003EF1AB /* Products */,
 				C268CA861EA65FD7008656F2 /* features */,
-				C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */,
+				B0D8C03648C7C698E53A0492 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1397,6 +1385,8 @@
 				C273CA8C1E831404003EF1AB /* CoreTelephony.framework */,
 				C273CA851E8313F3003EF1AB /* CoreBluetooth.framework */,
 				C20A49CB1F82A16B0016078E /* GoogleMobileAds.framework */,
+				2EF58B72B0711115EDA021FE /* Pods_PrebidMobileDemo.framework */,
+				BFA1B787CC9760CFAF037F0A /* Pods_PrebidMobileDemoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1444,15 +1434,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C273C8271E82DAAE003EF1AB /* Build configuration list for PBXNativeTarget "PrebidMobileDemo" */;
 			buildPhases = (
+				777D5C3292749CE384569929 /* [CP] Check Pods Manifest.lock */,
 				C273C8011E82DAAD003EF1AB /* Sources */,
 				C273C8021E82DAAD003EF1AB /* Frameworks */,
 				C273C8031E82DAAD003EF1AB /* Resources */,
 				C23386CF1EE5DAC9002FD404 /* Embed Frameworks */,
+				E09725FCAD79D31EB838CDF2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C23386CE1EE5DAC9002FD404 /* PBXTargetDependency */,
 			);
 			name = PrebidMobileDemo;
 			productName = PrebidMobileDemo;
@@ -1463,6 +1454,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C273C82A1E82DAAE003EF1AB /* Build configuration list for PBXNativeTarget "PrebidMobileDemoTests" */;
 			buildPhases = (
+				678A572E756A92A923F4BD1B /* [CP] Check Pods Manifest.lock */,
 				C273C81A1E82DAAE003EF1AB /* Sources */,
 				C273C81B1E82DAAE003EF1AB /* Frameworks */,
 				C273C81C1E82DAAE003EF1AB /* Resources */,
@@ -1510,12 +1502,6 @@
 			mainGroup = C273C7FC1E82DAAD003EF1AB;
 			productRefGroup = C273C8061E82DAAD003EF1AB /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C23386C61EE5DAA7002FD404 /* Products */;
-					ProjectRef = C23386C51EE5DAA7002FD404 /* PrebidMobile.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C273C8041E82DAAD003EF1AB /* PrebidMobileDemo */,
@@ -1523,23 +1509,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C23386CA1EE5DAA7002FD404 /* PrebidMobile.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PrebidMobile.framework;
-			remoteRef = C23386C91EE5DAA7002FD404 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C255C5B11F4489180089CB41 /* PrebidMobileTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PrebidMobileTests.xctest;
-			remoteRef = C255C5B01F4489180089CB41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C273C8031E82DAAD003EF1AB /* Resources */ = {
@@ -1588,6 +1557,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		678A572E756A92A923F4BD1B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PrebidMobileDemoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		777D5C3292749CE384569929 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PrebidMobileDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E09725FCAD79D31EB838CDF2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PrebidMobileDemo/Pods-PrebidMobileDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FSCache/FSCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PrebidMobileFS/PrebidMobileFS.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PrebidMobileFS.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PrebidMobileDemo/Pods-PrebidMobileDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C273C8011E82DAAD003EF1AB /* Sources */ = {
@@ -1776,11 +1804,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C23386CE1EE5DAC9002FD404 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PrebidMobile;
-			targetProxy = C23386CD1EE5DAC9002FD404 /* PBXContainerItemProxy */;
-		};
 		C273C8201E82DAAE003EF1AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C273C8041E82DAAD003EF1AB /* PrebidMobileDemo */;
@@ -1916,6 +1939,7 @@
 		};
 		C273C8281E82DAAE003EF1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8942479AAC2E21C8DD055DA /* Pods-PrebidMobileDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HR94J6TSB3;
@@ -1933,6 +1957,7 @@
 					"$(PROJECT_DIR)/../../sdk/**",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-force_load",
 					"\"$(SOURCE_ROOT)/calabash.framework/calabash\"",
@@ -1946,6 +1971,7 @@
 		};
 		C273C8291E82DAAE003EF1AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F899FCDA954E8D39B68DADF /* Pods-PrebidMobileDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HR94J6TSB3;
@@ -1962,7 +1988,10 @@
 					"$(PROJECT_DIR)/MoPubSDK",
 					"$(PROJECT_DIR)/../../sdk/**",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppNexus.PrebidMobileDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1970,6 +1999,7 @@
 		};
 		C273C82B1E82DAAE003EF1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71A69F6696A53039DFC3784B /* Pods-PrebidMobileDemoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HR94J6TSB3;
@@ -1983,6 +2013,7 @@
 		};
 		C273C82C1E82DAAE003EF1AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CEE3CC9FB4E73314F5D762D /* Pods-PrebidMobileDemoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HR94J6TSB3;

@@ -20,9 +20,27 @@
 #import "PBServerReachability.h"
 #import "PBTargetingParams.h"
 #import "PBServerLocation.h"
+#import <FSCache/FSCache.h>
+#import "PBException.h"
+#import "PBLogging.h"
+#import "PBConstants.h"
 
+@protocol PBServerRequestBuilding
+
++ (NSArray *)openrtbImpsFromAdUnits:(NSArray<PBAdUnit *> *)adUnits withSecureSettings:(BOOL) isSecure;
++ (NSDictionary *)openrtbRequestExtension:(BOOL)isLocalCache;
+
+@end
 
 static NSString *const kPrebidMobileVersion = @"0.2.1";
+static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
+static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
+
+#if DEBUG
+static NSString *const kFSPPrebidServerUrl = @"https://dev-prebid.pub.network/openrtb2/auction";
+#else
+static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
+#endif
 
 @implementation PBServerRequestBuilder
 
@@ -60,13 +78,35 @@ static NSString *const kPrebidMobileVersion = @"0.2.1";
 - (NSDictionary *)openRTBRequestBodyForAdUnits:(NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID shouldCacheLocal:(BOOL) isLocalCache withSecureParams:(BOOL) isSecure{
     NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
     
+    if (!isLocalCache) {
+        requestDict[@"cache_markup"] = @(1);
+    }
     requestDict[@"id"] = [[NSUUID UUID] UUIDString];
     requestDict[@"source"] = [self openrtbSource];
     requestDict[@"app"] = [self openrtbApp:accountID];
     requestDict[@"device"] = [self openrtbDevice];
     requestDict[@"user"] = [self openrtbUser];
-    requestDict[@"imp"] = [self openrtbImpsFromAdUnits:adUnits withSecureSettings:isSecure];
-    requestDict[@"ext"] = [self openrtbRequestExtension:isLocalCache];
+    
+    if (_host == PBServerHostFreestar) {
+        Class<PBServerRequestBuilding> freestarBuilderClass = NSClassFromString(@"FSServerRequestBuilder");
+        if (freestarBuilderClass == nil) {
+            @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
+        }
+        requestDict[@"imp"] = [(Class)freestarBuilderClass openrtbImpsFromAdUnits:adUnits
+                                                               withSecureSettings:isSecure];
+    } else {
+        requestDict[@"imp"] = [self openrtbImpsFromAdUnits:adUnits withSecureSettings:isSecure];
+    }
+
+    if (_host == PBServerHostFreestar) {
+        Class<PBServerRequestBuilding> freestarBuilderClass = NSClassFromString(@"FSServerRequestBuilder");
+        if (freestarBuilderClass == nil) {
+            @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
+        }
+        requestDict[@"ext"] = [(Class)freestarBuilderClass openrtbRequestExtension:(BOOL)isLocalCache];
+    } else {
+        requestDict[@"ext"] = [self openrtbRequestExtension:isLocalCache];
+    }
     
 #ifndef DEBUG
     requestDict[@"test"] = @(TRUE);
@@ -118,6 +158,8 @@ static NSString *const kPrebidMobileVersion = @"0.2.1";
             imp[@"instl"] = @(1);
         }
         
+        NSMutableDictionary *prebidAdUnitExt = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *adUnitExt = [[NSMutableDictionary alloc] init];
         //to be used when openRTB doesnt support storedRequests
         /*NSMutableDictionary *placementDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@9924885,@"placementId", nil];
          
@@ -125,14 +167,10 @@ static NSString *const kPrebidMobileVersion = @"0.2.1";
          imp[@"ext"] = vendorDict;*/
         
         //to be used when openRTB supports storedRequests
-        NSMutableDictionary *prebidAdUnitExt = [[NSMutableDictionary alloc] init];
         prebidAdUnitExt[@"storedrequest"] = @{@"id" : adUnit.configId};
-        
-        NSMutableDictionary *adUnitExt = [[NSMutableDictionary alloc] init];
         adUnitExt[@"prebid"] = prebidAdUnitExt;
         
-        imp[@"ext"] = adUnitExt;
-        
+        imp[@"ext"] = adUnitExt;        
         
         [imps addObject:imp];
     }
@@ -179,7 +217,15 @@ static NSString *const kPrebidMobileVersion = @"0.2.1";
     
     NSString *deviceModel = PBSDeviceModel();
     if (deviceModel) {
+        #if DEBUG
+        if (_testMode == YES && [deviceDict[@"model"] isEqualToString:@"x86_64"]) {
+            deviceDict[@"model"] = @"iPhone10,6";
+        } else {
+            deviceDict[@"model"] = deviceModel;
+        }
+        #else
         deviceDict[@"model"] = deviceModel;
+        #endif
     }
     CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = [netinfo subscriberCellularProvider];
@@ -342,6 +388,34 @@ static NSString *const kPrebidMobileVersion = @"0.2.1";
     }
     
     return keywordString;
+}
+            
+- (NSURL*)hostURL {
+    NSURL *hostUrl = [self urlForHost:_host];
+    if (hostUrl == nil) {
+        @throw [PBException exceptionWithName:PBHostInvalidException];
+    }
+    return hostUrl;
+}
+            
+- (NSURL *)urlForHost:(PBServerHost)host {
+    NSURL *url;
+    switch (host) {
+        case PBServerHostAppNexus:
+            url = [NSURL URLWithString:kAPNPrebidServerUrl];
+            break;
+        case PBServerHostRubicon:
+            url = [NSURL URLWithString:kRPPrebidServerUrl];
+            break;
+        case PBServerHostFreestar:
+            url = [NSURL URLWithString:kFSPPrebidServerUrl];
+            break;
+        default:
+            url = nil;
+            break;
+    }
+    
+    return url;
 }
 
 @end

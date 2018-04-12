@@ -19,7 +19,7 @@
     "tid": "123"
   },
   "app": {
-    "bundle": "AppNexus.PrebidMobileDemo",
+    "bundle": "Freestar.PrebidMobileDemo",
     "ext": {
       "prebid": {
         "version": "0.1.1",

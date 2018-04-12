@@ -16,6 +16,7 @@
 #import "PrebidMobile.h"
 #import "PrebidURLProtocol.h"
 #import "PBLogging.h"
+#import "PBServerRequestBuilder.h"
 
 @implementation PrebidMobile
 
@@ -62,6 +63,11 @@
 
 + (void) shouldLoadOverSecureConnection:(BOOL) secureConnection {
     [[PBBidManager sharedInstance] loadOnSecureConnection:secureConnection];
+}
+
++ (void)setTestMode:(BOOL)testMode {
+    [[PBServerRequestBuilder sharedInstance] setTestMode:testMode];
+    [[PBBidManager sharedInstance] setTestMode:testMode];
 }
 
 @end

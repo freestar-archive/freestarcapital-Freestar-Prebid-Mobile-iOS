@@ -17,7 +17,7 @@
 #import <GoogleMobileAds/DFPInterstitial.h>
 #import "InterstitialTestsViewController.h"
 #import "MPInterstitialAdController.h"
-#import <PrebidMobile/PrebidMobile.h>
+#import <PrebidMobileFS/PrebidMobile.h>
 
 @interface InterstitialTestsViewController () <MPInterstitialAdControllerDelegate, GADInterstitialDelegate>
 

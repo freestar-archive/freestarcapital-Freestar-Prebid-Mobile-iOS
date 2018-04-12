@@ -24,4 +24,10 @@
  */
 - (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier andConfigId:(nonnull NSString *)configId;
 
+/**
+ * Initializes the Interstitial AdUnit with an identifier
+ * @param identifier : the identifier is a developer specific identity given for each of the ad unit created
+ */
+- (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier;
+
 @end

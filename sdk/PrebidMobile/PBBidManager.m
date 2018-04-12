@@ -24,7 +24,11 @@
 #import "PBLogging.h"
 #import "PBServerAdapter.h"
 
+#if DEBUG
+static NSTimeInterval const kBidExpiryTimerInterval = 20;
+#else
 static NSTimeInterval const kBidExpiryTimerInterval = 30;
+#endif
 
 @interface PBBidManager ()
 
@@ -61,7 +65,9 @@ static NSTimeInterval const kBidExpiryTimerInterval = 30;
 
 @end
 
-@implementation PBBidManager
+@implementation PBBidManager {
+    BOOL _timerStarted;
+}
 
 @synthesize delegate;
 
@@ -101,6 +107,13 @@ static dispatch_once_t onceToken;
           withAccountId:(nonnull NSString *)accountId
                withHost:(PBServerHost)host
      andPrimaryAdServer:(PBPrimaryAdServerType)adServer {
+    if (host == PBServerHostFreestar) {
+        Class fsReg = NSClassFromString(@"FSRegistration");
+        if (fsReg == nil) {
+            @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
+        }
+    }
+    
     if (_adUnits == nil) {
         _adUnits = [[NSMutableSet alloc] init];
     }
@@ -108,7 +121,9 @@ static dispatch_once_t onceToken;
     
     self.adServer = adServer;
     
-    _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host] ;
+    if (!_demandAdapter) {
+        _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host] ;
+    }
     
     if(adServer == PBPrimaryAdServerMoPub){
         //the adservers are cached locally by default except for MoPub hence this needs to be configured
@@ -238,6 +253,7 @@ static dispatch_once_t onceToken;
 }
 
 - (void)requestBidsForAdUnits:(NSArray<PBAdUnit *> *)adUnits {
+    PBLogDebug(@"sending bid request...");
     [_demandAdapter requestBidsWithAdUnits:adUnits withDelegate:[self delegate]];
 }
 
@@ -260,10 +276,15 @@ static dispatch_once_t onceToken;
 
 // Poll every 30 seconds to check for expired bids
 - (void)startPollingBidsExpiryTimer {
+    if (_timerStarted) {
+        return;
+    }
+    
     __weak PBBidManager *weakSelf = self;
     if ([[NSTimer class] respondsToSelector:@selector(pb_scheduledTimerWithTimeInterval:block:repeats:)]) {
         [NSTimer pb_scheduledTimerWithTimeInterval:kBidExpiryTimerInterval
                                              block:^{
+                                                 PBLogDebug(@"polling...");
                                                  PBBidManager *strongSelf = weakSelf;
                                                  [strongSelf checkForBidsExpired];
                                              }
@@ -276,11 +297,19 @@ static dispatch_once_t onceToken;
         NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
         NSMutableArray *adUnitsToRequest = [[NSMutableArray alloc] init];
         for (PBAdUnit *adUnit in _adUnits) {
+//            #if DEBUG
+//            NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
+//            if ((bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) || _testMode) {
+//                [adUnitsToRequest addObject:adUnit];
+//                [self resetAdUnit:adUnit];
+//            }
+//            #else
             NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
             if (bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) {
                 [adUnitsToRequest addObject:adUnit];
                 [self resetAdUnit:adUnit];
             }
+//            #endif
         }
         if ([adUnitsToRequest count] > 0) {
             [self requestBidsForAdUnits:adUnitsToRequest];

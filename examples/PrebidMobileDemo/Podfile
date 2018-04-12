@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target "PrebidMobileDemo" do
+  pod 'PrebidMobileFS', :git => 'https://github.com/freestarcapital/freestar-Prebid-mobile-ios.git'
+  pod 'FSCache', :git => 'https://github.com/freestarcapital/FSCache.git'
+
+  target "PrebidMobileDemoTests" do
+    inherit! :search_paths
+  end
+end

@@ -1,0 +1,30 @@
+PODS:
+  - FSCache (2.2.0)
+  - PrebidMobileFS (0.2.1):
+    - FSCache
+
+DEPENDENCIES:
+  - FSCache (from `https://github.com/freestarcapital/FSCache.git`)
+  - PrebidMobileFS (from `https://github.com/freestarcapital/freestar-Prebid-mobile-ios.git`)
+
+EXTERNAL SOURCES:
+  FSCache:
+    :git: https://github.com/freestarcapital/FSCache.git
+  PrebidMobileFS:
+    :git: https://github.com/freestarcapital/freestar-Prebid-mobile-ios.git
+
+CHECKOUT OPTIONS:
+  FSCache:
+    :commit: 19fafec448c43a7e596c83a9087f78cda41bc3d2
+    :git: https://github.com/freestarcapital/FSCache.git
+  PrebidMobileFS:
+    :commit: eefdfcdd84e7fd6c25b493ebfd0ce8301c5c6afc
+    :git: https://github.com/freestarcapital/freestar-Prebid-mobile-ios.git
+
+SPEC CHECKSUMS:
+  FSCache: 4d3bcbf5950894eecdcdc7d59a576b4fd274d017
+  PrebidMobileFS: 19a5921bbd067e09959bbea20f24903e5178e42e
+
+PODFILE CHECKSUM: bdee530e8e48fa742ab551da721d6f854822add1
+
+COCOAPODS: 1.5.0

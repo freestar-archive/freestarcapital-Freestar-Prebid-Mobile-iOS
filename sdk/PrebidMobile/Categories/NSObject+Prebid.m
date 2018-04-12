@@ -19,6 +19,7 @@
 #import "NSObject+Prebid.h"
 #import "NSString+Extension.h"
 #import <objc/runtime.h>
+#import "PBConstants.h"
 
 @implementation NSObject (Prebid)
 
@@ -69,26 +70,49 @@
 // dfp ad slot
 - (id)pb_requestParameters {
     __block id requestParameters = [self pb_requestParameters];
-
+    
     SEL adEventDelegateSel = NSSelectorFromString(@"adEventDelegate");
     if ([self respondsToSelector:adEventDelegateSel]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         id adEventDelegate = [self performSelector:adEventDelegateSel];
-        NSDictionary<NSString *, NSString *> *keywordsPairs;
-
+        NSMutableDictionary<NSString *, NSString *> *keywordsPairs;
+        
         SEL getPb_identifier = NSSelectorFromString(@"pb_identifier");
         if ([adEventDelegate respondsToSelector:getPb_identifier]) {
             PBAdUnit *adUnit = (PBAdUnit *)[adEventDelegate performSelector:getPb_identifier];
 #pragma clang diagnostic pop
-
+            
             if (adUnit) {
-                keywordsPairs = [[PBBidManager sharedInstance] keywordsForWinningBidForAdUnit:adUnit];
-                requestParameters = [[PBBidManager sharedInstance] addPrebidParameters:requestParameters withKeywords:keywordsPairs];
+                keywordsPairs = [[[PBBidManager sharedInstance] keywordsForWinningBidForAdUnit:adUnit] mutableCopy];
+                if (keywordsPairs[@"hb_pb"] != nil && ![keywordsPairs[@"hb_pb"] isEqualToString:@"0.00"]) {
+                    // for testing line item delivery
+//                    keywordsPairs[@"hb_pb"] = @"20.00";
+//                    keywordsPairs[@"hb_format"] = @"display";
+                    [self sendKeywordStatusNotification];
+                } else if ([keywordsPairs[@"hb_pb"] isEqualToString:@"0.00"]) {
+                    // suppress zero cent bids
+                    NSArray<NSString*> *allKeys = [keywordsPairs allKeys];
+                    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *string, NSDictionary *bind) {
+                        return [string hasPrefix:@"hb_"];
+                    }];
+                    NSArray<NSString*> *filteredKeys = [allKeys filteredArrayUsingPredicate:predicate];
+                    [keywordsPairs removeObjectsForKeys:filteredKeys];
+                }
+                requestParameters = [[PBBidManager sharedInstance] addPrebidParameters:requestParameters withKeywords:[keywordsPairs copy]];
             }
         }
     }
     return requestParameters;
+}
+
+- (void)sendKeywordStatusNotification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:PBKeywordsStatusNotification
+                                          object:nil
+                                        userInfo:@{ @"status" : @(1) }];
+    });
 }
 
 // mopub banner

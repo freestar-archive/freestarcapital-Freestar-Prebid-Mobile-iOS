@@ -22,8 +22,11 @@
 
 @end
 
+#if DEBUG
+static NSTimeInterval const kDefaultBidExpiryTime = 60;
+#else
 static NSTimeInterval const kDefaultBidExpiryTime = 270;
-
+#endif
 
 @implementation PBBidResponse
 

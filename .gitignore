@@ -109,3 +109,9 @@ xcuserdata/
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 # Pods/
+examples/PrebidMobileDemo/Pods
+sdk/Pods
+examples/PrebidMobileDemo/PrebidMobileDemo.xcodeproj/project.xcworkspace/xcshareddata
+sdk/PrebidMobile.xcworkspace/xcshareddata
+sdk/PrebidMobile.xcodeproj/project.xcworkspace/xcshareddata
+examples/PrebidMobileDemo/PrebidMobileDemo.xcworkspace/xcshareddata

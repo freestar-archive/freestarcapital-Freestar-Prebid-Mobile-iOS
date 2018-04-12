@@ -14,7 +14,7 @@
     },
     "prebid_version":"0.21.0-pre",
     "app":{
-        "bundle":"AppNexus.PrebidMobileDemo"
+        "bundle":"Freestar.PrebidMobileDemo"
     },
     "ad_units":[
                 {

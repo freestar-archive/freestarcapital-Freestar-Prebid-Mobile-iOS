@@ -35,7 +35,7 @@
  * @param accountId : Prebid server accountId
  * @param host : Prebid server host
  * @param adServer : Primary ad server - needed to determine optimal bid caching
- */
+ */
 + (void)registerAdUnits:(nonnull NSArray<PBAdUnit *> *)adUnits
           withAccountId:(nonnull NSString *)accountId
                withHost:(PBServerHost)host
@@ -49,6 +49,6 @@
                completionHandler:(nullable void (^)(void))handler;
 
 + (void) shouldLoadOverSecureConnection:(BOOL) secureConnection;
-
++ (void)setTestMode:(BOOL)testMode;
 
 @end

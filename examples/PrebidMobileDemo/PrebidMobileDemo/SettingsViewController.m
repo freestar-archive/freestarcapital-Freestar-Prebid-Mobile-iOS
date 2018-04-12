@@ -19,10 +19,10 @@
 #import "SettingsViewController.h"
 #import "VideoTestsViewController.h"
 
-#import <PrebidMobile/PBBannerAdUnit.h>
-#import <PrebidMobile/PBException.h>
-#import <PrebidMobile/PBInterstitialAdUnit.h>
-#import <PrebidMobile/PrebidMobile.h>
+#import <PrebidMobileFS/PBBannerAdUnit.h>
+#import <PrebidMobileFS/PBException.h>
+#import <PrebidMobileFS/PBInterstitialAdUnit.h>
+#import <PrebidMobileFS/PrebidMobile.h>
 
 static NSString *const kSeeAdButtonTitle = @"See Ad";
 static NSString *const kAdSettingsTableViewReuseId = @"AdSettingsTableItem";
@@ -90,6 +90,7 @@ static CGFloat const kRightMargin = 15;
 
 - (void)previewAdButtonClicked:(id)sender {
     UISegmentedControl *adServerSegControl = [self.generalSettingsFields objectForKey:kAdServer];
+    [self adServerClicked:adServerSegControl];
     UISegmentedControl *adTypeSegControl = [self.generalSettingsFields objectForKey:kAdType];
     UITextField *placementIdField = [self.generalSettingsFields objectForKey:kPlacementId];
     UITextField *sizeIdField = [self.generalSettingsFields objectForKey:kSize];
@@ -128,20 +129,14 @@ static CGFloat const kRightMargin = 15;
 }
 
 - (BOOL)setupPrebidAndRegisterAdUnitsWithAdServer:(PBPrimaryAdServerType)adServer {
-    @try {
-        PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:kAdUnit1Id andConfigId:kAdUnit1ConfigId];
-        PBInterstitialAdUnit *__nullable adUnit2 = [[PBInterstitialAdUnit alloc] initWithAdUnitIdentifier:kAdUnit2Id andConfigId:kAdUnit2ConfigId];
-        [adUnit1 addSize:CGSizeMake(300, 250)];
-        
-        [PrebidMobile shouldLoadOverSecureConnection:YES];
+    PBBannerAdUnit *__nullable adUnit1 = [[PBBannerAdUnit alloc] initWithAdUnitIdentifier:kAdUnit1Id andConfigId:kAdUnit1ConfigId];
+    PBInterstitialAdUnit *__nullable adUnit2 = [[PBInterstitialAdUnit alloc] initWithAdUnitIdentifier:kAdUnit2Id andConfigId:kAdUnit2ConfigId];
+    [adUnit1 addSize:CGSizeMake(300, 250)];
+    
+    [PrebidMobile shouldLoadOverSecureConnection:YES];
 
-        [PrebidMobile registerAdUnits:@[adUnit1, adUnit2] withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:adServer];
-
-    } @catch (PBException *ex) {
-        NSLog(@"%@",[ex reason]);
-    } @finally {
-        return YES;
-    }
+    [PrebidMobile registerAdUnits:@[adUnit1, adUnit2] withAccountId:kAccountId withHost:kPBServerHost andPrimaryAdServer:adServer];
+    return YES;
 }
 
 #pragma mark UITableViewDataSource methods

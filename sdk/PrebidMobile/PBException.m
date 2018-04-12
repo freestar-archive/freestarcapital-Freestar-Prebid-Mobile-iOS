@@ -34,6 +34,9 @@
         case PBHostInvalidException:
             return ([super exceptionWithName:@"PBHostInvalidException" reason:@"Prebid server host not valid." userInfo:nil]);
             break;
+        case PBFreestarMissingFrameworkException:
+            return ([super exceptionWithName:@"PBFreestarMissingFrameworkException" reason:@"Freestar Ad SDK framework missing." userInfo:nil]);
+            break;
         default:
             return ([super exceptionWithName:@"PrebidException" reason:@"" userInfo:nil]);
             break;
