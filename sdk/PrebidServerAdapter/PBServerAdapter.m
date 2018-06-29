@@ -68,21 +68,21 @@ static int const kBatchCount = 10;
 
 - (void)requestBidsWithAdUnits:(nullable NSArray<PBAdUnit *> *)adUnits
                   withDelegate:(nonnull id<PBBidResponseDelegate>)delegate {
-
+    
     [[PBServerRequestBuilder sharedInstance] setHost:_host];
-
+    
     //batch the adunits to group of 10 & send to the server instead of this bulk request
     int adUnitsRemaining = (int)[adUnits count];
     int j = 0;
-
+    
     while(adUnitsRemaining) {
         NSRange range = NSMakeRange(j, MIN(kBatchCount, adUnitsRemaining));
         NSArray<PBAdUnit *> *subAdUnitArray = [adUnits subarrayWithRange:range];
         adUnitsRemaining-=range.length;
         j+=range.length;
-
+        
         NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:subAdUnitArray withAccountId:self.accountId withSecureParams:self.isSecure];
-
+        
         [[PBServerFetcher sharedInstance] makeBidRequest:request withCompletionHandler:^(NSDictionary *adUnitToBidsMap, NSError *error) {
             if (error) {
                 [delegate didCompleteWithError:error];
@@ -91,71 +91,15 @@ static int const kBatchCount = 10;
             for (NSString *adUnitId in [adUnitToBidsMap allKeys]) {
                 NSArray *bidsArray = (NSArray *)[adUnitToBidsMap objectForKey:adUnitId];
                 NSMutableArray *bidResponsesArray = [[NSMutableArray alloc] init];
-                NSMutableArray * contentsToCache = [[NSMutableArray alloc] init];
                 for (NSDictionary *bid in bidsArray) {
-                    NSString *escapedBid = [self escapeJsonString:[self jsonStringFromDictionary:bid]];
-                    [contentsToCache addObject:escapedBid];
+                    PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:bid[@"ext"][@"prebid"][@"targeting"]];
+                    PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
+                    [bidResponsesArray addObject:bidResponse];
                 }
-
-                [[PrebidCache globalCache] cacheContents:contentsToCache forAdserver:self.primaryAdServer withCompletionBlock:^(NSArray *cacheIds) {
-
-                    for (int i = 0; i< bidsArray.count; i++) {
-                        NSMutableDictionary *adServerTargetingCopy = [bidsArray[i][@"ext"][@"prebid"][@"targeting"] mutableCopy];
-                        if (i == 0) {
-                            NSString *cacheId = cacheIds[i];
-                            adServerTargetingCopy[kAPNAdServerCacheIdKey] = cacheId;
-                        }
-                        NSString *bidderCacheId = cacheIds[i];
-                        NSString *cacheIdkey =[ NSString stringWithFormat:@"%@_%@", kAPNAdServerCacheIdKey, bidsArray[i][@"seat"]];
-                        cacheIdkey = cacheIdkey.length > 20 ? [cacheIdkey substringToIndex:20] : cacheIdkey;
-                        adServerTargetingCopy[cacheIdkey] = bidderCacheId;
-                        PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:adServerTargetingCopy];
-                        PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
-                        [bidResponsesArray addObject:bidResponse];
-                    }
-                    [delegate didReceiveSuccessResponse:bidResponsesArray];;
-                }];
+                [delegate didReceiveSuccessResponse:bidResponsesArray];;
             }
         }];
-
     }
-}
-
-- (NSString *)jsonStringFromDictionary: (NSDictionary *) dict
-{
-    //strip all the extra lines in the creative before converting to escaped json string - start
-    NSMutableDictionary *copiedDict = [[NSMutableDictionary alloc] initWithDictionary:dict];
-
-    NSString *copiedAdm = (NSString *)copiedDict[@"adm"];
-
-    NSString *strippedTextLine = [copiedAdm stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-
-    copiedDict[@"adm"] = strippedTextLine;
-    //end - do not remove this
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:copiedDict
-                                                       options:0
-                                                         error:&error];
-    if (!jsonData) {
-        NSLog(@"%s: error: %@", __func__, error.localizedDescription);
-        return @"{}";
-    } else {
-        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    }
-}
-
-- (NSString *) escapeJsonString: (NSString *) aString
-{
-    NSMutableString *s = [NSMutableString stringWithString:aString];
-
-    [s replaceOccurrencesOfString:@"\"" withString:@"\\\"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"/" withString:@"\\/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"\n" withString:@"\\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"\b" withString:@"\\b" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"\f" withString:@"\\f" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"\r" withString:@"\\r" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    [s replaceOccurrencesOfString:@"\t" withString:@"\\t" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
-    return [NSString stringWithString:s];
 }
 
 @end
