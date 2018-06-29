@@ -98,7 +98,7 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
         if (freestarBuilderClass == nil) {
             @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
         }
-        requestDict[@"ext"] = [(Class)freestarBuilderClass openrtbRequestExtension:YES];
+        requestDict[@"ext"] = [(Class)freestarBuilderClass openrtbRequestExtension:NO];
     } else {
         requestDict[@"ext"] = [self openrtbRequestExtension];
     }
