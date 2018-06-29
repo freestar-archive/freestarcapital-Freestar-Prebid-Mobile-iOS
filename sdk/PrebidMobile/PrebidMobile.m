@@ -14,22 +14,15 @@
  */
 
 #import "PrebidMobile.h"
-#import "PrebidURLProtocol.h"
 #import "PBLogging.h"
 #import "PBServerRequestBuilder.h"
 
 @implementation PrebidMobile
 
 + (void)registerAdUnits:(nonnull NSArray<PBAdUnit *> *)adUnits
-          withAccountId:(nonnull NSString *)accountId {
-    [[PBBidManager sharedInstance] registerAdUnits:adUnits withAccountId:accountId];
-}
-
-+ (void)registerAdUnits:(nonnull NSArray<PBAdUnit *> *)adUnits
           withAccountId:(nonnull NSString *)accountId
                withHost:(PBServerHost)host
      andPrimaryAdServer:(PBPrimaryAdServerType)adServer {
-    [NSURLProtocol registerClass:[PrebidURLProtocol class]];
     [[PBBidManager sharedInstance] registerAdUnits:adUnits withAccountId:accountId withHost:host andPrimaryAdServer:adServer];
 }
 

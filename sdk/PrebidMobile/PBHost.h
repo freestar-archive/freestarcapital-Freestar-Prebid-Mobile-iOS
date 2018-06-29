@@ -21,7 +21,7 @@
 typedef NS_ENUM(NSUInteger, PBServerHost) {
     PBServerHostAppNexus = 1,
     PBServerHostRubicon,
-    PBServerHostFreestar
+    PBServerHostFreestar    
 };
 
 @interface PBHost : NSObject

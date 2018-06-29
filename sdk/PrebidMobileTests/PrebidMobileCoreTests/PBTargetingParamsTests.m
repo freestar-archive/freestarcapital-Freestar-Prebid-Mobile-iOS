@@ -93,4 +93,19 @@
     XCTAssertNil([[PBTargetingParams sharedInstance] userKeywords]);
 }
 
+-(void) testGDPRConsentString {
+    [[PBTargetingParams sharedInstance] setGdprConsentString:@"testconsent"];
+    XCTAssertNotNil([[PBTargetingParams sharedInstance] gdprConsentString]);
+    NSString *value = [[PBTargetingParams sharedInstance] gdprConsentString];
+    
+    XCTAssertTrue([value isEqualToString:@"testconsent"]);
+}
+
+-(void) testGDPREnable {
+    [[PBTargetingParams sharedInstance] setSubjectToGDPR:FALSE];
+    BOOL testGDPR = [[PBTargetingParams sharedInstance] subjectToGDPR];
+    
+    XCTAssertFalse(testGDPR);
+}
+
 @end

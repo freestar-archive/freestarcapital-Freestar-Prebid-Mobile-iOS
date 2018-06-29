@@ -32,15 +32,10 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.2.1";
+static NSString *const kPrebidMobileVersion = @"0.4.1";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
-
-#if DEBUG
-static NSString *const kFSPPrebidServerUrl = @"https://dev-prebid.pub.network/openrtb2/auction";
-#else
 static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
-#endif
 
 @implementation PBServerRequestBuilder
 
@@ -56,13 +51,13 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     return _sharedInstance;
 }
 
-- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID shouldCacheLocal:(BOOL) isLocal withSecureParams:(BOOL) isSecure {
+- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID withSecureParams:(BOOL) isSecure {
     
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:self.hostURL
                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                                    timeoutInterval:1000];
     [mutableRequest setHTTPMethod:@"POST"];
-    NSDictionary *requestBody = [self openRTBRequestBodyForAdUnits:adUnits withAccountId:accountID shouldCacheLocal:isLocal withSecureParams:isSecure];
+    NSDictionary *requestBody = [self openRTBRequestBodyForAdUnits:adUnits withAccountId:accountID withSecureParams:isSecure];
     NSError *error;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:requestBody
                                                        options:kNilOptions
@@ -75,16 +70,16 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     }
 }
 
-- (NSDictionary *)openRTBRequestBodyForAdUnits:(NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID shouldCacheLocal:(BOOL) isLocalCache withSecureParams:(BOOL) isSecure{
+- (NSDictionary *)openRTBRequestBodyForAdUnits:(NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID withSecureParams:(BOOL) isSecure{
     NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
     
-    if (!isLocalCache) {
-        requestDict[@"cache_markup"] = @(1);
-    }
     requestDict[@"id"] = [[NSUUID UUID] UUIDString];
     requestDict[@"source"] = [self openrtbSource];
     requestDict[@"app"] = [self openrtbApp:accountID];
     requestDict[@"device"] = [self openrtbDevice];
+    if([[PBTargetingParams sharedInstance] isGDPREnabled] == YES){
+        requestDict[@"regs"] = [self openrtbRegs];
+    }
     requestDict[@"user"] = [self openrtbUser];
     
     if (_host == PBServerHostFreestar) {
@@ -103,14 +98,10 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
         if (freestarBuilderClass == nil) {
             @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
         }
-        requestDict[@"ext"] = [(Class)freestarBuilderClass openrtbRequestExtension:(BOOL)isLocalCache];
+        requestDict[@"ext"] = [(Class)freestarBuilderClass openrtbRequestExtension:YES];
     } else {
-        requestDict[@"ext"] = [self openrtbRequestExtension:isLocalCache];
+        requestDict[@"ext"] = [self openrtbRequestExtension];
     }
-    
-#ifndef DEBUG
-    requestDict[@"test"] = @(TRUE);
-#endif
     
     return [requestDict copy];
 }
@@ -123,12 +114,9 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     return sourceDict;
 }
 
-- (NSDictionary *)openrtbRequestExtension:(BOOL) isLocalCache {
+- (NSDictionary *)openrtbRequestExtension
+{
     NSMutableDictionary *requestPrebidExt = [[NSMutableDictionary alloc] init];
-    
-    if (isLocalCache == FALSE) {
-        requestPrebidExt[@"cache"] = @{@"bids" : [[NSMutableDictionary alloc] init]};
-    }
     requestPrebidExt[@"targeting"] = @{@"lengthmax" : @(20), @"pricegranularity":@"medium"};
     
     NSMutableDictionary *requestExt = [[NSMutableDictionary alloc] init];
@@ -306,6 +294,17 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     }
 }
 
+-(NSDictionary *) openrtbRegs {
+    
+    NSMutableDictionary *regsDict = [[NSMutableDictionary alloc] init];
+    
+    BOOL gdpr = [[PBTargetingParams sharedInstance] subjectToGDPR];
+    
+    regsDict[@"ext"] = @{@"gdpr" : @(@(gdpr).integerValue)};
+    
+    return regsDict;
+}
+
 // OpenRTB 2.5 Object: User in section 3.2.20
 - (NSDictionary *)openrtbUser {
     NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
@@ -334,14 +333,19 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     
     NSDictionary<NSString *, NSArray *> * targetingParams = [[PBTargetingParams sharedInstance] userKeywords];
     
-    if(targetingParams.count <= 0){
-        targetingParams = [[PBTargetingParams sharedInstance] customKeywords];
-    }
-    
     NSString *keywordString = [self fetchKeywordsString:targetingParams];
     
     if(![keywordString isEqualToString:@""]){
         userDict[@"keywords"] = keywordString;
+    }
+    
+    if([[PBTargetingParams sharedInstance] isGDPREnabled] == YES){
+    
+        NSString *consentString = [[PBTargetingParams sharedInstance] gdprConsentString];
+        if(consentString != nil){
+            userDict[@"ext"] = @{@"consent" : consentString};
+        }
+        
     }
     return [userDict copy];
 }
@@ -389,6 +393,10 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     
     return keywordString;
 }
+
+- (void)setHostURL:(NSURL *)hostURL {    
+    _host = [self hostForURL:hostURL];
+}
             
 - (NSURL*)hostURL {
     NSURL *hostUrl = [self urlForHost:_host];
@@ -416,6 +424,19 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     }
     
     return url;
+}
+
+- (PBServerHost)hostForURL:(NSURL*)url {
+    if ([url isEqual:[NSURL URLWithString:kAPNPrebidServerUrl]]) {
+        return PBServerHostAppNexus;
+    }
+    if ([url isEqual:[NSURL URLWithString:kRPPrebidServerUrl]]) {
+        return PBServerHostRubicon;
+    }
+    if ([url isEqual:[NSURL URLWithString:kFSPPrebidServerUrl]]) {
+        return PBServerHostFreestar;
+    }
+    return PBServerHostFreestar;
 }
 
 @end

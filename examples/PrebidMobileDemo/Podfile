@@ -3,8 +3,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target "PrebidMobileDemo" do
-  pod 'PrebidMobileFS', :git => 'https://github.com/freestarcapital/freestar-Prebid-mobile-ios.git'
-  pod 'FSCache', :git => 'https://github.com/freestarcapital/FSCache.git'
+  pod 'PrebidMobileFS', :git => 'https://github.com/freestarcapital/Freestar-Prebid-Mobile-iOS.git'
 
   target "PrebidMobileDemoTests" do
     inherit! :search_paths
