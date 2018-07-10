@@ -1,11 +1,11 @@
 /*   Copyright 2017 Prebid.org, Inc.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -88,21 +88,6 @@ static dispatch_once_t onceToken;
     onceToken = 0;
     sharedInstance = nil;
 }
-
-- (void)registerAdUnits:(nonnull NSArray<PBAdUnit *> *)adUnits
-          withAccountId:(nonnull NSString *)accountId {
-    if (_adUnits == nil) {
-        _adUnits = [[NSMutableSet alloc] init];
-    }
-    _bidsMap = [[NSMutableDictionary alloc] init];
-    _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId];
-    for (id adUnit in adUnits) {
-        [self registerAdUnit:adUnit];
-    }
-    [self startPollingBidsExpiryTimer];
-    [self requestBidsForAdUnits:adUnits];
-}
-
 - (void)registerAdUnits:(nonnull NSArray<PBAdUnit *> *)adUnits
           withAccountId:(nonnull NSString *)accountId
                withHost:(PBServerHost)host
@@ -113,23 +98,16 @@ static dispatch_once_t onceToken;
             @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
         }
     }
-    
+
     if (_adUnits == nil) {
         _adUnits = [[NSMutableSet alloc] init];
     }
     _bidsMap = [[NSMutableDictionary alloc] init];
-    
+
     self.adServer = adServer;
-    
-    if (!_demandAdapter) {
-        _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host] ;
-    }
-    
-    if(adServer == PBPrimaryAdServerMoPub){
-        //the adservers are cached locally by default except for MoPub hence this needs to be configured
-       _demandAdapter.shouldCacheLocal = FALSE;
-    }
-    
+
+    _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host andAdServer:adServer] ;
+
     for (id adUnit in adUnits) {
         [self registerAdUnit:adUnit];
     }
@@ -235,7 +213,7 @@ static dispatch_once_t onceToken;
     if (adUnit.adSizes == nil && adUnit.adType == PBAdUnitTypeBanner) {
         @throw [PBException exceptionWithName:PBAdUnitNoSizeException];
     }
-    
+
     // Check if ad unit already exists, if so remove it
     NSMutableArray *adUnitsToRemove = [[NSMutableArray alloc] init];
     for (PBAdUnit *existingAdUnit in _adUnits) {
@@ -279,7 +257,7 @@ static dispatch_once_t onceToken;
     if (_timerStarted) {
         return;
     }
-    
+
     __weak PBBidManager *weakSelf = self;
     if ([[NSTimer class] respondsToSelector:@selector(pb_scheduledTimerWithTimeInterval:block:repeats:)]) {
         [NSTimer pb_scheduledTimerWithTimeInterval:kBidExpiryTimerInterval
@@ -336,9 +314,12 @@ static dispatch_once_t onceToken;
 }
 
 - (void)setBidOnAdObject:(NSObject *)adObject {
-    [self clearBidOnAdObject:adObject];
+
 
     if (adObject.pb_identifier) {
+
+        [self clearBidOnAdObject:adObject];
+
         NSMutableArray *mutableKeywords;
         NSString *keywords = @"";
         SEL getKeywords = NSSelectorFromString(@"keywords");
@@ -376,6 +357,10 @@ static dispatch_once_t onceToken;
     }
 }
 
+///
+// bids should not be cleared n set to nil as setting to nil will remove all publisher keywords too
+// so just remove all bids thats related to prebid... Prebid targeting starts as "hb_"
+///
 - (void)clearBidOnAdObject:(NSObject *)adObject {
     NSString *keywordsString = @"";
     SEL getKeywords = NSSelectorFromString(@"keywords");
@@ -385,16 +370,15 @@ static dispatch_once_t onceToken;
         keywordsString = (NSString *)[adObject performSelector:getKeywords];
     }
     if (keywordsString.length) {
+
         NSArray *keywords = [keywordsString componentsSeparatedByString:@","];
         NSMutableArray *mutableKeywords = [keywords mutableCopy];
         [keywords enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL *stop) {
-            for (NSString *reservedKey in [PBKeywordsManager reservedKeys]) {
-                if ([keyword hasPrefix:reservedKey]) {
-                    [mutableKeywords removeObject:keyword];
-                    return;
-                }
+            if ([keyword hasPrefix:@"hb_"]) {
+                [mutableKeywords removeObject:keyword];
             }
         }];
+
         SEL setKeywords = NSSelectorFromString(@"setKeywords:");
         if ([adObject respondsToSelector:setKeywords]) {
             [adObject performSelector:setKeywords withObject:[mutableKeywords componentsJoinedByString:@","]];

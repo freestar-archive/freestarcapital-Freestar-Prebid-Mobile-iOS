@@ -86,9 +86,8 @@
             if (adUnit) {
                 keywordsPairs = [[[PBBidManager sharedInstance] keywordsForWinningBidForAdUnit:adUnit] mutableCopy];
                 if (keywordsPairs[@"hb_pb"] != nil && ![keywordsPairs[@"hb_pb"] isEqualToString:@"0.00"]) {
-                    // for testing line item delivery
-//                    keywordsPairs[@"hb_pb"] = @"20.00";
-//                    keywordsPairs[@"hb_format"] = @"display";
+                    // Freestar line item delivery
+                    keywordsPairs[@"fs_app"] = @"true";
                     [self sendKeywordStatusNotification];
                 } else if ([keywordsPairs[@"hb_pb"] isEqualToString:@"0.00"]) {
                     // suppress zero cent bids

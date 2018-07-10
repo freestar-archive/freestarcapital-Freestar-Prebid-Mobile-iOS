@@ -1,11 +1,11 @@
 /*   Copyright 2017 Prebid.org, Inc.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,12 +29,16 @@
 
 static NSString *const kAPNAdServerCacheIdKey = @"hb_cache_id";
 
-static NSTimeInterval const kAdTimeoutInterval = 360;
+static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
+static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
+static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
 static int const kBatchCount = 10;
 
 @interface PBServerAdapter ()
 
 @property (nonatomic, strong) NSString *accountId;
+
+@property (assign) PBPrimaryAdServerType primaryAdServer;
 
 @property (nonatomic, assign, readwrite) PBServerHost host;
 
@@ -42,26 +46,22 @@ static int const kBatchCount = 10;
 
 @implementation PBServerAdapter
 
-- (nonnull instancetype)initWithAccountId:(nonnull NSString *)accountId {
+- (nonnull instancetype)initWithAccountId:(nonnull NSString *)accountId andAdServer:(PBPrimaryAdServerType) adServer{
     if (self = [super init]) {
         _accountId = accountId;
         _isSecure = TRUE;
-        _shouldCacheLocal = TRUE;
         _host = PBServerHostAppNexus;
+        _primaryAdServer = adServer;
     }
     return self;
 }
 
-- (nonnull instancetype)initWithAccountId:(nonnull NSString *)accountId andHost:(PBServerHost) host {
+- (nonnull instancetype)initWithAccountId:(nonnull NSString *)accountId andHost:(PBServerHost) host andAdServer:(PBPrimaryAdServerType) adServer{
     if (self = [super init]) {
         _accountId = accountId;
         _isSecure = TRUE;
-        if (host == PBServerHostFreestar) {
-            _shouldCacheLocal = FALSE;
-        } else {
-            _shouldCacheLocal = TRUE;
-        }
         _host = host;
+        _primaryAdServer = adServer;
     }
     return self;
 }
@@ -81,13 +81,9 @@ static int const kBatchCount = 10;
         adUnitsRemaining-=range.length;
         j+=range.length;
         
-        NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:subAdUnitArray withAccountId:self.accountId shouldCacheLocal:self.shouldCacheLocal withSecureParams:self.isSecure];
-        
-        __weak __typeof__(self) weakSelf = self;
+        NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:subAdUnitArray withAccountId:self.accountId withSecureParams:self.isSecure];
         
         [[PBServerFetcher sharedInstance] makeBidRequest:request withCompletionHandler:^(NSDictionary *adUnitToBidsMap, NSError *error) {
-            
-            __typeof__(self) strongSelf = weakSelf;
             if (error) {
                 [delegate didCompleteWithError:error];
                 return;
@@ -97,29 +93,12 @@ static int const kBatchCount = 10;
                 NSMutableArray *bidResponsesArray = [[NSMutableArray alloc] init];
                 for (NSDictionary *bid in bidsArray) {
                     PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:bid[@"ext"][@"prebid"][@"targeting"]];
-                    if (strongSelf.shouldCacheLocal == TRUE) {
-                        NSString *cacheId = [[NSUUID UUID] UUIDString];
-                        NSMutableDictionary *bidCopy = [bid mutableCopy];
-                        NSMutableDictionary *adServerTargetingCopy = [bidCopy[@"ext"][@"prebid"][@"targeting"] mutableCopy];
-                        if([adServerTargetingCopy valueForKey:kAPNAdServerCacheIdKey] == nil){
-                            adServerTargetingCopy[kAPNAdServerCacheIdKey] = cacheId;
-                        }
-                        NSMutableDictionary *extCopy = [bidCopy[@"ext"] mutableCopy];
-                        NSMutableDictionary *prebidExtCopy = [bidCopy[@"ext"][@"prebid"] mutableCopy];
-                        prebidExtCopy[@"targeting"] = adServerTargetingCopy;
-                        extCopy[@"prebid"] = prebidExtCopy;
-                        bidCopy[@"ext"] = extCopy;
-                        [[PrebidCache globalCache] setObject:bidCopy forKey:cacheId withTimeoutInterval:kAdTimeoutInterval];
-                        
-                        bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:adServerTargetingCopy];
-                    }
-                    PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", bidResponse.customKeywords, adUnitId);
+                    PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
                     [bidResponsesArray addObject:bidResponse];
                 }
-                [delegate didReceiveSuccessResponse:bidResponsesArray];
+                [delegate didReceiveSuccessResponse:bidResponsesArray];;
             }
         }];
-        
     }
 }
 

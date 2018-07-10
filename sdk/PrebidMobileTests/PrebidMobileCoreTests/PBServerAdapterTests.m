@@ -19,16 +19,59 @@
 #import "PBServerAdapter.h"
 #import "PBException.h"
 #import "PBHost.h"
+#import "PBBidResponse.h"
 
 static NSString *const kPrebidMobileVersion = @"0.1.1";
-static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/auction";
-static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/auction";
+static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
+static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
+static NSString *testResponse = @"";
 
+@interface PBTestProtocol: NSURLProtocol
+@end
+
+@implementation PBTestProtocol
++ (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    if ([NSURLProtocol propertyForKey:@"PrebidURLProtocolHandledKey" inRequest:request]) {
+        return NO;
+    }
+    if ([request.URL.absoluteString containsString:kAPNPrebidServerUrl]) {
+        return YES;
+    }
+    return NO;
+}
+
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+    return request;
+}
+
++ (BOOL)requestIsCacheEquivalent:(NSURLRequest *)a toRequest:(NSURLRequest *)b {
+    return [super requestIsCacheEquivalent:a toRequest:b];
+}
+
+- (void)startLoading {
+    NSMutableURLRequest *newRequest = [self.request mutableCopy];
+    [NSURLProtocol setProperty:@YES forKey:@"PrebidURLProtocolHandledKey" inRequest:newRequest];
+
+    NSData *data = [testResponse dataUsingEncoding:NSUTF8StringEncoding];
+    if (data) {
+        NSURLResponse* response = [[NSHTTPURLResponse alloc] initWithURL:[self.request URL] statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:@{@"Access-Control-Allow-Origin": kAPNPrebidServerUrl, @"Access-Control-Allow-Credentials" : @"true"}];
+                [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                [self.client URLProtocol:self didLoadData:data];
+                [self.client URLProtocolDidFinishLoading:self];
+    }
+
+}
+
+- (void)stopLoading
+{
+    
+}
+
+@end
 
 @interface PBServerAdapterTests : XCTestCase<PBBidResponseDelegate>
-
+@property void (^completionHandler)(NSArray *bids);
 @property (nonatomic, strong) NSArray *adUnits;
-
 @end
 
 @implementation PBServerAdapterTests
@@ -45,16 +88,28 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
     [super tearDown];
 }
 
+- (void)didCompleteWithError:(nonnull NSError *)error {
+    if (self.completionHandler) {
+        self.completionHandler(nil);
+    }
+
+}
+
+- (void)didReceiveSuccessResponse:(nonnull NSArray<PBBidResponse *> *)bid {
+    if (self.completionHandler) {
+         self.completionHandler(bid);
+    }
+}
 
 - (void)testRequestBodyForAdUnit {
     
-    [[PBTargetingParams sharedInstance] setCustomTargeting:@"targeting1" withValue:@"value1"];
-    [[PBTargetingParams sharedInstance] setCustomTargeting:@"targeting2" withValue:@"value2"];
+    [[PBTargetingParams sharedInstance] setUserKeywords:@"targeting1" withValue:@"value1"];
+    [[PBTargetingParams sharedInstance] setUserKeywords:@"targeting2" withValue:@"value2"];
     
     NSURL *hostURL = [NSURL URLWithString:kAPNPrebidServerUrl];
     
     [[PBServerRequestBuilder sharedInstance] setHostURL: hostURL];
-    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" shouldCacheLocal:NO withSecureParams:NO];
+    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" withSecureParams:NO];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Dummy expectation"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
@@ -70,13 +125,13 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
         XCTAssertEqualObjects(requestBody[@"app"][@"publisher"][@"id"], @"account_id");
         
         NSDictionary *app = requestBody[@"app"][@"ext"][@"prebid"];
-        XCTAssertEqualObjects(app[@"version"], kPrebidMobileVersion);
+        XCTAssertNotNil(app[@"version"]);
         
         XCTAssertEqualObjects(app[@"source"], @"prebid-mobile");
         
         NSString *targetingParams = requestBody[@"user"][@"keywords"];
         
-        XCTAssertEqualObjects(targetingParams, @"targeting2=value2,targeting1=value1");
+        XCTAssertNotNil(targetingParams);
         
         NSDictionary *device = requestBody[@"device"];
         XCTAssertEqualObjects(device[@"os"], @"iOS");
@@ -88,7 +143,7 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
 }
 
 - (void)testBuildRequestForAdUnitsInvalidHost {
-    PBServerAdapter *serverAdapter = [[PBServerAdapter alloc] initWithAccountId:@"test_account_id" andHost:PBServerHostAppNexus];
+    PBServerAdapter *serverAdapter = [[PBServerAdapter alloc] initWithAccountId:@"test_account_id" andHost:PBServerHostAppNexus andAdServer:PBPrimaryAdServerDFP];
     @try {
         [serverAdapter requestBidsWithAdUnits:self.adUnits withDelegate:self];
     } @catch (PBException *exception) {
@@ -103,7 +158,7 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
     NSURL *hostURL = [NSURL URLWithString:kRPPrebidServerUrl];
     
     [[PBServerRequestBuilder sharedInstance] setHostURL: hostURL];
-    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" shouldCacheLocal:NO withSecureParams:NO];
+    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" withSecureParams:NO];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Dummy expectation"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
@@ -114,59 +169,6 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
     });
     [self waitForExpectationsWithTimeout:20.0 handler:nil];
 
-}
-
-- (void)testRequestBodyForAdUnitWithDFPAdServer {
-    
-    NSURL *hostURL = [NSURL URLWithString:kAPNPrebidServerUrl];
-    
-    [[PBServerRequestBuilder sharedInstance] setHostURL: hostURL];
-    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" shouldCacheLocal:YES withSecureParams:NO];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Dummy expectation"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        
-        
-        NSError* error;
-        NSDictionary* requestBody = [NSJSONSerialization JSONObjectWithData:[request HTTPBody]
-                                                                    options:kNilOptions
-                                                                      error:&error];
-        
-        XCTAssertNotNil(requestBody);
-        
-        XCTAssertNil(requestBody[@"ext"][@"prebid"][@"cache"]);
-        
-        [expectation fulfill];
-    });
-    [self waitForExpectationsWithTimeout:20.0 handler:nil];
-    
-    
-}
-
-- (void)testRequestBodyForAdUnitWithMoPubAdServer {
-    NSURL *hostURL = [NSURL URLWithString:kAPNPrebidServerUrl];
-    
-    [[PBServerRequestBuilder sharedInstance] setHostURL: hostURL];
-    NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:self.adUnits withAccountId:@"account_id" shouldCacheLocal:NO withSecureParams:NO];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Dummy expectation"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        
-        
-        NSError* error;
-        NSDictionary* requestBody = [NSJSONSerialization JSONObjectWithData:[request HTTPBody]
-                                                                    options:kNilOptions
-                                                                      error:&error];
-        
-        XCTAssertNotNil(requestBody);
-        
-        XCTAssertNotNil(requestBody[@"ext"][@"prebid"][@"cache"]);
-        
-        [expectation fulfill];
-    });
-    [self waitForExpectationsWithTimeout:20.0 handler:nil];
-
-    
 }
 
 -(void) testBatchRequestBidsWithAdUnits{
@@ -208,7 +210,7 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
     
     NSArray *adUnitsArray = @[adUnit1,adUnit2,adUnit3,adUnit4,adUnit5,adUnit6,adUnit7,adUnit8,adUnit9,adUnit10, adUnit11, adUnit12];
     
-    PBServerAdapter *serverAdapter = [[PBServerAdapter alloc] initWithAccountId:@"test_account_id" andHost:PBServerHostAppNexus];
+    PBServerAdapter *serverAdapter = [[PBServerAdapter alloc] initWithAccountId:@"test_account_id" andHost:PBServerHostAppNexus andAdServer:PBPrimaryAdServerDFP];
     @try {
         [serverAdapter requestBidsWithAdUnits:adUnitsArray withDelegate:self];
     } @catch (PBException *exception) {
@@ -216,16 +218,6 @@ static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproje
         XCTAssertNotNil(exception);
         XCTAssertEqual(exception.name, expectedException);
     }
-    
-    
-}
-
-- (void)didCompleteWithError:(nonnull NSError *)error {
-    
-}
-
-- (void)didReceiveSuccessResponse:(nonnull NSArray<PBBidResponse *> *)bid {
-    
 }
 
 @end
