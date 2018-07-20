@@ -1,11 +1,11 @@
 /*   Copyright 2017 Prebid.org, Inc.
-
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,6 +42,8 @@ static NSTimeInterval const kBidExpiryTimerInterval = 30;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, NSMutableArray<PBBidResponse *> *> *__nullable bidsMap;
 
 @property (nonatomic, assign) PBPrimaryAdServerType adServer;
+@property (nonatomic, assign) NSTimeInterval intervalSinceLastPoll;
+@property (nonatomic, assign) NSTimeInterval lastPollEpochTime;
 
 @end
 
@@ -98,16 +100,16 @@ static dispatch_once_t onceToken;
             @throw [PBException exceptionWithName:PBFreestarMissingFrameworkException];
         }
     }
-
+    
     if (_adUnits == nil) {
         _adUnits = [[NSMutableSet alloc] init];
     }
     _bidsMap = [[NSMutableDictionary alloc] init];
-
+    
     self.adServer = adServer;
-
+    
     _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host andAdServer:adServer] ;
-
+    
     for (id adUnit in adUnits) {
         [self registerAdUnit:adUnit];
     }
@@ -213,7 +215,7 @@ static dispatch_once_t onceToken;
     if (adUnit.adSizes == nil && adUnit.adType == PBAdUnitTypeBanner) {
         @throw [PBException exceptionWithName:PBAdUnitNoSizeException];
     }
-
+    
     // Check if ad unit already exists, if so remove it
     NSMutableArray *adUnitsToRemove = [[NSMutableArray alloc] init];
     for (PBAdUnit *existingAdUnit in _adUnits) {
@@ -225,7 +227,7 @@ static dispatch_once_t onceToken;
         [_adUnits removeObject:adUnit];
         [_bidsMap removeObjectForKey:adUnit.identifier];
     }
-
+    
     // Finish registration of ad unit by adding it to adUnits
     [_adUnits addObject:adUnit];
     PBLogDebug(@"AdUnit %@ is registered with Prebid Mobile", adUnit.identifier);
@@ -245,7 +247,7 @@ static dispatch_once_t onceToken;
     if ([bidResponses count] > 0) {
         PBBidResponse *bid = (PBBidResponse *)bidResponses[0];
         [_bidsMap setObject:[bidResponses mutableCopy] forKey:bid.adUnitId];
-
+        
         // TODO: if prebid server returns expiry time for bids we need to change this implementation
         NSTimeInterval timeToExpire = bid.timeToExpireAfter + [[NSDate date] timeIntervalSince1970];
         PBAdUnit *adUnit = [self adUnitByIdentifier:bid.adUnitId];
@@ -258,7 +260,8 @@ static dispatch_once_t onceToken;
     if (_timerStarted) {
         return;
     }
-
+    
+    _lastPollEpochTime = [[NSDate date] timeIntervalSince1970];
     __weak PBBidManager *weakSelf = self;
     if ([[NSTimer class] respondsToSelector:@selector(pb_scheduledTimerWithTimeInterval:block:repeats:)]) {
         [NSTimer pb_scheduledTimerWithTimeInterval:kBidExpiryTimerInterval
@@ -277,11 +280,13 @@ static dispatch_once_t onceToken;
         NSMutableArray *adUnitsToRequest = [[NSMutableArray alloc] init];
         for (PBAdUnit *adUnit in _adUnits) {
             NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
-            if (bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) {
+            _intervalSinceLastPoll = [[NSDate date] timeIntervalSince1970] - _lastPollEpochTime;
+            if (((bids && [bids count] > 0) && [adUnit shouldExpireAllBids:currentTime]) || (_intervalSinceLastPoll > 75)) {
                 [adUnitsToRequest addObject:adUnit];
                 [self resetAdUnit:adUnit];
+                _lastPollEpochTime = [[NSDate date] timeIntervalSince1970];
+                _intervalSinceLastPoll = 0;
             }
-//            #endif
         }
         if ([adUnitsToRequest count] > 0) {
             [self requestBidsForAdUnits:adUnitsToRequest];
@@ -308,12 +313,12 @@ static dispatch_once_t onceToken;
 }
 
 - (void)setBidOnAdObject:(NSObject *)adObject {
-
-
+    
+    
     if (adObject.pb_identifier) {
-
+        
         [self clearBidOnAdObject:adObject];
-
+        
         NSMutableArray *mutableKeywords;
         NSString *keywords = @"";
         SEL getKeywords = NSSelectorFromString(@"keywords");
@@ -364,7 +369,7 @@ static dispatch_once_t onceToken;
         keywordsString = (NSString *)[adObject performSelector:getKeywords];
     }
     if (keywordsString.length) {
-
+        
         NSArray *keywords = [keywordsString componentsSeparatedByString:@","];
         NSMutableArray *mutableKeywords = [keywords mutableCopy];
         [keywords enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL *stop) {
@@ -372,7 +377,7 @@ static dispatch_once_t onceToken;
                 [mutableKeywords removeObject:keyword];
             }
         }];
-
+        
         SEL setKeywords = NSSelectorFromString(@"setKeywords:");
         if ([adObject respondsToSelector:setKeywords]) {
             [adObject performSelector:setKeywords withObject:[mutableKeywords componentsJoinedByString:@","]];
