@@ -205,15 +205,7 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     
     NSString *deviceModel = PBSDeviceModel();
     if (deviceModel) {
-        #if DEBUG
-        if (_testMode == YES && [deviceDict[@"model"] isEqualToString:@"x86_64"]) {
-            deviceDict[@"model"] = @"iPhone10,6";
-        } else {
-            deviceDict[@"model"] = deviceModel;
-        }
-        #else
         deviceDict[@"model"] = deviceModel;
-        #endif
     }
     CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = [netinfo subscriberCellularProvider];

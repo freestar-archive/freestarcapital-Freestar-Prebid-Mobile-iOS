@@ -223,6 +223,7 @@ static dispatch_once_t onceToken;
     }
     for (PBAdUnit *adUnit in adUnitsToRemove) {
         [_adUnits removeObject:adUnit];
+        [_bidsMap removeObjectForKey:adUnit.identifier];
     }
 
     // Finish registration of ad unit by adding it to adUnits
@@ -275,13 +276,6 @@ static dispatch_once_t onceToken;
         NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
         NSMutableArray *adUnitsToRequest = [[NSMutableArray alloc] init];
         for (PBAdUnit *adUnit in _adUnits) {
-//            #if DEBUG
-//            NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
-//            if ((bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) || _testMode) {
-//                [adUnitsToRequest addObject:adUnit];
-//                [self resetAdUnit:adUnit];
-//            }
-//            #else
             NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
             if (bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) {
                 [adUnitsToRequest addObject:adUnit];

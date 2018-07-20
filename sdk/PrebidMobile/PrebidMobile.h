@@ -42,6 +42,5 @@
                completionHandler:(nullable void (^)(void))handler;
 
 + (void) shouldLoadOverSecureConnection:(BOOL) secureConnection;
-+ (void)setTestMode:(BOOL)testMode;
 
 @end

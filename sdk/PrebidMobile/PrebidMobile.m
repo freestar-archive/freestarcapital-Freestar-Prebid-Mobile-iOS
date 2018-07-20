@@ -58,9 +58,4 @@
     [[PBBidManager sharedInstance] loadOnSecureConnection:secureConnection];
 }
 
-+ (void)setTestMode:(BOOL)testMode {
-    [[PBServerRequestBuilder sharedInstance] setTestMode:testMode];
-    [[PBBidManager sharedInstance] setTestMode:testMode];
-}
-
 @end
