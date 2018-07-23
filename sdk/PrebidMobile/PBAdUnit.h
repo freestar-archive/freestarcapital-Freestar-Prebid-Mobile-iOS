@@ -75,6 +75,12 @@ typedef NS_ENUM(NSInteger, PBAdUnitType) {
 - (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type;
 
 /**
+ * initializes the PBAdUnit object with the adUnit type
+ * @param type : type of adUnit created. Can be banner, interstitial or native
+ */
+- (nonnull instancetype)initWithAdType:(PBAdUnitType)type;
+
+/**
  * addSize adds the size object to the adUnit object created
  * @param adSize : width & height of the ad that needs to be fetched
  */

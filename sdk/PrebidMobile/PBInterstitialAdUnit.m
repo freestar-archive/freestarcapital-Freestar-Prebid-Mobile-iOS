@@ -20,6 +20,12 @@ static NSInteger const kSizeXY = 2;
 
 @implementation PBInterstitialAdUnit
 
+- (nonnull instancetype)init {
+    PBInterstitialAdUnit *interstitialAdUnit = [super initWithAdType:PBAdUnitTypeInterstitial];
+    [self addSizesToInterstitialAdUnit:interstitialAdUnit];
+    return interstitialAdUnit;
+}
+
 - (nonnull instancetype)initWithAdUnitIdentifier:(nonnull NSString *)identifier andConfigId:(nonnull NSString *)configId {
     PBInterstitialAdUnit *interstitialAdUnit = [super initWithIdentifier:identifier andAdType:PBAdUnitTypeInterstitial andConfigId:configId];
     [self addSizesToInterstitialAdUnit:interstitialAdUnit];

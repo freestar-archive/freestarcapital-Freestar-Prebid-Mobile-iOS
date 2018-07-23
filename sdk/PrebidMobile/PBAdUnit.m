@@ -32,6 +32,15 @@
 @implementation PBAdUnit
 
 #pragma mark Initialization
+- (nonnull instancetype)initWithAdType:(PBAdUnitType)type {
+    if ((self = [super init])) {
+        [self generateUUID];
+        _adType = type;
+        _timeToExpireAllBids = 0;
+    }
+    return self;
+}
+
 - (nonnull instancetype)initWithIdentifier:(nonnull NSString *)identifier andAdType:(PBAdUnitType)type andConfigId:(nonnull NSString *)configId {
     if (self = [self initWithIdentifier:identifier andAdType:type]) {
         _configId = configId;
