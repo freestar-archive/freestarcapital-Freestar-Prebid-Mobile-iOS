@@ -31,40 +31,35 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-            [NSClassFromString(@"GADSlot") pb_swizzleInstanceSelector:@selector(requestParameters)
-                                                         withSelector:@selector(pb_requestParameters)];
-            [NSClassFromString(@"MPBannerAdManager") pb_swizzleInstanceSelector:@selector(loadAd)
-                                                                   withSelector:@selector(pb_loadAd)];
-            [NSClassFromString(@"MPBannerAdManager") pb_swizzleInstanceSelector:@selector(forceRefreshAd)
-                                                                   withSelector:@selector(pb_forceRefreshAd)];
-            [NSClassFromString(@"MPBannerAdManager") pb_swizzleInstanceSelector:@selector(applicationWillEnterForeground)
-                                                                   withSelector:@selector(pb_applicationWillEnterForeground)];
-            [NSClassFromString(@"MPInterstitialAdManager") pb_swizzleInstanceSelector:@selector(loadInterstitialWithAdUnitID:keywords:location:testing:)
-                                                                         withSelector:@selector(pb_loadInterstitialWithAdUnitID:keywords:location:testing:)];
+            [NSClassFromString(@"GADSlot") pb_GADSlot_swizzleInstanceSelector:@selector(requestParameters)
+                                                                 withSelector:@selector(pb_requestParameters)];
 #pragma clang diagnostic pop
         });
     });
 }
 
-+ (void)pb_swizzleInstanceSelector:(SEL)originalSelector
-                      withSelector:(SEL)swizzledSelector {
-    Class class = [self class];
-
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    
-    BOOL didAddMethod = class_addMethod(class,
-                                        originalSelector,
-                                        method_getImplementation(swizzledMethod),
-                                        method_getTypeEncoding(swizzledMethod));
-    if (didAddMethod) {
-        class_replaceMethod(class,
-                            swizzledSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
++ (void)pb_GADSlot_swizzleInstanceSelector:(SEL)originalSelector
+                              withSelector:(SEL)swizzledSelector {
+    static dispatch_once_t loadToken;
+    dispatch_once(&loadToken, ^{
+        Class class = [self class];
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL didAddMethod = class_addMethod(class,
+                                            originalSelector,
+                                            method_getImplementation(swizzledMethod),
+                                            method_getTypeEncoding(swizzledMethod));
+        if (didAddMethod) {
+            class_replaceMethod(class,
+                                swizzledSelector,
+                                method_getImplementation(originalMethod),
+                                method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
 }
 
 // dfp ad slot
