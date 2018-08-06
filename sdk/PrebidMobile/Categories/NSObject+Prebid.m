@@ -40,26 +40,23 @@
 
 + (void)pb_GADSlot_swizzleInstanceSelector:(SEL)originalSelector
                               withSelector:(SEL)swizzledSelector {
-    static dispatch_once_t loadToken;
-    dispatch_once(&loadToken, ^{
-        Class class = [self class];
-        
-        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-        
-        BOOL didAddMethod = class_addMethod(class,
-                                            originalSelector,
-                                            method_getImplementation(swizzledMethod),
-                                            method_getTypeEncoding(swizzledMethod));
-        if (didAddMethod) {
-            class_replaceMethod(class,
-                                swizzledSelector,
-                                method_getImplementation(originalMethod),
-                                method_getTypeEncoding(originalMethod));
-        } else {
-            method_exchangeImplementations(originalMethod, swizzledMethod);
-        }
-    });
+    Class class = [self class];
+
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+
+    BOOL didAddMethod = class_addMethod(class,
+                                        originalSelector,
+                                        method_getImplementation(swizzledMethod),
+                                        method_getTypeEncoding(swizzledMethod));
+    if (didAddMethod) {
+        class_replaceMethod(class,
+                            swizzledSelector,
+                            method_getImplementation(originalMethod),
+                            method_getTypeEncoding(originalMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
 }
 
 // dfp ad slot
@@ -107,84 +104,6 @@
                                           object:nil
                                         userInfo:@{ @"status" : @(1) }];
     });
-}
-
-// mopub banner
-- (void)pb_applicationWillEnterForeground {
-    SEL getDelegate = NSSelectorFromString(@"delegate");
-    if ([self respondsToSelector:getDelegate]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id delegate = [self performSelector:getDelegate];
-        SEL getBannerAd = NSSelectorFromString(@"banner");
-        if ([delegate respondsToSelector:getBannerAd]) {
-            NSObject *adView = [delegate performSelector:getBannerAd];
-#pragma clang diagnostic pop
-            [[PBBidManager sharedInstance] setBidOnAdObject:adView];
-            [self pb_applicationWillEnterForeground];
-            [[PBBidManager sharedInstance] clearBidOnAdObject:adView];
-        }
-    };
-}
-
-- (void)pb_loadAd {
-    SEL getDelegate = NSSelectorFromString(@"delegate");
-    if ([self respondsToSelector:getDelegate]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id delegate = [self performSelector:getDelegate];
-        SEL getBannerAd = NSSelectorFromString(@"banner");
-        if ([delegate respondsToSelector:getBannerAd]) {
-            NSObject *adView = [delegate performSelector:getBannerAd];
-#pragma clang diagnostic pop
-            [[PBBidManager sharedInstance] setBidOnAdObject:adView];
-            [self pb_loadAd];
-            [[PBBidManager sharedInstance] clearBidOnAdObject:adView];
-        }
-    };
-}
-
-- (void)pb_forceRefreshAd {
-    SEL getDelegate = NSSelectorFromString(@"delegate");
-    if ([self respondsToSelector:getDelegate]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id delegate = [self performSelector:getDelegate];
-        SEL getBannerAd = NSSelectorFromString(@"banner");
-        if ([delegate respondsToSelector:getBannerAd]) {
-            NSObject *adView = [delegate performSelector:getBannerAd];
-#pragma clang diagnostic pop
-            [[PBBidManager sharedInstance] setBidOnAdObject:adView];
-            [self pb_forceRefreshAd];
-            [[PBBidManager sharedInstance] clearBidOnAdObject:adView];
-        }
-    };
-}
-
-// mopub interstitial
-- (void)pb_loadInterstitialWithAdUnitID:(NSString *)ID keywords:(NSString *)keywords location:(CLLocation *)location testing:(BOOL)testing {
-    SEL getDelegate = NSSelectorFromString(@"delegate");
-    if ([self respondsToSelector:getDelegate]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id delegate = [self performSelector:getDelegate];
-        SEL getInterstitialAd = NSSelectorFromString(@"interstitialAdController");
-        if ([delegate respondsToSelector:getInterstitialAd]) {
-            NSObject *interstitialAd = [delegate performSelector:getInterstitialAd];
-            SEL getAdUnitId = NSSelectorFromString(@"adUnitId");
-            SEL getKeywords = NSSelectorFromString(@"keywords");
-            SEL getLocation = NSSelectorFromString(@"location");
-            if ([delegate respondsToSelector:getAdUnitId] && [delegate respondsToSelector:getKeywords] && [delegate respondsToSelector:getLocation]) {
-                NSString *adUnitId = (NSString *)[interstitialAd performSelector:getAdUnitId];
-                CLLocation *location = (CLLocation *)[interstitialAd performSelector:getLocation];
-                [[PBBidManager sharedInstance] setBidOnAdObject:interstitialAd];
-                NSString *keywords = (NSString *)[interstitialAd performSelector:getKeywords];
-                [self pb_loadInterstitialWithAdUnitID:adUnitId keywords:keywords location:location testing:testing];
-#pragma clang diagnostic pop
-                [[PBBidManager sharedInstance] clearBidOnAdObject:interstitialAd];
-            }
-        }
-    };
 }
 
 - (void)setPb_identifier:(PBAdUnit *)pb_identifier {
