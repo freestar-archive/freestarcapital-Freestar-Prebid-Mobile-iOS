@@ -1,27 +1,8 @@
 PODS:
-  - FSAdSDK/Banner (0.0.1):
-    - FSAdSDK/Core
-    - FSCache
-  - FSAdSDK/Common (0.0.1):
-    - FSCache
-  - FSAdSDK/Core (0.0.1):
-    - FSAdSDK/Common
-    - FSAdSDK/Registration
-    - FSCache
-  - FSAdSDK/Registration (0.0.1):
-    - FSCache
   - FSCache (2.2.0)
-  - Google-Mobile-Ads-SDK (7.24.1)
 
 DEPENDENCIES:
-  - FSAdSDK/Banner
   - FSCache (from `https://github.com/freestarcapital/FSCache.git`)
-  - Google-Mobile-Ads-SDK (~> 7.24.1)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - FSAdSDK
-    - Google-Mobile-Ads-SDK
 
 EXTERNAL SOURCES:
   FSCache:
@@ -33,10 +14,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/freestarcapital/FSCache.git
 
 SPEC CHECKSUMS:
-  FSAdSDK: a158a4e9a649dbba4890a35831acd50e3b0bb4d6
   FSCache: ffa790ccec80b1755e8998fd630ebf3038ca0c26
-  Google-Mobile-Ads-SDK: ed8004a7265b424568dc84f3d2bbe3ea3fff958f
 
-PODFILE CHECKSUM: 5a1e7999799bdf3cf1efcbd856c5a117f1108c3f
+PODFILE CHECKSUM: 8e80954448a44e9f6a2bab44c4ac8a06efaae3fe
 
 COCOAPODS: 1.5.3

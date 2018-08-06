@@ -558,16 +558,10 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PrebidMobileTests/Pods-PrebidMobileTests-frameworks.sh",
 				"${PODS_ROOT}/FSCache/build/FSCache.framework",
-				"${PODS_ROOT}/FSAdSDK/SDK/FSBanner.framework",
-				"${PODS_ROOT}/FSAdSDK/SDK/FSCommon.framework",
-				"${PODS_ROOT}/FSAdSDK/SDK/FSAdSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSBanner.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCommon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSAdSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
