@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		050ACAEE208A5E4C003F8F1B /* PBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 050ACAEC208A5E4C003F8F1B /* PBConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		050ACAEF208A5E4C003F8F1B /* PBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACAED208A5E4C003F8F1B /* PBConstants.m */; };
+		052C13AE2134A62400C09AE6 /* PBAnalyticsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 052C13A62134A62400C09AE6 /* PBAnalyticsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		052C13AF2134A62400C09AE6 /* PBAnalyticsEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C13A72134A62400C09AE6 /* PBAnalyticsEvent.m */; };
+		052C13B02134A62400C09AE6 /* PBAnalyticsService.h in Headers */ = {isa = PBXBuildFile; fileRef = 052C13A82134A62400C09AE6 /* PBAnalyticsService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		052C13B12134A62400C09AE6 /* PBAnalyticsEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 052C13A92134A62400C09AE6 /* PBAnalyticsEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */; };
 		054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */; };
 		054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */; };
 		606A4299202005C400492433 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 606A4298202005C400492433 /* ReadMe.md */; };
@@ -93,6 +98,13 @@
 		00AE315CF341C404D2F49A45 /* Pods-PrebidMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobileTests/Pods-PrebidMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		050ACAEC208A5E4C003F8F1B /* PBConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBConstants.h; sourceTree = "<group>"; };
 		050ACAED208A5E4C003F8F1B /* PBConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBConstants.m; sourceTree = "<group>"; };
+		052C13A62134A62400C09AE6 /* PBAnalyticsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBAnalyticsManager.h; sourceTree = "<group>"; };
+		052C13A72134A62400C09AE6 /* PBAnalyticsEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBAnalyticsEvent.m; sourceTree = "<group>"; };
+		052C13A82134A62400C09AE6 /* PBAnalyticsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBAnalyticsService.h; sourceTree = "<group>"; };
+		052C13A92134A62400C09AE6 /* PBAnalyticsEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBAnalyticsEvent.h; sourceTree = "<group>"; };
+		052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBAnalyticsManager.m; sourceTree = "<group>"; };
+		052C13AC2134A62400C09AE6 /* PBSegmentAnalyticsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBSegmentAnalyticsService.h; sourceTree = "<group>"; };
+		052C13AD2134A62400C09AE6 /* PBSegmentAnalyticsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSegmentAnalyticsService.m; sourceTree = "<group>"; };
 		054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PBBidManager+FSAdditions.h"; sourceTree = "<group>"; };
 		054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PBBidManager+FSAdditions.m"; sourceTree = "<group>"; };
 		24E7D15B58EE6353A0A7DC35 /* Pods-PrebidMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobile/Pods-PrebidMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +222,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		052C13A52134A62400C09AE6 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				052C13A92134A62400C09AE6 /* PBAnalyticsEvent.h */,
+				052C13A72134A62400C09AE6 /* PBAnalyticsEvent.m */,
+				052C13A62134A62400C09AE6 /* PBAnalyticsManager.h */,
+				052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */,
+				052C13A82134A62400C09AE6 /* PBAnalyticsService.h */,
+				052C13AB2134A62400C09AE6 /* Services */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		052C13AB2134A62400C09AE6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				052C13AC2134A62400C09AE6 /* PBSegmentAnalyticsService.h */,
+				052C13AD2134A62400C09AE6 /* PBSegmentAnalyticsService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		606A4351202BC90800492433 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +343,7 @@
 		C2B16E1D1EE1BE69006304C0 /* PrebidMobile */ = {
 			isa = PBXGroup;
 			children = (
+				052C13A52134A62400C09AE6 /* Analytics */,
 				606A4352202BC98100492433 /* PrebidMobile-umbrella.h */,
 				C2B16E4A1EE1BEC4006304C0 /* Categories */,
 				C2B16E5F1EE1BECA006304C0 /* Logging */,
@@ -428,11 +463,14 @@
 				C2B16E341EE1BEA6006304C0 /* PBBannerAdUnit.h in Headers */,
 				C2B16E481EE1BEB6006304C0 /* PBBidResponse.h in Headers */,
 				C2B16E381EE1BEA6006304C0 /* PBBidResponseDelegate.h in Headers */,
+				052C13AE2134A62400C09AE6 /* PBAnalyticsManager.h in Headers */,
 				C2B16E3F1EE1BEA6006304C0 /* PBTargetingParams.h in Headers */,
 				054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */,
 				C23FCCEA1EE5E3F500CFFEF0 /* PBLogging.h in Headers */,
 				606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */,
 				C23386D61EE5DC95002FD404 /* PBAdUnit.h in Headers */,
+				052C13B02134A62400C09AE6 /* PBAnalyticsService.h in Headers */,
+				052C13B12134A62400C09AE6 /* PBAnalyticsEvent.h in Headers */,
 				C2B16E3D1EE1BEA6006304C0 /* PBKeywordsManager.h in Headers */,
 				C23FCCEE1EE5E41E00CFFEF0 /* PBLogManager.h in Headers */,
 				C23386DA1EE5DCDB002FD404 /* PBServerAdapter.h in Headers */,
@@ -635,6 +673,7 @@
 				C2B16E9C1EE1BF1A006304C0 /* PBServerGlobal.m in Sources */,
 				C2B16E3C1EE1BEA6006304C0 /* PBInterstitialAdUnit.m in Sources */,
 				C23FCCEB1EE5E3F500CFFEF0 /* PBLogging.m in Sources */,
+				052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */,
 				054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */,
 				C210FE391FC3375D0010B588 /* PrebidCache.m in Sources */,
 				C2B16E401EE1BEA6006304C0 /* PBTargetingParams.m in Sources */,
@@ -651,6 +690,7 @@
 				C2B16E3E1EE1BEA6006304C0 /* PBKeywordsManager.m in Sources */,
 				C2B16E991EE1BF1A006304C0 /* PBServerFetcher.m in Sources */,
 				050ACAEF208A5E4C003F8F1B /* PBConstants.m in Sources */,
+				052C13AF2134A62400C09AE6 /* PBAnalyticsEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

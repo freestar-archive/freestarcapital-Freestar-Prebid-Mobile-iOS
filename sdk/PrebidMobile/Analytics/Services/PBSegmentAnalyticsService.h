@@ -1,4 +1,4 @@
-/*   Copyright 2018 Prebid.org, Inc.
+/*   Copyright 2017 Prebid.org, Inc.
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,17 +14,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PBAdUnit.h"
-#import "PBHost.h"
+#import <PrebidMobile/PBAnalyticsService.h>
 
-@interface PBServerRequestBuilder : NSObject
-
-@property (nonatomic, strong, readwrite) NSURL * _Nonnull hostURL;
-@property (nonatomic, assign, readwrite) PBServerHost host;
-@property (nonatomic, strong, readonly) NSString *accountId;
-
-+ (instancetype _Nullable )sharedInstance;
-
-- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *_Nullable) accountID withSecureParams:(BOOL) isSecure;
+@interface PBSegmentAnalyticsService : NSObject <PBAnalyticsService>
 
 @end
