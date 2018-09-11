@@ -13,10 +13,16 @@
  limitations under the License.
  */
 
-#import "PBBidManager.h"
+#ifndef PBGlobalFunctions_h
+#define PBGlobalFunctions_h
 
-@interface PBBidManager (FSAdditions)
+static id ObjectOrNull(id object)
+{
+//#ifdef DEBUG
+//    return object;
+//#else
+    return object ?: [NSNull null];
+//#endif
+}
 
-- (void)refreshAllBids;
-
-@end
+#endif /* PBGlobalFunctions_h */

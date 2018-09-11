@@ -22,9 +22,12 @@
 @property (nonatomic, strong, readwrite) NSURL * _Nonnull hostURL;
 @property (nonatomic, assign, readwrite) PBServerHost host;
 @property (nonatomic, strong, readonly) NSString *accountId;
+@property (nonatomic, assign) BOOL testMode;
 
 + (instancetype _Nullable )sharedInstance;
 
-- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *_Nullable) accountID withSecureParams:(BOOL) isSecure;
+- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits
+                          withAccountId:(NSString *_Nullable)accountID
+                       withSecureParams:(BOOL)isSecure;
 
 @end

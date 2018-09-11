@@ -16,6 +16,7 @@
 #import "PBAnalyticsManager.h"
 #import "PBAnalyticsService.h"
 #import "PBLogging.h"
+#import "PBAnalyticsNSURLProtocol.h"
 
 @interface PBAnalyticsManager ()
 
@@ -47,12 +48,13 @@
         PBLogInfo(@"Analytics manager already initialized.");
         return;
     }
-
+    
     _application = application;
     _launchOptions = launchOptions;
     [self doServiceWithExecutionHandler:^(id<PBAnalyticsService> service) {
         [service initializeWithApplication:application launchOptions:launchOptions];
     }];
+    [PBAnalyticsNSURLProtocol start];
     _ready = YES;
 }
 
@@ -75,7 +77,7 @@
 }
 
 - (void)doServiceWithExecutionHandler:(void (^)(id<PBAnalyticsService>))handler {
-    dispatch_sync(self.queue, ^{
+    dispatch_async(self.queue, ^{
         [self.services enumerateObjectsUsingBlock:^(id<PBAnalyticsService> service, BOOL *stop) {
             handler(service);
         }];

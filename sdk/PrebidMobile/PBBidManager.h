@@ -75,9 +75,8 @@ typedef NS_ENUM(NSInteger, PBPrimaryAdServerType) {
                            andTimeout:(int)timeoutInMS
                     completionHandler:(nullable void (^)(void))handler;
 
-- (void)setBidOnAdObject:(nonnull NSObject *)adObject;
-- (void)clearBidOnAdObject:(nonnull NSObject *)adObject;
-
 -(void) loadOnSecureConnection:(BOOL) secureConnection;
+
+- (PBBidResponse*)usedBidWithCacheUUID:(NSString*)cacheUUID;
 
 @end

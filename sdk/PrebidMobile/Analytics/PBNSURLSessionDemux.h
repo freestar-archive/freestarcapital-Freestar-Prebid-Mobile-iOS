@@ -13,10 +13,14 @@
  limitations under the License.
  */
 
-#import "PBBidManager.h"
+#import <Foundation/Foundation.h>
 
-@interface PBBidManager (FSAdditions)
+@interface PBNSURLSessionDemux : NSURLProtocol
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration;
 
-- (void)refreshAllBids;
+@property (atomic, copy, readonly) NSURLSessionConfiguration *configuration;
+@property (atomic, strong, readonly) NSURLSession *session;
+
+- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request delegate:(id<NSURLSessionDataDelegate>)delegate modes:(NSArray *)modes;
 
 @end

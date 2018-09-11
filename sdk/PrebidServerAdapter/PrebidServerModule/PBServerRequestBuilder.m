@@ -32,10 +32,11 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.4.1";
+static NSString *const kPrebidMobileVersion = @"0.4.2";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
-static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
+static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
+static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/openrtb2/auction";
 
 @implementation PBServerRequestBuilder
 
@@ -51,7 +52,10 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     return _sharedInstance;
 }
 
-- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits withAccountId:(NSString *) accountID withSecureParams:(BOOL) isSecure {
+- (NSURLRequest *_Nullable)buildRequest:(nullable NSArray<PBAdUnit *> *)adUnits
+                          withAccountId:(NSString *_Nullable)accountID
+                       withSecureParams:(BOOL)isSecure                               
+{
     _accountId = accountID;
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:self.hostURL
                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -165,6 +169,10 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     return [imps copy];
 }
 
+- (NSDictionary*)openrtbApp {
+    return [self openrtbApp:_accountId];
+}
+
 // OpenRTB 2.5 Object: App in section 3.2.14
 - (NSDictionary *)openrtbApp:(NSString *) accountId {
     NSMutableDictionary *app = [[NSMutableDictionary alloc] init];
@@ -178,7 +186,9 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
         app[@"ver"] = version;
     }
     
-    app[@"publisher"] = @{@"id": accountId};
+    if (accountId) {
+        app[@"publisher"] = @{@"id": accountId};
+    }
     app[@"ext"] = @{@"prebid" : @{@"version" : kPrebidMobileVersion, @"source" : @"prebid-mobile"}};
     
     return [app copy];
@@ -408,7 +418,11 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
             url = [NSURL URLWithString:kRPPrebidServerUrl];
             break;
         case PBServerHostFreestar:
-            url = [NSURL URLWithString:kFSPPrebidServerUrl];
+            if (_testMode) {
+                url = [NSURL URLWithString:kFSPrebidServerUrlDev];
+            } else {
+                url = [NSURL URLWithString:kFSPrebidServerUrl];
+            }
             break;
         default:
             url = nil;
@@ -425,7 +439,8 @@ static NSString *const kFSPPrebidServerUrl = @"https://prebid.pub.network/openrt
     if ([url isEqual:[NSURL URLWithString:kRPPrebidServerUrl]]) {
         return PBServerHostRubicon;
     }
-    if ([url isEqual:[NSURL URLWithString:kFSPPrebidServerUrl]]) {
+    if ([url isEqual:[NSURL URLWithString:kFSPrebidServerUrl]] ||
+        [url isEqual:[NSURL URLWithString:kFSPrebidServerUrlDev]]) {
         return PBServerHostFreestar;
     }
     return PBServerHostFreestar;

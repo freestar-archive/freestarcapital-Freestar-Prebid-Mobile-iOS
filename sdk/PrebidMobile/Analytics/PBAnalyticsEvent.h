@@ -17,9 +17,12 @@
 
 typedef NS_ENUM(NSUInteger, PBAnalyticsEventType) {
     PBAnalyticsEventCustom = 0,
-    PBAnalyticsEventRegisterAdUnit,
-    PBAnalyticsEventRequestBids,
-    PBAnalyticsEventAttachKeywords
+    PBAnalyticsEventBidAdjustment,
+    PBAnalyticsEventBidResponse,
+    PBAnalyticsEventBidWon,
+    PBAnalyticsEventDFPResponse,
+    PBAnalyticsEventVideoAd,
+    PBAnalyticsEventCREImpression    
 };
 
 @interface PBAnalyticsEvent : NSObject

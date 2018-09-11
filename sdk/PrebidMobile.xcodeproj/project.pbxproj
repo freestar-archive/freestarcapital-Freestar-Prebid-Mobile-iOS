@@ -16,6 +16,14 @@
 		052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */; };
 		054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */; };
 		054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */; };
+		0565FFB5216692F90086811A /* PBAnalyticsNSURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB3216692F90086811A /* PBAnalyticsNSURLProtocol.h */; };
+		0565FFB6216692F90086811A /* PBAnalyticsNSURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFB4216692F90086811A /* PBAnalyticsNSURLProtocol.m */; };
+		0565FFB9216696B60086811A /* PBNSURLSessionDemux.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB7216696B60086811A /* PBNSURLSessionDemux.h */; };
+		0565FFBA216696B60086811A /* PBNSURLSessionDemux.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFB8216696B60086811A /* PBNSURLSessionDemux.m */; };
+		0565FFBD2166B55D0086811A /* PBCanonicalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFBB2166B55D0086811A /* PBCanonicalRequest.h */; };
+		0565FFBE2166B55D0086811A /* PBCanonicalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFBC2166B55D0086811A /* PBCanonicalRequest.m */; };
+		057EAD372167E011005EBBBB /* NSURL+Query.h in Headers */ = {isa = PBXBuildFile; fileRef = 057EAD352167E011005EBBBB /* NSURL+Query.h */; };
+		057EAD382167E011005EBBBB /* NSURL+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 057EAD362167E011005EBBBB /* NSURL+Query.m */; };
 		606A4299202005C400492433 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 606A4298202005C400492433 /* ReadMe.md */; };
 		606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A42A22020FD4600492433 /* PBServerRequestBuilder.h */; };
 		606A42A52020FD4600492433 /* PBServerRequestBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 606A42A32020FD4600492433 /* PBServerRequestBuilder.m */; };
@@ -107,6 +115,15 @@
 		052C13AD2134A62400C09AE6 /* PBSegmentAnalyticsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSegmentAnalyticsService.m; sourceTree = "<group>"; };
 		054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PBBidManager+FSAdditions.h"; sourceTree = "<group>"; };
 		054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PBBidManager+FSAdditions.m"; sourceTree = "<group>"; };
+		0565FFB3216692F90086811A /* PBAnalyticsNSURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBAnalyticsNSURLProtocol.h; sourceTree = "<group>"; };
+		0565FFB4216692F90086811A /* PBAnalyticsNSURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBAnalyticsNSURLProtocol.m; sourceTree = "<group>"; };
+		0565FFB7216696B60086811A /* PBNSURLSessionDemux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBNSURLSessionDemux.h; sourceTree = "<group>"; };
+		0565FFB8216696B60086811A /* PBNSURLSessionDemux.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBNSURLSessionDemux.m; sourceTree = "<group>"; };
+		0565FFBB2166B55D0086811A /* PBCanonicalRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBCanonicalRequest.h; sourceTree = "<group>"; };
+		0565FFBC2166B55D0086811A /* PBCanonicalRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBCanonicalRequest.m; sourceTree = "<group>"; };
+		057EAD352167E011005EBBBB /* NSURL+Query.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+Query.h"; sourceTree = "<group>"; };
+		057EAD362167E011005EBBBB /* NSURL+Query.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Query.m"; sourceTree = "<group>"; };
+		05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBGlobalFunctions.h; sourceTree = "<group>"; };
 		24E7D15B58EE6353A0A7DC35 /* Pods-PrebidMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobile/Pods-PrebidMobile.release.xcconfig"; sourceTree = "<group>"; };
 		390737F336F61641E11DC4F4 /* Pods_PrebidMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrebidMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F9F4C9D8D06651CFE488BD1 /* Pods-PrebidMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PrebidMobile/Pods-PrebidMobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -229,7 +246,13 @@
 				052C13A72134A62400C09AE6 /* PBAnalyticsEvent.m */,
 				052C13A62134A62400C09AE6 /* PBAnalyticsManager.h */,
 				052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */,
+				0565FFB3216692F90086811A /* PBAnalyticsNSURLProtocol.h */,
+				0565FFB4216692F90086811A /* PBAnalyticsNSURLProtocol.m */,
 				052C13A82134A62400C09AE6 /* PBAnalyticsService.h */,
+				0565FFBB2166B55D0086811A /* PBCanonicalRequest.h */,
+				0565FFBC2166B55D0086811A /* PBCanonicalRequest.m */,
+				0565FFB7216696B60086811A /* PBNSURLSessionDemux.h */,
+				0565FFB8216696B60086811A /* PBNSURLSessionDemux.m */,
 				052C13AB2134A62400C09AE6 /* Services */,
 			);
 			path = Analytics;
@@ -372,6 +395,7 @@
 				C210FE371FC3375D0010B588 /* PrebidCache.m */,
 				050ACAEC208A5E4C003F8F1B /* PBConstants.h */,
 				050ACAED208A5E4C003F8F1B /* PBConstants.m */,
+				05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */,
 			);
 			path = PrebidMobile;
 			sourceTree = "<group>";
@@ -381,12 +405,14 @@
 			children = (
 				C2B16E4B1EE1BEC4006304C0 /* NSDictionary+Extension.h */,
 				C2B16E4C1EE1BEC4006304C0 /* NSDictionary+Extension.m */,
+				C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */,
+				C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */,
 				C2B16E4D1EE1BEC4006304C0 /* NSString+Extension.h */,
 				C2B16E4E1EE1BEC4006304C0 /* NSString+Extension.m */,
 				C2B16E4F1EE1BEC4006304C0 /* NSTimer+Extension.h */,
 				C2B16E501EE1BEC4006304C0 /* NSTimer+Extension.m */,
-				C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */,
-				C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */,
+				057EAD352167E011005EBBBB /* NSURL+Query.h */,
+				057EAD362167E011005EBBBB /* NSURL+Query.m */,
 				054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */,
 				054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */,
 			);
@@ -468,19 +494,23 @@
 				054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */,
 				C23FCCEA1EE5E3F500CFFEF0 /* PBLogging.h in Headers */,
 				606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */,
+				057EAD372167E011005EBBBB /* NSURL+Query.h in Headers */,
 				C23386D61EE5DC95002FD404 /* PBAdUnit.h in Headers */,
 				052C13B02134A62400C09AE6 /* PBAnalyticsService.h in Headers */,
 				052C13B12134A62400C09AE6 /* PBAnalyticsEvent.h in Headers */,
+				0565FFB5216692F90086811A /* PBAnalyticsNSURLProtocol.h in Headers */,
 				C2B16E3D1EE1BEA6006304C0 /* PBKeywordsManager.h in Headers */,
 				C23FCCEE1EE5E41E00CFFEF0 /* PBLogManager.h in Headers */,
 				C23386DA1EE5DCDB002FD404 /* PBServerAdapter.h in Headers */,
 				C23386D21EE5DBFB002FD404 /* PrebidMobile.h in Headers */,
+				0565FFBD2166B55D0086811A /* PBCanonicalRequest.h in Headers */,
 				C24B78C41EE7467E0045B454 /* NSObject+Prebid.h in Headers */,
 				C2B16E3B1EE1BEA6006304C0 /* PBInterstitialAdUnit.h in Headers */,
 				C2B16E9B1EE1BF1A006304C0 /* PBServerGlobal.h in Headers */,
 				C2B16E9F1EE1BF1A006304C0 /* PBServerReachability.h in Headers */,
 				C2B16E9D1EE1BF1A006304C0 /* PBServerLocation.h in Headers */,
 				C2B16E981EE1BF1A006304C0 /* PBServerFetcher.h in Headers */,
+				0565FFB9216696B60086811A /* PBNSURLSessionDemux.h in Headers */,
 				C210FE381FC3375D0010B588 /* PrebidCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,6 +702,7 @@
 				C23386DB1EE5DCDB002FD404 /* PBServerAdapter.m in Sources */,
 				C2B16E9C1EE1BF1A006304C0 /* PBServerGlobal.m in Sources */,
 				C2B16E3C1EE1BEA6006304C0 /* PBInterstitialAdUnit.m in Sources */,
+				0565FFBE2166B55D0086811A /* PBCanonicalRequest.m in Sources */,
 				C23FCCEB1EE5E3F500CFFEF0 /* PBLogging.m in Sources */,
 				052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */,
 				054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */,
@@ -681,10 +712,13 @@
 				C2B16E351EE1BEA6006304C0 /* PBBannerAdUnit.m in Sources */,
 				C23386D71EE5DC95002FD404 /* PBAdUnit.m in Sources */,
 				606A42A52020FD4600492433 /* PBServerRequestBuilder.m in Sources */,
+				057EAD382167E011005EBBBB /* NSURL+Query.m in Sources */,
 				C24B78C51EE7467E0045B454 /* NSObject+Prebid.m in Sources */,
 				C2B16E581EE1BEC4006304C0 /* NSString+Extension.m in Sources */,
 				C2B16E3A1EE1BEA6006304C0 /* PBException.m in Sources */,
+				0565FFB6216692F90086811A /* PBAnalyticsNSURLProtocol.m in Sources */,
 				C2B16E491EE1BEB6006304C0 /* PBBidResponse.m in Sources */,
+				0565FFBA216696B60086811A /* PBNSURLSessionDemux.m in Sources */,
 				C23FCCEF1EE5E41E00CFFEF0 /* PBLogManager.m in Sources */,
 				C2B16E371EE1BEA6006304C0 /* PBBidManager.m in Sources */,
 				C2B16E3E1EE1BEA6006304C0 /* PBKeywordsManager.m in Sources */,

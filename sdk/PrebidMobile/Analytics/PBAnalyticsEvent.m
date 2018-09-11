@@ -47,14 +47,14 @@
         case PBAnalyticsEventCustom:
             title = @"custom";
             break;
-        case PBAnalyticsEventRegisterAdUnit:
-            title = @"register adunit";
+        case PBAnalyticsEventBidResponse:
+            title = @"bidResponse";
             break;
-        case PBAnalyticsEventRequestBids:
-            title = @"bid request";
+        case PBAnalyticsEventBidWon:
+            title = @"bidWon";
             break;
-        case PBAnalyticsEventAttachKeywords:
-            title = @"attach keywords";
+        case PBAnalyticsEventDFPResponse:
+            title = @"dfpResponse";
             break;
         default:
             break;

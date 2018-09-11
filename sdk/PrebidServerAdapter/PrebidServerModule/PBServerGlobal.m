@@ -23,10 +23,22 @@ static NSString *const kIFASentinelValue = @"00000000-0000-0000-0000-00000000000
 NSString *PBSUserAgent() {
     static NSString *userAgent = nil;
     if (userAgent == nil) {
-        UIWebView *webview = [[UIWebView alloc] init];
-        userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
-        webview.delegate = nil;
-        [webview stopLoading];
+        if ([NSThread isMainThread]) {
+            UIWebView *webview = [[UIWebView alloc] init];
+            userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
+            webview.delegate = nil;
+            [webview stopLoading];
+        } else {
+            dispatch_semaphore_t lock = dispatch_semaphore_create(0);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIWebView *webview = [[UIWebView alloc] init];
+                userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
+                webview.delegate = nil;
+                [webview stopLoading];
+                dispatch_semaphore_signal(lock);
+            });
+            dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+        }
     }
     return userAgent;
 }

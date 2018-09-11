@@ -13,10 +13,10 @@
  limitations under the License.
  */
 
-#import "PBBidManager.h"
+#import <Foundation/Foundation.h>
 
-@interface PBBidManager (FSAdditions)
+@interface NSURL (Query)
 
-- (void)refreshAllBids;
+- (NSString *)pb_queryValueForKey:(NSString *)key;
 
 @end
