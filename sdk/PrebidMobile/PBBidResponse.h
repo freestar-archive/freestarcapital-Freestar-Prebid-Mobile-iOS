@@ -23,6 +23,16 @@
 @property (nonatomic, readonly) NSString *__nullable adUnitId;
 
 /**
+ * the cacheUUID is the cache identifier that the bid response corresponds to
+ */
+@property (nonatomic, readonly) NSString *__nullable cacheUUID;
+
+/**
+ * the responseInfo is the openRTB response that the bid response corresponds to
+ */
+@property (nonatomic) NSDictionary *__nullable responseInfo;
+
+/**
  * customKeywords is a dictionary of all the response objects returned by the demand source that can be used in future
  */
 @property (nonatomic, readonly) NSDictionary<NSString *, NSString *> *__nullable customKeywords;

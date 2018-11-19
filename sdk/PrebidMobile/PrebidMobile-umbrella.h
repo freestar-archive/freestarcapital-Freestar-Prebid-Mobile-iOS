@@ -13,3 +13,6 @@
 #import "PBTargetingParams.h"
 #import "PBConstants.h"
 #import "PBServerAdapter.h"
+#import "PBAnalyticsService.h"
+#import "PBAnalyticsManager.h"
+#import "PBAnalyticsEvent.h"

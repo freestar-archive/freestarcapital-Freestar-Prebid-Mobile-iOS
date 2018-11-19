@@ -13,10 +13,15 @@
  limitations under the License.
  */
 
-#import "PBBidManager.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface PBBidManager (FSAdditions)
+@class PBAnalyticsEvent;
 
-- (void)refreshAllBids;
+@protocol PBAnalyticsService <NSObject>
+
+- (void)initializeWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions;
+- (void)trackEvent:(PBAnalyticsEvent *)event;
+- (BOOL)isSupportedWithEvent:(PBAnalyticsEvent *)event;
 
 @end

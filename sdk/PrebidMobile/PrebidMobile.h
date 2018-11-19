@@ -43,4 +43,6 @@
 
 + (void) shouldLoadOverSecureConnection:(BOOL) secureConnection;
 
++ (void)setTestMode:(BOOL)testMode;
+
 @end

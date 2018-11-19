@@ -31,8 +31,13 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-            [NSClassFromString(@"GADSlot") pb_GADSlot_swizzleInstanceSelector:@selector(requestParameters)
-                                                                 withSelector:@selector(pb_requestParameters)];
+            if (NSClassFromString(@"GADSlot") == nil) {
+                [NSClassFromString(@"GADOSlot") pb_GADSlot_swizzleInstanceSelector:@selector(requestParameters)
+                                                                      withSelector:@selector(pb_requestParameters)];
+            } else {
+                [NSClassFromString(@"GADSlot") pb_GADSlot_swizzleInstanceSelector:@selector(requestParameters)
+                                                                     withSelector:@selector(pb_requestParameters)];
+            }
 #pragma clang diagnostic pop
         });
     });

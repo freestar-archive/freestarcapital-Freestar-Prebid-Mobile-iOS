@@ -32,7 +32,7 @@ static NSTimeInterval const kBidExpiryTimerInterval = 30;
 
 @interface PBBidManager ()
 
-@property id<PBBidResponseDelegate> delegate;
+@property (nonatomic, strong) id<PBBidResponseDelegate> delegate;
 - (void)saveBidResponses:(nonnull NSArray<PBBidResponse *> *)bidResponse;
 
 @property (nonatomic, assign) NSTimeInterval topBidExpiryTime;
@@ -40,6 +40,7 @@ static NSTimeInterval const kBidExpiryTimerInterval = 30;
 
 @property (nonatomic, strong) NSMutableSet<PBAdUnit *> *adUnits;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, NSMutableArray<PBBidResponse *> *> *__nullable bidsMap;
+@property (nonatomic, strong) NSMutableDictionary <NSString *, PBBidResponse *> *__nullable usedBidsMap;
 
 @property (nonatomic, assign) PBPrimaryAdServerType adServer;
 
@@ -103,10 +104,13 @@ static dispatch_once_t onceToken;
         _adUnits = [[NSMutableSet alloc] init];
     }
     _bidsMap = [[NSMutableDictionary alloc] init];
+    _usedBidsMap = [[NSMutableDictionary alloc] init];
 
     self.adServer = adServer;
 
-    _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host andAdServer:adServer] ;
+    if (!_demandAdapter) {
+        _demandAdapter = [[PBServerAdapter alloc] initWithAccountId:accountId andHost:host andAdServer:adServer];
+    }
 
     for (id adUnit in adUnits) {
         [self registerAdUnit:adUnit];
@@ -134,12 +138,39 @@ static dispatch_once_t onceToken;
     }
 }
 
+- (void)ejectExpiredUsedBids {
+    if (_usedBidsMap.count == 0) {
+        return;
+    }
+    for (PBBidResponse *bidResponse in [[_usedBidsMap allValues] copy]) {
+        if (bidResponse.isExpired) {
+            [_usedBidsMap removeObjectForKey:bidResponse.cacheUUID];
+        }
+    }
+}
+
+- (PBBidResponse*)usedBidWithCacheUUID:(NSString*)cacheUUID {
+    [self ejectExpiredUsedBids];
+    return [_usedBidsMap objectForKey:cacheUUID];
+}
+
+- (void)archiveUsedBids:(NSArray<PBBidResponse *> *)bids {
+    for (PBBidResponse *bidResponse in bids) {
+        if (bidResponse.cacheUUID) {
+            [_usedBidsMap setObject:bidResponse forKey:bidResponse.cacheUUID];
+        }
+    }
+}
+
 - (nullable NSDictionary<NSString *, NSString *> *)keywordsForWinningBidForAdUnit:(nonnull PBAdUnit *)adUnit {
     NSArray *bids = [self getBids:adUnit];
-    [self resetAdUnit:adUnit];
+    [self ejectExpiredUsedBids];
+    [self archiveUsedBids:bids];
     [self requestBidsForAdUnits:@[adUnit]];
+    
     if (bids) {
         PBLogDebug(@"Bids available to create keywords");
+        [self resetAdUnit:adUnit];    
         NSMutableDictionary<NSString *, NSString *> *keywords = [[NSMutableDictionary alloc] init];
         for (PBBidResponse *bidResp in bids) {
             [keywords addEntriesFromDictionary:bidResp.customKeywords];
@@ -305,50 +336,6 @@ static dispatch_once_t onceToken;
         return YES;
     }
     return NO;
-}
-
-- (void)setBidOnAdObject:(NSObject *)adObject {
-
-
-    if (adObject.pb_identifier) {
-
-        [self clearBidOnAdObject:adObject];
-
-        NSMutableArray *mutableKeywords;
-        NSString *keywords = @"";
-        SEL getKeywords = NSSelectorFromString(@"keywords");
-        if ([adObject respondsToSelector:getKeywords]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            keywords = (NSString *)[adObject performSelector:getKeywords];
-        }
-        if (keywords.length) {
-            mutableKeywords = [[keywords componentsSeparatedByString:@","] mutableCopy];
-        }
-        if (!mutableKeywords) {
-            mutableKeywords = [[NSMutableArray alloc] init];
-        }
-        PBAdUnit *adUnit = adObject.pb_identifier;
-        NSDictionary<NSString *, NSString *> *keywordsPairs = [self keywordsForWinningBidForAdUnit:adUnit];
-        for (id key in keywordsPairs) {
-            id value = [keywordsPairs objectForKey:key];
-            if (value) {
-                [mutableKeywords addObject:[NSString stringWithFormat:@"%@:%@", key, value]];
-            }
-        }
-        if ([[mutableKeywords componentsJoinedByString:@","] length] > 4000) {
-            PBLogDebug(@"Bid to MoPub is too long");
-        } else {
-            SEL setKeywords = NSSelectorFromString(@"setKeywords:");
-            if ([adObject respondsToSelector:setKeywords]) {
-                NSString *keywordsToSet = [mutableKeywords componentsJoinedByString:@","];
-                [adObject performSelector:setKeywords withObject:keywordsToSet];
-#pragma clang diagnostic pop
-            }
-        }
-    } else {
-        PBLogDebug(@"No bid available to pass to MoPub");
-    }
 }
 
 ///

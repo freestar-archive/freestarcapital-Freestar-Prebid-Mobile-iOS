@@ -1,11 +1,11 @@
 /*   Copyright 2017 Prebid.org, Inc.
-
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,12 +26,11 @@
 #import "PBTargetingParams.h"
 #import "PBServerRequestBuilder.h"
 #import "PBException.h"
+#import "PBAnalyticsEvent.h"
+#import "PBAnalyticsManager.h"
+#import "PBGlobalFunctions.h"
 
 static NSString *const kAPNAdServerCacheIdKey = @"hb_cache_id";
-
-static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
-static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
-static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
 static int const kBatchCount = 10;
 
 @interface PBServerAdapter ()
@@ -82,24 +81,66 @@ static int const kBatchCount = 10;
         j+=range.length;
         
         NSURLRequest *request = [[PBServerRequestBuilder sharedInstance] buildRequest:subAdUnitArray withAccountId:self.accountId withSecureParams:self.isSecure];
-        
+        __weak typeof(self) weakSelf = self;
         [[PBServerFetcher sharedInstance] makeBidRequest:request withCompletionHandler:^(NSDictionary *adUnitToBidsMap, NSError *error) {
+            __strong typeof(self) strongSelf = weakSelf;
             if (error) {
                 [delegate didCompleteWithError:error];
                 return;
             }
+            
+            NSMutableArray<NSDictionary*> *bidResponses = [[NSMutableArray alloc] init];
             for (NSString *adUnitId in [adUnitToBidsMap allKeys]) {
                 NSArray *bidsArray = (NSArray *)[adUnitToBidsMap objectForKey:adUnitId];
                 NSMutableArray *bidResponsesArray = [[NSMutableArray alloc] init];
                 for (NSDictionary *bid in bidsArray) {
                     PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:bid[@"ext"][@"prebid"][@"targeting"]];
+                    bidResponse.responseInfo = bid;
                     PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
                     [bidResponsesArray addObject:bidResponse];
+                    
+                    // analytics
+                    NSDictionary *analyticsEventInfo = @{
+                                                         @"bidderCode" : ObjectOrNull(bid[@"seat"]),
+                                                         @"width" : ObjectOrNull(bid[@"w"]),
+                                                         @"height" : ObjectOrNull(bid[@"h"]),
+                                                         @"statusMessage" : @"",
+                                                         @"adId" : ObjectOrNull(bid[@"adid"]),
+                                                         @"ad" : ObjectOrNull(bid[@"adm"]),
+                                                         @"cpm" : ObjectOrNull(bid[@"price"]),
+                                                         @"creativeId" : ObjectOrNull(bid[@"crid"]),
+                                                         @"pubapiId" : @"",
+                                                         @"currencyCode" : ObjectOrNull(@"USD"),
+                                                         @"requestId" : ObjectOrNull(bid[@"id"]),
+                                                         @"responseTimestamp" : @([[NSDate date] timeIntervalSince1970]),
+                                                         @"requestTimestamp" : @([[NSDate date] timeIntervalSince1970]),
+                                                         @"bidder" : ObjectOrNull(bid[@"seat"]),
+                                                         @"adUnitCode" : ObjectOrNull(adUnitId),
+                                                         @"timeToRespond" : @(60),
+                                                         @"adjustment" : @(NO),
+                                                         @"ttl" : @(300)
+                                                         };
+                    NSArray *keysForNullValues = [analyticsEventInfo allKeysForObject:[NSNull null]];
+                    NSMutableDictionary *prunedAnalyticsInfo = [analyticsEventInfo mutableCopy];
+                    // remove NSNulls
+                    [prunedAnalyticsInfo removeObjectsForKeys:keysForNullValues];
+                    [bidResponses addObject:prunedAnalyticsInfo];
                 }
                 [delegate didReceiveSuccessResponse:bidResponsesArray];;
             }
+            [strongSelf trackBidResponses:bidResponses];
         }];
     }
+}
+
+- (void)trackBidResponses:(NSArray*)bidResponses {
+    if (bidResponses == nil || bidResponses.count == 0) {
+        return;
+    }
+    NSDictionary *infoWrapper = @{ @"bidResponses" : bidResponses };
+    PBAnalyticsEvent *event = [[PBAnalyticsEvent alloc] initWithEventType:PBAnalyticsEventBidResponse];
+    event.info = infoWrapper;
+    [[PBAnalyticsManager sharedInstance] trackEvent:event];
 }
 
 @end

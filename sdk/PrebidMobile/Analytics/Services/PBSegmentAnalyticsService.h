@@ -13,10 +13,9 @@
  limitations under the License.
  */
 
-#import "PBBidManager.h"
+#import <Foundation/Foundation.h>
+#import <PrebidMobile/PBAnalyticsService.h>
 
-@interface PBBidManager (FSAdditions)
-
-- (void)refreshAllBids;
+@interface PBSegmentAnalyticsService : NSObject <PBAnalyticsService>
 
 @end

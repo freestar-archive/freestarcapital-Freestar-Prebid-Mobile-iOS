@@ -66,4 +66,11 @@ static NSTimeInterval const kDefaultBidExpiryTime = 270;
     return ([[NSDate date] timeIntervalSince1970] - self.createdTime > self.timeToExpireAfter);
 }
 
+- (NSString*)cacheUUID {
+    if (!_customKeywords) {
+        return nil;
+    }
+    return _customKeywords[@"hb_cache_id"];
+}
+
 @end
