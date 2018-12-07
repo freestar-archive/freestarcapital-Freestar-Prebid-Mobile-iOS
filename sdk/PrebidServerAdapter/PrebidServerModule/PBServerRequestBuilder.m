@@ -177,7 +177,10 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
 - (NSDictionary *)openrtbApp:(NSString *) accountId {
     NSMutableDictionary *app = [[NSMutableDictionary alloc] init];
     
-    NSString *bundle = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *bundle = [[PBTargetingParams sharedInstance] itunesID];
+    if (bundle == nil) {
+        bundle = [[NSBundle mainBundle] bundleIdentifier];
+    }
     if (bundle) {
         app[@"bundle"] = bundle;
     }
