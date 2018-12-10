@@ -117,7 +117,8 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     // Get the scheme.
     if (shouldAccept) {
         scheme = [[url scheme] lowercaseString];
-        shouldAccept = (scheme != nil);
+        // matches http and https
+        shouldAccept = [scheme hasPrefix:@"http"];
     }
     
     // check for correct domain
@@ -142,7 +143,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
     NSURLRequest *      result;
     
-    assert(request != nil);
+    if (request == nil) {
+        return nil;
+    }
     // can be called on any thread
     
     // Canonicalising a request is quite complex, so all the heavy lifting has
@@ -150,15 +153,21 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
     result = CanonicalRequestForRequest(request);
     
+    // if request cannot be canonicalised, return original request
+    if (result == nil) {
+        return request;
+    }
+    
     //    PBLogDebug(@"canonicalized %@ to %@", [request URL], [result URL]);
     return result;
 }
 
 - (id)initWithRequest:(NSURLRequest *)request cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id <NSURLProtocolClient>)client
 {
-    assert(request != nil);
+    if (request == nil || client == nil) {
+        return nil;
+    }
     // cachedResponse may be nil
-    assert(client != nil);
     // can be called on any thread
     
     self = [super initWithRequest:request cachedResponse:cachedResponse client:client];
@@ -171,7 +180,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 
 - (void)dealloc
 {
-    assert(self->_task == nil);                     // we should have cleared it by now
+    self->_task = nil;
     //    assert(self->_pendingChallenge == nil);         // we should have cancelled it by now
     //    assert(self->_pendingChallengeCompletionHandler == nil);    // we should have cancelled it by now
 }
@@ -326,27 +335,44 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
 {
-    NSURLCacheStoragePolicy cacheStoragePolicy;
+    NSURLCacheStoragePolicy cacheStoragePolicy = NSURLCacheStorageNotAllowed;
+    
+    // cancel request if response is nil or dataTask is incorrect
+    if (dataTask != self.task || response == nil) {
+        if (response == nil) {
+            response = [[NSHTTPURLResponse alloc] initWithURL:dataTask.originalRequest.URL statusCode:500 HTTPVersion:@"1.1" headerFields:nil];
+        }
+        [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:cacheStoragePolicy];
+        if (completionHandler) {
+            completionHandler(NSURLSessionResponseCancel);
+        }
+    }
     
 #pragma unused(session)
 #pragma unused(dataTask)
-    assert(dataTask == self.task);
-    assert(response != nil);
-    assert(completionHandler != nil);
-    assert([NSThread currentThread] == self.clientThread);
+//    assert(dataTask == self.task);
+//    assert(response != nil);
+//    assert(completionHandler != nil);
+//    assert([NSThread currentThread] == self.clientThread);
     
-    cacheStoragePolicy = NSURLCacheStorageNotAllowed;
+    
     [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:cacheStoragePolicy];
-    completionHandler(NSURLSessionResponseAllow);
+    if (completionHandler) {
+        completionHandler(NSURLSessionResponseAllow);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
 #pragma unused(session)
 #pragma unused(dataTask)
-    assert(dataTask == self.task);
-    assert(data != nil);
-    assert([NSThread currentThread] == self.clientThread);
+    if (dataTask != self.task || data == nil) {
+        [[self client] URLProtocol:self didLoadData:[NSData data]];
+        return;
+    }
+//    assert(dataTask == self.task);
+//    assert(data != nil);
+//    assert([NSThread currentThread] == self.clientThread);
     
     if (!_receivedData) {
         _receivedData = [NSMutableData data];
@@ -359,10 +385,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(dataTask)
-    assert(dataTask == self.task);
-    assert(proposedResponse != nil);
-    assert(completionHandler != nil);
-    assert([NSThread currentThread] == self.clientThread);
+//    assert(dataTask == self.task);
+//    assert(proposedResponse != nil);
+//    assert(completionHandler != nil);
+//    assert([NSThread currentThread] == self.clientThread);
     completionHandler(proposedResponse);
 }
 
@@ -371,8 +397,13 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(task)
-    assert( (self.task == nil) || (task == self.task) );        // can be nil in the 'cancel from -stopLoading' case
-    assert([NSThread currentThread] == self.clientThread);
+    if (self.task != nil && task != self.task) {
+        error = [NSError errorWithDomain:DFPAdManagerDomain
+                                    code:666
+                                userInfo:nil];
+    }
+//    assert( (self.task == nil) || (task == self.task) );        // can be nil in the 'cancel from -stopLoading' case
+//    assert([NSThread currentThread] == self.clientThread);
     
     // Just log and then, in most cases, pass the call on to our client.
     

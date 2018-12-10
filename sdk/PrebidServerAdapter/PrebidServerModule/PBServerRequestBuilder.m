@@ -81,9 +81,8 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     requestDict[@"source"] = [self openrtbSource];
     requestDict[@"app"] = [self openrtbApp:accountID];
     requestDict[@"device"] = [self openrtbDevice];
-    if([[PBTargetingParams sharedInstance] isGDPREnabled] == YES){
-        requestDict[@"regs"] = [self openrtbRegs];
-    }
+    // be explicit with GDPR
+    requestDict[@"regs"] = [self openrtbRegs];
     requestDict[@"user"] = [self openrtbUser];
     
     if (_host == PBServerHostFreestar) {
