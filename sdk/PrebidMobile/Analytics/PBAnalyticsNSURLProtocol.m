@@ -330,7 +330,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 //    assert(challenge != nil);
 //    assert(completionHandler != nil);
 //    assert([NSThread currentThread] == self.clientThread);
-    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+    if (completionHandler) {
+        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
