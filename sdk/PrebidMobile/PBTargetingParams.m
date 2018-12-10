@@ -174,7 +174,7 @@ static dispatch_once_t onceToken;
 }
 
 -(BOOL) subjectToGDPR {
-    BOOL savedGDPR = YES;
+    BOOL savedGDPR = NO;
     if([[NSUserDefaults standardUserDefaults] objectForKey:PB_GDPR_SubjectToConsent] != nil){
         
         savedGDPR = [[NSUserDefaults standardUserDefaults] boolForKey:PB_GDPR_SubjectToConsent];

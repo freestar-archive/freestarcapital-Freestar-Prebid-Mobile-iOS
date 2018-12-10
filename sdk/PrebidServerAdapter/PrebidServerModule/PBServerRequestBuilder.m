@@ -303,7 +303,7 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     NSMutableDictionary *regsDict = [[NSMutableDictionary alloc] init];
     
     BOOL gdpr = [[PBTargetingParams sharedInstance] subjectToGDPR];
-    NSNumber *gdprValue = [NSNumber numberWithBool:gdpr];
+    NSNumber *gdprValue = gdpr ? @(1) : @(0);
     regsDict[@"ext"] = @{@"gdpr" : gdprValue};
     
     return regsDict;
