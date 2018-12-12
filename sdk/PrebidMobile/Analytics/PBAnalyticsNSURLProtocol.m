@@ -102,7 +102,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     NSString *  scheme;
     
     // check to see if analytics is enabled
-    shouldAccept = [PBAnalyticsManager sharedInstance].enabled;
+    shouldAccept = [PBAnalyticsManager sharedInstance].isEnabled;
     if (!shouldAccept) {
         return NO;
     }
@@ -130,23 +130,38 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
     // check for correct domain
     if (shouldAccept) {
-        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
-        BOOL isPrebidCacheRequest = [request.URL.absoluteString containsString:PrebidCacheDomain];
-        isPrebidCacheRequest = isPrebidCacheRequest && [[[urlComponents host] lowercaseString] isEqualToString:PrebidCacheDomain];
-        BOOL isDFPRequest = [request.URL.absoluteString containsString:DFPAdManagerDomainPath];
-        isDFPRequest = isDFPRequest && [[[urlComponents host] lowercaseString] isEqualToString:DFPAdManagerDomain];
-        if (isPrebidCacheRequest) {
+        if ([self isPrebidCacheRequestWithURL:url]) {
             //            PBLogDebug(@"accept prebid cache request %@", url);
             NSString *uuid = [request.URL pb_queryValueForKey:@"uuid"];
             // bidWon event
             PBBidResponse *bidWon = [[PBBidManager sharedInstance] usedBidWithCacheUUID:uuid];
             [self trackBidWon:bidWon];
-        } else if (isDFPRequest) {
+            // we don't need to manage this request
+            shouldAccept = NO;
+        } else if ([self isDFPRequestWithURL:url]) {
             //            PBLogDebug(@"accept DFP request %@", url);
+            shouldAccept = YES;
+        } else {
+            // do not manage this request
+            shouldAccept = NO;
         }
     }
     
     return shouldAccept;
+}
+
++ (BOOL)isPrebidCacheRequestWithURL:(NSURL*)url {
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+    BOOL isPrebidCacheRequest = [url.absoluteString containsString:PrebidCacheDomain];
+    isPrebidCacheRequest = isPrebidCacheRequest && [[[urlComponents host] lowercaseString] isEqualToString:PrebidCacheDomain];
+    return isPrebidCacheRequest;
+}
+
++ (BOOL)isDFPRequestWithURL:(NSURL*)url {
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+    BOOL isDFPRequest = [url.absoluteString containsString:DFPAdManagerDomainPath];
+    isDFPRequest = isDFPRequest && [[[urlComponents host] lowercaseString] isEqualToString:DFPAdManagerDomain];
+    return isDFPRequest;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
@@ -232,11 +247,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     recursiveRequest = [[self request] mutableCopy];
     assert(recursiveRequest != nil);
     
-    BOOL isPrebidCacheRequest = [[self request].URL.absoluteString containsString:PrebidCacheDomain];
-    BOOL isDFPRequest = [[self request].URL.absoluteString containsString:DFPAdManagerDomain];
-    if (isPrebidCacheRequest) {
+    NSURL *url = [self request].URL;    
+    if ([self.class isPrebidCacheRequestWithURL:url]) {
         [[self class] setProperty:@YES forKey:kOurPrebidCacheRequestFlagProperty inRequest:recursiveRequest];
-    } else if (isDFPRequest) {
+    } else if ([self.class isDFPRequestWithURL:url]) {
         [[self class] setProperty:@YES forKey:kOurDFPFlagRequestProperty inRequest:recursiveRequest];
     }
     
@@ -336,10 +350,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(task)
-//    assert(task == self.task);
-//    assert(challenge != nil);
-//    assert(completionHandler != nil);
-//    assert([NSThread currentThread] == self.clientThread);
+    //    assert(task == self.task);
+    //    assert(challenge != nil);
+    //    assert(completionHandler != nil);
+    //    assert([NSThread currentThread] == self.clientThread);
     if (completionHandler) {
         completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     }
@@ -362,10 +376,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
 #pragma unused(session)
 #pragma unused(dataTask)
-//    assert(dataTask == self.task);
-//    assert(response != nil);
-//    assert(completionHandler != nil);
-//    assert([NSThread currentThread] == self.clientThread);
+    //    assert(dataTask == self.task);
+    //    assert(response != nil);
+    //    assert(completionHandler != nil);
+    //    assert([NSThread currentThread] == self.clientThread);
     
     
     [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:cacheStoragePolicy];
@@ -382,9 +396,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
         [[self client] URLProtocol:self didLoadData:[NSData data]];
         return;
     }
-//    assert(dataTask == self.task);
-//    assert(data != nil);
-//    assert([NSThread currentThread] == self.clientThread);
+    //    assert(dataTask == self.task);
+    //    assert(data != nil);
+    //    assert([NSThread currentThread] == self.clientThread);
     
     if (!_receivedData) {
         _receivedData = [NSMutableData data];
@@ -397,10 +411,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(dataTask)
-//    assert(dataTask == self.task);
-//    assert(proposedResponse != nil);
-//    assert(completionHandler != nil);
-//    assert([NSThread currentThread] == self.clientThread);
+    //    assert(dataTask == self.task);
+    //    assert(proposedResponse != nil);
+    //    assert(completionHandler != nil);
+    //    assert([NSThread currentThread] == self.clientThread);
     completionHandler(proposedResponse);
 }
 
@@ -414,8 +428,8 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
                                     code:666
                                 userInfo:nil];
     }
-//    assert( (self.task == nil) || (task == self.task) );        // can be nil in the 'cancel from -stopLoading' case
-//    assert([NSThread currentThread] == self.clientThread);
+    //    assert( (self.task == nil) || (task == self.task) );        // can be nil in the 'cancel from -stopLoading' case
+    //    assert([NSThread currentThread] == self.clientThread);
     
     // Just log and then, in most cases, pass the call on to our client.
     
@@ -434,7 +448,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
         [[self client] URLProtocol:self didFailWithError:error];
     }
     
-    BOOL isDFPResponse = ([[self class] propertyForKey:kOurDFPFlagRequestProperty inRequest:task.currentRequest] == nil);
+    BOOL isDFPResponse = ([[self class] propertyForKey:kOurDFPFlagRequestProperty inRequest:task.currentRequest]) != nil;
     if (isDFPResponse) {
         if (_receivedData && _receivedData.length > 0) {
             NSString *response = [[NSString alloc] initWithData:_receivedData encoding:NSUTF8StringEncoding];

@@ -30,5 +30,6 @@
 - (void)addService:(id<PBAnalyticsService>)service;
 - (void)removeService:(id<PBAnalyticsService>)service;
 - (void)removeAllServices;
+- (void)setEnabled:(BOOL)enabled;
 
 @end
