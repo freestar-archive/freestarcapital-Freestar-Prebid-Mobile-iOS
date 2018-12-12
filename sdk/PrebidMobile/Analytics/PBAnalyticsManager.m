@@ -38,7 +38,8 @@
         sharedInstance = [[self alloc] init];
         sharedInstance.services = [[NSMutableSet alloc] init];
         sharedInstance.queue = dispatch_queue_create("PBAnalyticsManagerQueue", DISPATCH_QUEUE_SERIAL);
-        sharedInstance.enabled = YES;
+        // analytics is disabled by default
+//        sharedInstance.enabled = YES;
     });
     return sharedInstance;
 }

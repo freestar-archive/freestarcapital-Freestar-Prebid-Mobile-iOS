@@ -27,7 +27,8 @@
 #import "PBGlobalFunctions.h"
 
 #define PrebidCacheDomain @"prebid-cache.pub.network"
-#define DFPAdManagerDomain @"pubads.g.doubleclick.net/gampad/"
+#define DFPAdManagerDomain @"pubads.g.doubleclick.net"
+#define DFPAdManagerDomainPath @"pubads.g.doubleclick.net/gampad/"
 
 typedef void (^ChallengeCompletionHandler)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential);
 
@@ -100,6 +101,12 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     NSURL *     url;
     NSString *  scheme;
     
+    // check to see if analytics is enabled
+    shouldAccept = [PBAnalyticsManager sharedInstance].enabled;
+    if (!shouldAccept) {
+        return NO;
+    }
+    
     // Check the basics.  This routine is extremely defensive because experience has shown that
     // it can be called with some very odd requests <rdar://problem/15197355>.
     
@@ -123,8 +130,11 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
     // check for correct domain
     if (shouldAccept) {
+        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
         BOOL isPrebidCacheRequest = [request.URL.absoluteString containsString:PrebidCacheDomain];
-        BOOL isDFPRequest = [request.URL.absoluteString containsString:DFPAdManagerDomain];
+        isPrebidCacheRequest = isPrebidCacheRequest && [[[urlComponents host] lowercaseString] isEqualToString:PrebidCacheDomain];
+        BOOL isDFPRequest = [request.URL.absoluteString containsString:DFPAdManagerDomainPath];
+        isDFPRequest = isDFPRequest && [[[urlComponents host] lowercaseString] isEqualToString:DFPAdManagerDomain];
         if (isPrebidCacheRequest) {
             //            PBLogDebug(@"accept prebid cache request %@", url);
             NSString *uuid = [request.URL pb_queryValueForKey:@"uuid"];
