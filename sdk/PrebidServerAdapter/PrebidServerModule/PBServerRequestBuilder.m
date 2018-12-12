@@ -32,7 +32,7 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.4.2";
+static NSString *const kPrebidMobileVersion = @"0.5.4";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
 static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
@@ -81,9 +81,8 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     requestDict[@"source"] = [self openrtbSource];
     requestDict[@"app"] = [self openrtbApp:accountID];
     requestDict[@"device"] = [self openrtbDevice];
-    if([[PBTargetingParams sharedInstance] isGDPREnabled] == YES){
-        requestDict[@"regs"] = [self openrtbRegs];
-    }
+    // be explicit with GDPR
+    requestDict[@"regs"] = [self openrtbRegs];
     requestDict[@"user"] = [self openrtbUser];
     
     if (_host == PBServerHostFreestar) {
@@ -177,7 +176,10 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
 - (NSDictionary *)openrtbApp:(NSString *) accountId {
     NSMutableDictionary *app = [[NSMutableDictionary alloc] init];
     
-    NSString *bundle = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *bundle = [[PBTargetingParams sharedInstance] itunesID];
+    if (bundle == nil) {
+        bundle = [[NSBundle mainBundle] bundleIdentifier];
+    }
     if (bundle) {
         app[@"bundle"] = bundle;
     }
@@ -301,8 +303,8 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     NSMutableDictionary *regsDict = [[NSMutableDictionary alloc] init];
     
     BOOL gdpr = [[PBTargetingParams sharedInstance] subjectToGDPR];
-    
-    regsDict[@"ext"] = @{@"gdpr" : @(@(gdpr).integerValue)};
+    NSNumber *gdprValue = gdpr ? @(1) : @(0);
+    regsDict[@"ext"] = @{@"gdpr" : gdprValue};
     
     return regsDict;
 }

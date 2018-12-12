@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name         = "PrebidMobileFS"
-  s.version      = "0.4.2"
+  s.version      = "0.5.4"
   s.summary      = "PrebidMobile is a lightweight framework that integrates directly with Prebid Server."
-
+  
   s.description  = <<-DESC
     Prebid-Mobile-SDK is a lightweight framework that integrates directly with Prebid Server to increase yield for publishers by adding more mobile buyers."
     DESC
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/freestarcapital/Freestar-Prebid-Mobile-iOS.git",  :tag => s.version.to_s }
   s.source_files = "sdk/PrebidMobile", "sdk/PrebidMobile/**/*.{h,m}", "sdk/PrebidServerAdapter/**/*.{h,m}"
   s.public_header_files = "sdk/PrebidServerAdapter/PBServerAdapter.h", "sdk/PrebidMobile/*.h", "sdk/PrebidMobile/Logging/*.h", "sdk/PrebidMobile/Analytics/*.h"
-  s.exclude_files = "sdk/PrebidMobile/Analytics/Services/*.{h,m}"
+  s.exclude_files = "sdk/PrebidMobile/Analytics/Services/*.{h,m}", "sdk/PrebidMobile/**/PrebidMobile-umbrella.h"
   s.dependency  "FSCache"
   s.requires_arc = true
   s.xcconfig = {

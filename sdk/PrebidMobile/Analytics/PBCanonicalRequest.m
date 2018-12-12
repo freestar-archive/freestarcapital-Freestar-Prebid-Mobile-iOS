@@ -51,12 +51,20 @@ static CFIndex FixPostSchemeSeparator(NSURL *url, NSMutableData *urlData, CFInde
     NSUInteger  separatorLength;
     NSUInteger  expectedSeparatorLength;
     
+    if (url == nil || urlData == nil || bytesInserted < 0) {
+        return kCFNotFound;
+    }
+    
     assert(url != nil);
     assert(urlData != nil);
     assert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentScheme, NULL);
     if (range.location != kCFNotFound) {
+        if (range.location < 0 || range.length < 0) {
+            return kCFNotFound;
+        }
+        
         assert(range.location >= 0);
         assert(range.length >= 0);
         
@@ -315,7 +323,9 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
     NSMutableURLRequest *   result;
     NSString *              scheme;
     
-    assert(request != nil);
+    if (request == nil) {
+        return nil;
+    }
     
     // Make a mutable copy of the request.
     
@@ -325,7 +335,10 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
     // we even called?).
     
     scheme = [[[request URL] scheme] lowercaseString];
-    assert(scheme != nil);
+    
+    if (scheme == nil) {
+        return nil;
+    }
     
     if ( ! [scheme isEqual:@"http" ] && ! [scheme isEqual:@"https"]) {
         assert(NO);
@@ -333,6 +346,11 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
         CFIndex         bytesInserted;
         NSURL *         requestURL;
         NSMutableData * urlData;
+        
+        if (requestURL == nil || urlData == nil) {
+            return nil;
+        }
+        
         static const CanonicalRequestStepFunction kStepFunctions[] = {
             FixPostSchemeSeparator,
             LowercaseScheme,

@@ -94,39 +94,57 @@ static int const kBatchCount = 10;
                 NSArray *bidsArray = (NSArray *)[adUnitToBidsMap objectForKey:adUnitId];
                 NSMutableArray *bidResponsesArray = [[NSMutableArray alloc] init];
                 for (NSDictionary *bid in bidsArray) {
-                    PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:bid[@"ext"][@"prebid"][@"targeting"]];
-                    bidResponse.responseInfo = bid;
-                    PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
-                    [bidResponsesArray addObject:bidResponse];
-                    
-                    // analytics
-                    NSDictionary *analyticsEventInfo = @{
-                                                         @"bidderCode" : ObjectOrNull(bid[@"seat"]),
-                                                         @"width" : ObjectOrNull(bid[@"w"]),
-                                                         @"height" : ObjectOrNull(bid[@"h"]),
-                                                         @"statusMessage" : @"",
-                                                         @"adId" : ObjectOrNull(bid[@"adid"]),
-                                                         @"ad" : ObjectOrNull(bid[@"adm"]),
-                                                         @"cpm" : ObjectOrNull(bid[@"price"]),
-                                                         @"creativeId" : ObjectOrNull(bid[@"crid"]),
-                                                         @"pubapiId" : @"",
-                                                         @"currencyCode" : ObjectOrNull(@"USD"),
-                                                         @"requestId" : ObjectOrNull(bid[@"id"]),
-                                                         @"responseTimestamp" : @([[NSDate date] timeIntervalSince1970]),
-                                                         @"requestTimestamp" : @([[NSDate date] timeIntervalSince1970]),
-                                                         @"bidder" : ObjectOrNull(bid[@"seat"]),
-                                                         @"adUnitCode" : ObjectOrNull(adUnitId),
-                                                         @"timeToRespond" : @(60),
-                                                         @"adjustment" : @(NO),
-                                                         @"ttl" : @(300)
-                                                         };
-                    NSArray *keysForNullValues = [analyticsEventInfo allKeysForObject:[NSNull null]];
-                    NSMutableDictionary *prunedAnalyticsInfo = [analyticsEventInfo mutableCopy];
-                    // remove NSNulls
-                    [prunedAnalyticsInfo removeObjectsForKeys:keysForNullValues];
-                    [bidResponses addObject:prunedAnalyticsInfo];
+                    NSMutableDictionary *adServerTargetingCopy = [bid[@"ext"][@"prebid"][@"targeting"] mutableCopy];
+                    if (adServerTargetingCopy != nil) {
+                        // Check if resposne has cache id, since prebid server cache would fail for some reason and not set cache id on the response
+                        // If cache id is not present, we do not pass the bid back
+                        bool hasCacheID = NO;
+                        for (NSString *key in adServerTargetingCopy.allKeys) {
+                            if ([key containsString:@"hb_cache_id"]) {
+                                hasCacheID = YES;
+                            }
+                        }
+                        if (hasCacheID) {
+                            PBBidResponse *bidResponse = [PBBidResponse bidResponseWithAdUnitId:adUnitId adServerTargeting:bid[@"ext"][@"prebid"][@"targeting"]];
+                            bidResponse.responseInfo = bid;
+                            PBLogDebug(@"Bid Successful with rounded bid targeting keys are %@ for adUnit id is %@", [bidResponse.customKeywords description], adUnitId);
+                            [bidResponsesArray addObject:bidResponse];
+                            
+                            // analytics
+                            NSDictionary *analyticsEventInfo = @{
+                                                                 @"bidderCode" : ObjectOrNull(bid[@"seat"]),
+                                                                 @"width" : ObjectOrNull(bid[@"w"]),
+                                                                 @"height" : ObjectOrNull(bid[@"h"]),
+                                                                 @"statusMessage" : @"",
+                                                                 @"adId" : ObjectOrNull(bid[@"adid"]),
+                                                                 @"ad" : ObjectOrNull(bid[@"adm"]),
+                                                                 @"cpm" : ObjectOrNull(bid[@"price"]),
+                                                                 @"creativeId" : ObjectOrNull(bid[@"crid"]),
+                                                                 @"pubapiId" : @"",
+                                                                 @"currencyCode" : ObjectOrNull(@"USD"),
+                                                                 @"requestId" : ObjectOrNull(bid[@"id"]),
+                                                                 @"responseTimestamp" : @([[NSDate date] timeIntervalSince1970]),
+                                                                 @"requestTimestamp" : @([[NSDate date] timeIntervalSince1970]),
+                                                                 @"bidder" : ObjectOrNull(bid[@"seat"]),
+                                                                 @"adUnitCode" : ObjectOrNull(adUnitId),
+                                                                 @"timeToRespond" : @(60),
+                                                                 @"adjustment" : @(NO),
+                                                                 @"ttl" : @(300)
+                                                                 };
+                            NSArray *keysForNullValues = [analyticsEventInfo allKeysForObject:[NSNull null]];
+                            NSMutableDictionary *prunedAnalyticsInfo = [analyticsEventInfo mutableCopy];
+                            // remove NSNulls
+                            [prunedAnalyticsInfo removeObjectsForKeys:keysForNullValues];
+                            [bidResponses addObject:prunedAnalyticsInfo];
+                        }
+                    }
                 }
-                [delegate didReceiveSuccessResponse:bidResponsesArray];;
+                if (bidResponsesArray.count == 0) {
+                    // use code 0 to represent the no bid case for now
+                    [delegate didCompleteWithError:[NSError errorWithDomain:@"prebid.org" code:0 userInfo:nil] ];
+                } else {
+                    [delegate didReceiveSuccessResponse:bidResponsesArray];
+                }
             }
             [strongSelf trackBidResponses:bidResponses];
         }];
