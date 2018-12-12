@@ -102,7 +102,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     NSString *  scheme;
     
     // check to see if analytics is enabled
-    shouldAccept = [PBAnalyticsManager sharedInstance].isEnabled;
+    shouldAccept = [PBAnalyticsManager sharedInstance].enabled;
     if (!shouldAccept) {
         return NO;
     }

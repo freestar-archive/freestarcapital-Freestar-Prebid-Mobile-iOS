@@ -21,7 +21,7 @@
 
 @interface PBAnalyticsManager : NSObject
 
-@property (nonatomic, assign, getter=isEnabled) BOOL enabled;
+@property (nonatomic, assign) BOOL enabled;
 
 + (instancetype)sharedInstance;
 - (void)initializeWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions;
@@ -30,6 +30,5 @@
 - (void)addService:(id<PBAnalyticsService>)service;
 - (void)removeService:(id<PBAnalyticsService>)service;
 - (void)removeAllServices;
-- (void)setEnabled:(BOOL)enabled;
 
 @end
