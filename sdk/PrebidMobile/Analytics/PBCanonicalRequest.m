@@ -55,9 +55,9 @@ static CFIndex FixPostSchemeSeparator(NSURL *url, NSMutableData *urlData, CFInde
         return kCFNotFound;
     }
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentScheme, NULL);
     if (range.location != kCFNotFound) {
@@ -65,8 +65,8 @@ static CFIndex FixPostSchemeSeparator(NSURL *url, NSMutableData *urlData, CFInde
             return kCFNotFound;
         }
         
-        assert(range.location >= 0);
-        assert(range.length >= 0);
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
         
         urlDataBytes  = [urlData mutableBytes];
         urlDataLength = [urlData length];
@@ -110,15 +110,15 @@ static CFIndex LowercaseScheme(NSURL *url, NSMutableData *urlData, CFIndex bytes
     uint8_t *   urlDataBytes;
     CFIndex     i;
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentScheme, NULL);
     if (range.location != kCFNotFound) {
-        assert(range.location >= 0);
-        assert(range.length >= 0);
-        
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
+
         urlDataBytes = [urlData mutableBytes];
         for (i = range.location + bytesInserted; i < (range.location + bytesInserted + range.length); i++) {
             urlDataBytes[i] = (uint8_t) tolower_l(urlDataBytes[i], NULL);
@@ -141,15 +141,15 @@ static CFIndex LowercaseHost(NSURL *url, NSMutableData *urlData, CFIndex bytesIn
     uint8_t *   urlDataBytes;
     CFIndex     i;
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentHost, NULL);
     if (range.location != kCFNotFound) {
-        assert(range.location >= 0);
-        assert(range.length >= 0);
-        
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
+
         urlDataBytes = [urlData mutableBytes];
         for (i = range.location + bytesInserted; i < (range.location + bytesInserted + range.length); i++) {
             urlDataBytes[i] = (uint8_t) tolower_l(urlDataBytes[i], NULL);
@@ -170,17 +170,17 @@ static CFIndex FixEmptyHost(NSURL *url, NSMutableData *urlData, CFIndex bytesIns
     CFRange     range;
     CFRange     rangeWithSeparator;
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentHost, &rangeWithSeparator);
     if (range.length == 0) {
         NSUInteger  localhostLength;
         
-        assert(range.location >= 0);
-        assert(range.length >= 0);
-        
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
+
         localhostLength = strlen("localhost");
         if (range.location != kCFNotFound) {
             [urlData replaceBytesInRange:NSMakeRange( (NSUInteger) range.location + (NSUInteger) bytesInserted, 0) withBytes:"localhost" length:localhostLength];
@@ -205,18 +205,19 @@ static CFIndex FixEmptyPath(NSURL *url, NSMutableData *urlData, CFIndex bytesIns
     CFRange     range;
     CFRange     rangeWithSeparator;
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentPath, &rangeWithSeparator);
     // The following is not a typo.  We use rangeWithSeparator to find where to insert the
     // "/" and the range length to decide whether we /need/ to insert the "/".
     if ( (rangeWithSeparator.location != kCFNotFound) && (range.length == 0) ) {
-        assert(range.location >= 0);
-        assert(range.length >= 0);
-        assert(rangeWithSeparator.location >= 0);
-        assert(rangeWithSeparator.length >= 0);
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
+        
+        NSCAssert(rangeWithSeparator.location >= 0, @"Scheme range separator location must be greater or equal to zero.");
+        NSCAssert(rangeWithSeparator.length >= 0, @"Scheme range separator length must be greater or equal to zero.");
         
         [urlData replaceBytesInRange:NSMakeRange( (NSUInteger) rangeWithSeparator.location + (NSUInteger) bytesInserted, 0) withBytes:"/" length:1];
         bytesInserted += 1;
@@ -244,21 +245,21 @@ __attribute__((unused)) static CFIndex DeleteDefaultPort(NSURL *url, NSMutableDa
     NSString *  portNumberStr;
     int         portNumber;
     
-    assert(url != nil);
-    assert(urlData != nil);
-    assert(bytesInserted >= 0);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(urlData != nil);
+    NSCParameterAssert(bytesInserted >= 0);
     
     scheme = [[url scheme] lowercaseString];
-    assert(scheme != nil);
+    NSCAssert(scheme != nil, @"Scheme must not be nil.");
     
     isHTTP  = [scheme isEqual:@"http" ];
     isHTTPS = [scheme isEqual:@"https"];
     
     range = CFURLGetByteRangeForComponent( (CFURLRef) url, kCFURLComponentPort, NULL);
     if (range.location != kCFNotFound) {
-        assert(range.location >= 0);
-        assert(range.length >= 0);
-        
+        NSCAssert(range.location >= 0, @"Scheme range location must be greater or equal to zero.");
+        NSCAssert(range.length >= 0, @"Scheme range length must be greater or equal to zero.");
+
         urlDataBytes = [urlData mutableBytes];
         
         portNumberStr = [[NSString alloc] initWithBytes:&urlDataBytes[range.location + bytesInserted] length:(NSUInteger) range.length encoding:NSUTF8StringEncoding];
@@ -341,7 +342,7 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
     }
     
     if ( ! [scheme isEqual:@"http" ] && ! [scheme isEqual:@"https"]) {
-        assert(NO);
+        NSCAssert(NO, @"Invalid scheme: %@.", scheme);
     } else {
         CFIndex         bytesInserted;
         NSURL *         requestURL;
@@ -367,26 +368,26 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
         bytesInserted = kCFNotFound;
         urlData = nil;
         requestURL = [request URL];
-        assert(requestURL != nil);
+        NSCAssert(requestURL != nil, @"Request URL must not be nil.");
         
         stepCount = sizeof(kStepFunctions) / sizeof(*kStepFunctions);
         for (stepIndex = 0; stepIndex < stepCount; stepIndex++) {
             
             // If we don't have valid URL data, create it from the URL.
             
-            assert(requestURL != nil);
+            NSCAssert(requestURL != nil, @"Request URL must not be nil.");
             if (bytesInserted == kCFNotFound) {
                 NSData *    urlDataImmutable;
                 
                 urlDataImmutable = CFBridgingRelease( CFURLCreateData(NULL, (CFURLRef) requestURL, kCFStringEncodingUTF8, true) );
-                assert(urlDataImmutable != nil);
+                NSCAssert(urlDataImmutable != nil, @"URL data must not be nil.");
                 
                 urlData = [urlDataImmutable mutableCopy];
-                assert(urlData != nil);
+                NSCAssert(urlData != nil, @"URL mutable data must not be nil.");
                 
                 bytesInserted = 0;
             }
-            assert(urlData != nil);
+            NSCAssert(urlData != nil, @"URL mutable data must not be nil.");
             
             // Run the step.
             
@@ -404,7 +405,7 @@ extern NSMutableURLRequest * CanonicalRequestForRequest(NSURLRequest *request)
             
             if ( (bytesInserted == kCFNotFound) || ((stepIndex + 1) == stepCount) ) {
                 requestURL = CFBridgingRelease( CFURLCreateWithBytes(NULL, [urlData bytes], (CFIndex) [urlData length], kCFStringEncodingUTF8, NULL) );
-                assert(requestURL != nil);
+                NSCAssert(requestURL != nil, @"Request URL must not be nil.");
                 
                 urlData = nil;
             }

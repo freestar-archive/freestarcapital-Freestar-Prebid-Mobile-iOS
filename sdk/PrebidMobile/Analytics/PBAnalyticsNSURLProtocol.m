@@ -166,6 +166,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
+    NSParameterAssert(request != nil);
     NSURLRequest *      result;
     
     if (request == nil) {
@@ -189,6 +190,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 
 - (id)initWithRequest:(NSURLRequest *)request cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id <NSURLProtocolClient>)client
 {
+    NSParameterAssert(request != nil);
+    NSParameterAssert(client != nil);
+    
     if (request == nil || client == nil) {
         return nil;
     }
@@ -206,21 +210,21 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 - (void)dealloc
 {
     self->_task = nil;
-    //    assert(self->_pendingChallenge == nil);         // we should have cancelled it by now
-    //    assert(self->_pendingChallengeCompletionHandler == nil);    // we should have cancelled it by now
+    NSAssert(self->_task == nil, @"Task must be nil.");
 }
 
 - (void)startLoading
 {
+    NSAssert(self.clientThread == nil, @"Client thread must be nil.");
+    NSAssert(self.task == nil, @"Task must be nil.");
+    NSAssert(self.modes == nil, @"Modes must be nil.");
+    
     NSMutableURLRequest *   recursiveRequest;
     NSMutableArray *        calculatedModes;
     NSString *              currentMode;
     
     // At this point we kick off the process of loading the URL via NSURLSession.
     // The thread that calls this method becomes the client thread.
-    
-    assert(self.clientThread == nil);           // you can't call -startLoading twice
-    assert(self.task == nil);
     
     // Calculate our effective run loop modes.  In some circumstances (yes I'm looking at
     // you UIWebView!) we can be called from a non-standard thread which then runs a
@@ -231,7 +235,6 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     // For debugging purposes the non-standard mode is "WebCoreSynchronousLoaderRunLoopMode"
     // but it's better not to hard-code that here.
     
-    assert(self.modes == nil);
     calculatedModes = [NSMutableArray array];
     [calculatedModes addObject:NSDefaultRunLoopMode];
     currentMode = [[NSRunLoop currentRunLoop] currentMode];
@@ -239,13 +242,13 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
         [calculatedModes addObject:currentMode];
     }
     self.modes = calculatedModes;
-    assert([self.modes count] > 0);
+    NSAssert(self.modes.count > 0, @"Mode count must be > 0.");
     
     // Create new request that's a clone of the request we were initialised with,
     // except that it has our 'recursive request flag' property set on it.
     
     recursiveRequest = [[self request] mutableCopy];
-    assert(recursiveRequest != nil);
+    NSAssert(recursiveRequest != nil, @"Recursive request must not be nil.");
     
     NSURL *url = [self request].URL;    
     if ([self.class isPrebidCacheRequestWithURL:url]) {
@@ -257,18 +260,13 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     [[self class] setProperty:@YES forKey:kOurRecursiveRequestFlagProperty inRequest:recursiveRequest];
     
     self.startTime = [NSDate timeIntervalSinceReferenceDate];
-    //    if (currentMode == nil) {
-    //        PBLogDebug(@"start %@", [recursiveRequest URL]);
-    //    } else {
-    //        PBLogDebug(@"start %@ (mode %@)", [recursiveRequest URL], currentMode);
-    //    }
     
     // Latch the thread we were called on, primarily for debugging purposes.
     self.clientThread = [NSThread currentThread];
     
     // Once everything is ready to go, create a data task with the new request.
     self.task = [[[self class] sharedDemux] dataTaskWithRequest:recursiveRequest delegate:self modes:self.modes];
-    assert(self.task != nil);
+    NSAssert(self.task != nil, @"Task must not be nil.");
     
     [self.task resume];
 }
@@ -278,7 +276,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     // The implementation just cancels the current load (if it's still running).
     //    PBLogDebug(@"stop (elapsed %.1f)", [NSDate timeIntervalSinceReferenceDate] - self.startTime);
     
-    assert(self.clientThread != nil);           // someone must have called -startLoading
+    NSAssert(self.clientThread != nil , @"Client thread must not be nil");
     
     // Check that we're being stopped on the same thread that we were started
     // on.  Without this invariant things are going to go badly (for example,
@@ -290,7 +288,7 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     // Rather, I rely on our client calling us on the right thread, which is what
     // the following assert is about.
     
-    assert([NSThread currentThread] == self.clientThread);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
     
     if (self.task != nil) {
         [self.task cancel];
@@ -309,12 +307,13 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
 #pragma unused(session)
 #pragma unused(task)
-    assert(task == self.task);
-    assert(response != nil);
-    assert(newRequest != nil);
+    NSAssert(task == self.task, @"Current task must be task in parameter.");
+    NSParameterAssert(response != nil);
+    NSParameterAssert(newRequest != nil);
+
 #pragma unused(completionHandler)
-    assert(completionHandler != nil);
-    assert([NSThread currentThread] == self.clientThread);
+    NSParameterAssert(completionHandler != nil);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
     
     //    PBLogDebug(@"will redirect from %@ to %@", [response URL], [newRequest URL]);
     
@@ -326,7 +325,8 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     // We also cancel our current connection because the client is going to start a new request for
     // us anyway.
     
-    assert([[self class] propertyForKey:kOurRecursiveRequestFlagProperty inRequest:newRequest] != nil);
+    NSAssert([[self class] propertyForKey:kOurRecursiveRequestFlagProperty inRequest:newRequest] != nil,
+             @"Recursive request property not found.");
     
     redirectRequest = [newRequest mutableCopy];
     [[self class] removePropertyForKey:kOurRecursiveRequestFlagProperty inRequest:redirectRequest];
@@ -350,10 +350,11 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(task)
-    //    assert(task == self.task);
-    //    assert(challenge != nil);
-    //    assert(completionHandler != nil);
-    //    assert([NSThread currentThread] == self.clientThread);
+    NSAssert(task == self.task, @"Current task must be task in parameter.");
+    NSParameterAssert(challenge != nil);
+    NSParameterAssert(completionHandler != nil);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
+    
     if (completionHandler) {
         completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     }
@@ -376,11 +377,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
     
 #pragma unused(session)
 #pragma unused(dataTask)
-    //    assert(dataTask == self.task);
-    //    assert(response != nil);
-    //    assert(completionHandler != nil);
-    //    assert([NSThread currentThread] == self.clientThread);
-    
+    NSAssert(dataTask == self.task, @"Current task must be task in parameter.");
+    NSParameterAssert(response != nil);
+    NSParameterAssert(completionHandler != nil);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
     
     [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:cacheStoragePolicy];
     if (completionHandler) {
@@ -396,9 +396,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
         [[self client] URLProtocol:self didLoadData:[NSData data]];
         return;
     }
-    //    assert(dataTask == self.task);
-    //    assert(data != nil);
-    //    assert([NSThread currentThread] == self.clientThread);
+    NSAssert(dataTask == self.task, @"Current task must be task in parameter.");
+    NSParameterAssert(data != nil);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
     
     if (!_receivedData) {
         _receivedData = [NSMutableData data];
@@ -411,11 +411,13 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
 {
 #pragma unused(session)
 #pragma unused(dataTask)
-    //    assert(dataTask == self.task);
-    //    assert(proposedResponse != nil);
-    //    assert(completionHandler != nil);
-    //    assert([NSThread currentThread] == self.clientThread);
-    completionHandler(proposedResponse);
+    NSAssert(dataTask == self.task, @"Current task must be task in parameter.");
+    NSParameterAssert(proposedResponse != nil);
+    NSParameterAssert(completionHandler != nil);
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
+    if (completionHandler) {
+        completionHandler(proposedResponse);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
@@ -428,11 +430,10 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
                                     code:666
                                 userInfo:nil];
     }
-    //    assert( (self.task == nil) || (task == self.task) );        // can be nil in the 'cancel from -stopLoading' case
-    //    assert([NSThread currentThread] == self.clientThread);
+    NSAssert((self.task == nil) || (task == self.task), @"Task must be nil or current task must be task in parameter.");
+    NSAssert([NSThread currentThread] == self.clientThread, @"Current thread must be client thread.");
     
     // Just log and then, in most cases, pass the call on to our client.
-    
     if (error == nil) {
         
         [[self client] URLProtocolDidFinishLoading:self];
