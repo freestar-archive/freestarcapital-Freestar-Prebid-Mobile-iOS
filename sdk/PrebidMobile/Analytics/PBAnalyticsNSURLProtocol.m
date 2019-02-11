@@ -28,7 +28,7 @@
 
 #define PrebidCacheDomain @"prebid-cache.pub.network"
 #define DFPAdManagerDomain @"pubads.g.doubleclick.net"
-#define DFPAdManagerDomainPath @"pubads.g.doubleclick.net/gampad/"
+#define DFPAdManagerDomainPath @"pubads.g.doubleclick.net/gampad/ads"
 
 typedef void (^ChallengeCompletionHandler)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential);
 
