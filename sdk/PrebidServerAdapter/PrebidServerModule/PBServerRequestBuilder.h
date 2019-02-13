@@ -22,6 +22,7 @@
 @property (nonatomic, strong, readwrite) NSURL * _Nonnull hostURL;
 @property (nonatomic, assign, readwrite) PBServerHost host;
 @property (nonatomic, strong, readonly) NSString *accountId;
+@property (nonatomic, strong) NSString *bundleIdentifier;
 @property (nonatomic, assign) BOOL testMode;
 
 + (instancetype _Nullable )sharedInstance;

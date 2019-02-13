@@ -32,7 +32,7 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.5.6";
+static NSString *const kPrebidMobileVersion = @"0.5.7";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
 static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
@@ -178,7 +178,7 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     
     NSString *bundle = [[PBTargetingParams sharedInstance] itunesID];
     if (bundle == nil) {
-        bundle = [[NSBundle mainBundle] bundleIdentifier];
+        bundle = [self bundleIdentifier];
     }
     if (bundle) {
         app[@"bundle"] = bundle;
@@ -194,6 +194,14 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     app[@"ext"] = @{@"prebid" : @{@"version" : kPrebidMobileVersion, @"source" : @"prebid-mobile"}};
     
     return [app copy];
+}
+
+- (NSString*)bundleIdentifier {
+    if (_bundleIdentifier) {
+        return _bundleIdentifier;
+    } else {
+        return [[NSBundle mainBundle] bundleIdentifier];
+    }
 }
 
 // OpenRTB 2.5 Object: Device in section 3.2.18

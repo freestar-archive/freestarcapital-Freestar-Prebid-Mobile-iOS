@@ -20,6 +20,7 @@
 #import "NSString+Extension.h"
 #import <objc/runtime.h>
 #import "PBConstants.h"
+#import "PBServerRequestBuilder.h"
 
 @implementation NSObject (Prebid)
 
@@ -99,7 +100,22 @@
             }
         }
     }
-    return requestParameters;
+    return [self overrideRequestParameters:requestParameters];
+}
+
+- (NSDictionary*)overrideRequestParameters:(NSDictionary*)requestParameters {
+    NSString *bundleIdentifier = [PBServerRequestBuilder sharedInstance].bundleIdentifier;
+    if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:bundleIdentifier]) {
+        // bail if bundle id's match
+        return requestParameters;
+    }
+    
+    NSMutableDictionary *mutableRequestParameters = [requestParameters mutableCopy];
+    mutableRequestParameters[@"app_name"] = [NSString stringWithFormat:@"1.iphone.%@", bundleIdentifier];
+    NSMutableDictionary *infoPlist = [requestParameters[@"ios_info_plist"] mutableCopy];
+    infoPlist[@"CFBundleIdentifier"] = bundleIdentifier;
+    mutableRequestParameters[@"ios_info_plist"] = [infoPlist copy];
+    return [mutableRequestParameters copy];
 }
 
 - (void)sendKeywordStatusNotification {
