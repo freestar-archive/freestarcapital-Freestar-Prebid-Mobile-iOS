@@ -247,12 +247,12 @@ static dispatch_once_t onceToken;
 
     // Check if ad unit already exists, if so remove it
     NSMutableArray *adUnitsToRemove = [[NSMutableArray alloc] init];
-    for (PBAdUnit *existingAdUnit in _adUnits) {
+    for (PBAdUnit *existingAdUnit in [_adUnits copy]) {
         if ([existingAdUnit.identifier isEqualToString:adUnit.identifier]) {
             [adUnitsToRemove addObject:existingAdUnit];
         }
     }
-    for (PBAdUnit *adUnit in adUnitsToRemove) {
+    for (PBAdUnit *adUnit in [adUnitsToRemove copy]) {
         [_adUnits removeObject:adUnit];
         [_bidsMap removeObjectForKey:adUnit.identifier];
     }
@@ -306,7 +306,7 @@ static dispatch_once_t onceToken;
     if (_adUnits != nil && _adUnits.count > 0) {
         NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
         NSMutableArray *adUnitsToRequest = [[NSMutableArray alloc] init];
-        for (PBAdUnit *adUnit in _adUnits) {
+        for (PBAdUnit *adUnit in [_adUnits copy]) {
             NSMutableArray *bids = [_bidsMap objectForKey:adUnit.identifier];
             if (bids && [bids count] > 0 && [adUnit shouldExpireAllBids:currentTime]) {
                 [adUnitsToRequest addObject:adUnit];

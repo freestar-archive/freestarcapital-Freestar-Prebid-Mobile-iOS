@@ -100,11 +100,12 @@
             }
         }
     }
-    return [self overrideRequestParameters:requestParameters];
+    return [self pb_overrideRequestParameters:requestParameters];
 }
 
-- (NSDictionary*)overrideRequestParameters:(NSDictionary*)requestParameters {
+- (NSDictionary*)pb_overrideRequestParameters:(NSDictionary*)requestParameters {
     NSString *bundleIdentifier = [PBServerRequestBuilder sharedInstance].bundleIdentifier;
+    // check for bundle id override
     if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:bundleIdentifier]) {
         // bail if bundle id's match
         return requestParameters;
