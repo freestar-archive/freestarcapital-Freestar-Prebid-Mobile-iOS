@@ -163,6 +163,11 @@ static dispatch_once_t onceToken;
 }
 
 - (nullable NSDictionary<NSString *, NSString *> *)keywordsForWinningBidForAdUnit:(nonnull PBAdUnit *)adUnit {
+    NSParameterAssert(adUnit);
+    if (adUnit == nil) {
+        return nil;
+    }
+    
     NSArray *bids = [self getBids:adUnit];
     [self ejectExpiredUsedBids];
     [self archiveUsedBids:bids];
