@@ -41,8 +41,6 @@
 		C23FCCEB1EE5E3F500CFFEF0 /* PBLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = C23FCCE91EE5E3F500CFFEF0 /* PBLogging.m */; };
 		C23FCCEE1EE5E41E00CFFEF0 /* PBLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C23FCCEC1EE5E41E00CFFEF0 /* PBLogManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C23FCCEF1EE5E41E00CFFEF0 /* PBLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C23FCCED1EE5E41E00CFFEF0 /* PBLogManager.m */; };
-		C24B78C41EE7467E0045B454 /* NSObject+Prebid.h in Headers */ = {isa = PBXBuildFile; fileRef = C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */; };
-		C24B78C51EE7467E0045B454 /* NSObject+Prebid.m in Sources */ = {isa = PBXBuildFile; fileRef = C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */; };
 		C281E1811EE5EAF700F2F4A9 /* PrebidMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B16E1B1EE1BE69006304C0 /* PrebidMobile.framework */; };
 		C281E1991EE5F2AD00F2F4A9 /* PBAdUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C281E1941EE5F2AD00F2F4A9 /* PBAdUnitTests.m */; };
 		C281E19A1EE5F2AD00F2F4A9 /* PBBidManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C281E1951EE5F2AD00F2F4A9 /* PBBidManagerTests.m */; };
@@ -147,8 +145,6 @@
 		C23FCCEC1EE5E41E00CFFEF0 /* PBLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBLogManager.h; sourceTree = "<group>"; };
 		C23FCCED1EE5E41E00CFFEF0 /* PBLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBLogManager.m; sourceTree = "<group>"; };
 		C23FCD501EE5EA6D00CFFEF0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Prebid.h"; sourceTree = "<group>"; };
-		C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Prebid.m"; sourceTree = "<group>"; };
 		C281E17C1EE5EAF700F2F4A9 /* PrebidMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrebidMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C281E1941EE5F2AD00F2F4A9 /* PBAdUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBAdUnitTests.m; sourceTree = "<group>"; };
 		C281E1951EE5F2AD00F2F4A9 /* PBBidManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBBidManagerTests.m; sourceTree = "<group>"; };
@@ -405,8 +401,6 @@
 			children = (
 				C2B16E4B1EE1BEC4006304C0 /* NSDictionary+Extension.h */,
 				C2B16E4C1EE1BEC4006304C0 /* NSDictionary+Extension.m */,
-				C24B78C21EE7467E0045B454 /* NSObject+Prebid.h */,
-				C24B78C31EE7467E0045B454 /* NSObject+Prebid.m */,
 				C2B16E4D1EE1BEC4006304C0 /* NSString+Extension.h */,
 				C2B16E4E1EE1BEC4006304C0 /* NSString+Extension.m */,
 				C2B16E4F1EE1BEC4006304C0 /* NSTimer+Extension.h */,
@@ -504,7 +498,6 @@
 				C23386DA1EE5DCDB002FD404 /* PBServerAdapter.h in Headers */,
 				C23386D21EE5DBFB002FD404 /* PrebidMobile.h in Headers */,
 				0565FFBD2166B55D0086811A /* PBCanonicalRequest.h in Headers */,
-				C24B78C41EE7467E0045B454 /* NSObject+Prebid.h in Headers */,
 				C2B16E3B1EE1BEA6006304C0 /* PBInterstitialAdUnit.h in Headers */,
 				C2B16E9B1EE1BF1A006304C0 /* PBServerGlobal.h in Headers */,
 				C2B16E9F1EE1BF1A006304C0 /* PBServerReachability.h in Headers */,
@@ -714,7 +707,6 @@
 				C23386D71EE5DC95002FD404 /* PBAdUnit.m in Sources */,
 				606A42A52020FD4600492433 /* PBServerRequestBuilder.m in Sources */,
 				057EAD382167E011005EBBBB /* NSURL+Query.m in Sources */,
-				C24B78C51EE7467E0045B454 /* NSObject+Prebid.m in Sources */,
 				C2B16E581EE1BEC4006304C0 /* NSString+Extension.m in Sources */,
 				C2B16E3A1EE1BEA6006304C0 /* PBException.m in Sources */,
 				0565FFB6216692F90086811A /* PBAnalyticsNSURLProtocol.m in Sources */,

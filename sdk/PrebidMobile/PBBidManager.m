@@ -13,7 +13,6 @@
  limitations under the License.
  */
 
-#import "NSObject+Prebid.h"
 #import "NSString+Extension.h"
 #import "NSTimer+Extension.h"
 #import "PBBidManager.h"
