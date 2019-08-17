@@ -138,9 +138,9 @@ static NSString * kOurDFPFlagRequestProperty = @"io.freestar.dfp.PBAnalyticsNSUR
             [self trackBidWon:bidWon];
             // we don't need to manage this request
             shouldAccept = NO;
-        } else if ([self isDFPRequestWithURL:url]) {
-            //            PBLogDebug(@"accept DFP request %@", url);
-            shouldAccept = YES;
+//        } else if ([self isDFPRequestWithURL:url]) {
+//            //            PBLogDebug(@"accept DFP request %@", url);
+//            shouldAccept = YES;
         } else {
             // do not manage this request
             shouldAccept = NO;
