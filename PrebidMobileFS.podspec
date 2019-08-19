@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PrebidMobileFS"
-  s.version      = "0.6.0"
+  s.version      = "0.6.1"
   s.summary      = "PrebidMobile is a lightweight framework that integrates directly with Prebid Server."
   s.description  = <<-DESC
     Prebid-Mobile-SDK is a lightweight framework that integrates directly with Prebid Server to increase yield for publishers by adding more mobile buyers."
