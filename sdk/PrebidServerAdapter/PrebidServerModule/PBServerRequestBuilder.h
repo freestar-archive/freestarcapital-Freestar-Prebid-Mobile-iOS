@@ -19,10 +19,10 @@
 
 @interface PBServerRequestBuilder : NSObject
 
-@property (nonatomic, strong, readwrite) NSURL * _Nonnull hostURL;
+@property (nonatomic, strong, readwrite, nullable) NSURL * hostURL;
 @property (nonatomic, assign, readwrite) PBServerHost host;
-@property (nonatomic, strong, readonly) NSString *accountId;
-@property (nonatomic, strong) NSString *bundleIdentifier;
+@property (nonatomic, strong, readonly, nullable) NSString *accountId;
+@property (nonatomic, strong, nullable) NSString *bundleIdentifier;
 @property (nonatomic, assign) BOOL testMode;
 
 + (instancetype _Nullable )sharedInstance;

@@ -87,6 +87,7 @@
 		C2B1747A1EE1E3C3006304C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B174791EE1E3C3006304C0 /* UIKit.framework */; };
 		C2B1747C1EE1E3C9006304C0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B1747B1EE1E3C9006304C0 /* SystemConfiguration.framework */; };
 		C2B1747E1EE1E3CE006304C0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B1747D1EE1E3CE006304C0 /* QuartzCore.framework */; };
+		FD8C3B122335787B001C563C /* PBBidManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B16E281EE1BEA6006304C0 /* PBBidManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFA2806F8D3775351BA098C7 /* Pods_PrebidMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390737F336F61641E11DC4F4 /* Pods_PrebidMobileTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -486,6 +487,7 @@
 				052C13AE2134A62400C09AE6 /* PBAnalyticsManager.h in Headers */,
 				C2B16E3F1EE1BEA6006304C0 /* PBTargetingParams.h in Headers */,
 				054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */,
+				FD8C3B122335787B001C563C /* PBBidManager.h in Headers */,
 				C23FCCEA1EE5E3F500CFFEF0 /* PBLogging.h in Headers */,
 				606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */,
 				057EAD372167E011005EBBBB /* NSURL+Query.h in Headers */,
@@ -519,7 +521,6 @@
 				C281E1781EE5EAF700F2F4A9 /* Sources */,
 				C281E1791EE5EAF700F2F4A9 /* Frameworks */,
 				C281E17A1EE5EAF700F2F4A9 /* Resources */,
-				5F2983B0932CDA0550DD84D7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -556,7 +557,7 @@
 		C2B16E121EE1BE69006304C0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Nicole Hedley";
 				TargetAttributes = {
 					C281E17B1EE5EAF700F2F4A9 = {
@@ -573,11 +574,11 @@
 			};
 			buildConfigurationList = C2B16E151EE1BE69006304C0 /* Build configuration list for PBXProject "PrebidMobile" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = C2B16E111EE1BE69006304C0;
 			productRefGroup = C2B16E1C1EE1BE69006304C0 /* Products */;
@@ -612,24 +613,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5F2983B0932CDA0550DD84D7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PrebidMobileTests/Pods-PrebidMobileTests-frameworks.sh",
-				"${PODS_ROOT}/FSCache/build/FSCache.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCache.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PrebidMobileTests/Pods-PrebidMobileTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B96382FDF1776B5254B4E52C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -760,6 +743,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -820,6 +804,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -888,6 +873,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 0.6.2;
 				MODULEMAP_FILE = "$(PROJECT)/PrebidMobile.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -913,6 +899,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 0.6.2;
 				MODULEMAP_FILE = "$(PROJECT)/PrebidMobile.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -77,6 +77,6 @@ typedef NS_ENUM(NSInteger, PBPrimaryAdServerType) {
 
 -(void) loadOnSecureConnection:(BOOL) secureConnection;
 
-- (PBBidResponse*)usedBidWithCacheUUID:(NSString*)cacheUUID;
+- (nullable PBBidResponse*)usedBidWithCacheUUID:(nonnull NSString*)cacheUUID;
 
 @end

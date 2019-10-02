@@ -31,6 +31,6 @@ typedef NS_ENUM(NSUInteger, PBAnalyticsEventType) {
 @property (nonatomic) NSString *__nullable title;
 @property (nonatomic) NSDictionary *__nullable info;
 
-- (instancetype)initWithEventType:(PBAnalyticsEventType)type;
+- (instancetype _Nonnull )initWithEventType:(PBAnalyticsEventType)type;
 
 @end

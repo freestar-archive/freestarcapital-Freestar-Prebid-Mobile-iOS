@@ -58,10 +58,6 @@
     [[PBBidManager sharedInstance] loadOnSecureConnection:secureConnection];
 }
 
-+ (void)overrideBundleIdentifier:(NSString*)bundleIdentifier {
-    [PBServerRequestBuilder sharedInstance].bundleIdentifier = bundleIdentifier;
-}
-
 + (void)setTestMode:(BOOL)testMode {
     [PBServerRequestBuilder sharedInstance].testMode = testMode;
 }
