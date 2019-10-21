@@ -17,7 +17,7 @@
 
 @interface NSString (Extension)
 
-- (NSString *)urlencode;
-- (NSString *)urldecode;
+- (NSString *)pb_urlencode;
+- (NSString *)pb_urldecode;
 
 @end

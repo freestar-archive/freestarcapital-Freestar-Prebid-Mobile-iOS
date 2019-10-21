@@ -27,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
              keyValueSeparatedByString:(nonnull NSString *)keyValueSeparator
       andKeyValuePairSeparatedByString:(nonnull NSString *)keyValuePairSeparator;
 
-- (nonnull NSArray<NSString *> *)arrayRepresentationOfKeyValueSeparatedByString:(nonnull NSString *)keyValueSeparator;
+- (nonnull NSArray<NSString *> *)pb_arrayRepresentationOfKeyValueSeparatedByString:(nonnull NSString *)keyValueSeparator;
 
-- (nonnull NSString *)stringRepresentationOfKeyValueSeparatedByString:(nonnull NSString *)keyValueSeparator
+- (nonnull NSString *)pb_stringRepresentationOfKeyValueSeparatedByString:(nonnull NSString *)keyValueSeparator
                                      andKeyValuePairSeparatedByString:(nonnull NSString *)keyValuePairSeparator;
 
 @end

@@ -47,7 +47,7 @@
     return (self);
 }
 
-- (NSArray<NSString *> *)arrayRepresentationOfKeyValueSeparatedByString:(NSString *)keyValueSeparator {
+- (NSArray<NSString *> *)pb_arrayRepresentationOfKeyValueSeparatedByString:(NSString *)keyValueSeparator {
     NSMutableArray *__nullable keyValueStrings = [[NSMutableArray alloc] initWithCapacity:[self count]];
 
     for (NSString *__nonnull key in [self allKeys]) {
@@ -59,9 +59,9 @@
     return (keyValueStrings);
 }
 
-- (NSString *)stringRepresentationOfKeyValueSeparatedByString:(NSString *)keyValueSeparator
+- (NSString *)pb_stringRepresentationOfKeyValueSeparatedByString:(NSString *)keyValueSeparator
                              andKeyValuePairSeparatedByString:(NSString *)keyValuePairSeparator {
-    NSArray *__nonnull keyValueStringArray = [self arrayRepresentationOfKeyValueSeparatedByString:keyValueSeparator];
+    NSArray *__nonnull keyValueStringArray = [self pb_arrayRepresentationOfKeyValueSeparatedByString:keyValueSeparator];
 
     return ([keyValueStringArray componentsJoinedByString:keyValuePairSeparator]);
 }

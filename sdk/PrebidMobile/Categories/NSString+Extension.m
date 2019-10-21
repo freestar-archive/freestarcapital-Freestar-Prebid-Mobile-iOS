@@ -17,7 +17,7 @@
 
 @implementation NSString (Extension)
 
-- (NSString *)urlencode {
+- (NSString *)pb_urlencode {
 
     NSMutableString *output = [NSMutableString string];
     const unsigned char *source = (const unsigned char *)[self UTF8String];
@@ -38,7 +38,7 @@
     return output;
 }
 
-- (NSString *)urldecode {
+- (NSString *)pb_urldecode {
     NSString *result = [(NSString *)self stringByReplacingOccurrencesOfString:@"+" withString:@" "];
     result = [result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return result;
