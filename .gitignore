@@ -115,3 +115,4 @@ examples/PrebidMobileDemo/PrebidMobileDemo.xcodeproj/project.xcworkspace/xcshare
 sdk/PrebidMobile.xcworkspace/xcshareddata
 sdk/PrebidMobile.xcodeproj/project.xcworkspace/xcshareddata
 examples/PrebidMobileDemo/PrebidMobileDemo.xcworkspace/xcshareddata
+*.swp

@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		05528E552398BFDF0055D85D /* Universal-PrebidMobile */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 05528E582398BFDF0055D85D /* Build configuration list for PBXAggregateTarget "Universal-PrebidMobile" */;
+			buildPhases = (
+				05528E592398BFF30055D85D /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Universal-PrebidMobile";
+			productName = "Universal-PrebidMobile";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		050ACAEE208A5E4C003F8F1B /* PBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 050ACAEC208A5E4C003F8F1B /* PBConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		050ACAEF208A5E4C003F8F1B /* PBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACAED208A5E4C003F8F1B /* PBConstants.m */; };
@@ -560,6 +574,11 @@
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Nicole Hedley";
 				TargetAttributes = {
+					05528E552398BFDF0055D85D = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = FLA943DDZ8;
+						ProvisioningStyle = Automatic;
+					};
 					C281E17B1EE5EAF700F2F4A9 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = HR94J6TSB3;
@@ -587,6 +606,7 @@
 			targets = (
 				C2B16E1A1EE1BE69006304C0 /* PrebidMobile */,
 				C281E17B1EE5EAF700F2F4A9 /* PrebidMobileTests */,
+				05528E552398BFDF0055D85D /* Universal-PrebidMobile */,
 			);
 		};
 /* End PBXProject section */
@@ -613,6 +633,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05528E592398BFF30055D85D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\necho ${BUILD_DIR}\necho ${BUILD_ROOT}\necho ${UNIVERSAL_OUTPUTFOLDER}\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\nxcodebuild BITCODE_GENERATION_MODE=bitcode OTHER_CFLAGS=\"-fembed-bitcode\" -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}/build\"\n";
+		};
 		B96382FDF1776B5254B4E52C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -715,6 +752,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		05528E562398BFDF0055D85D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FLA943DDZ8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		05528E572398BFDF0055D85D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FLA943DDZ8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		C281E1841EE5EAF700F2F4A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 66EB6A11D9B5C49B7E9D07AB /* Pods-PrebidMobileTests.debug.xcconfig */;
@@ -910,6 +965,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		05528E582398BFDF0055D85D /* Build configuration list for PBXAggregateTarget "Universal-PrebidMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05528E562398BFDF0055D85D /* Debug */,
+				05528E572398BFDF0055D85D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C281E1861EE5EAF700F2F4A9 /* Build configuration list for PBXNativeTarget "PrebidMobileTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
