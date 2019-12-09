@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "Prebid.org, Inc." => "info@prebid.org" }
   s.platform     = :ios, "8.0"
-  s.source       = { :http => 'https://storage.googleapis.com/freestar-sdk/PrebidMobileFS/Freestar-Prebid-Mobile-iOS-#{version}#.tar.gz }
+  s.source       = { :http => 'https://storage.googleapis.com/freestar-sdk/PrebidMobileFS/Freestar-Prebid-Mobile-iOS-#{version}#.tar.gz' }
   s.source_files = "sdk/PrebidMobile", "sdk/PrebidMobile/**/*.{h,m}", "sdk/PrebidServerAdapter/**/*.{h,m}"
   s.public_header_files = "sdk/PrebidServerAdapter/PBServerAdapter.h", "sdk/PrebidMobile/*.h", "sdk/PrebidMobile/Logging/*.h", "sdk/PrebidMobile/Analytics/*.h"
   s.exclude_files = "sdk/PrebidMobile/Analytics/Services/*.{h,m}", "sdk/PrebidMobile/**/PrebidMobile-umbrella.h"
