@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/yungdean/Workspace/freestar/Freestar-Prebid-Mobile-iOS/sdk/PrebidMobileFS.xcodeproj">
+      location = "group:PrebidMobileFS.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

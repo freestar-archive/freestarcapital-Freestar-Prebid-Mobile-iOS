@@ -17,9 +17,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C281E17B1EE5EAF700F2F4A9"
-               BuildableName = "PrebidMobileTests.xctest"
-               BlueprintName = "PrebidMobileTests"
-               ReferencedContainer = "container:PrebidMobile.xcodeproj">
+               BuildableName = "PrebidMobileFSTests.xctest"
+               BlueprintName = "PrebidMobileFSTests"
+               ReferencedContainer = "container:PrebidMobileFS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

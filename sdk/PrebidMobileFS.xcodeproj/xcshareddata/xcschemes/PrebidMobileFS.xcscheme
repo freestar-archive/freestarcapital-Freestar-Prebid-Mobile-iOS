@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C2B16E1A1EE1BE69006304C0"
-               BuildableName = "PrebidMobile.framework"
-               BlueprintName = "PrebidMobile"
-               ReferencedContainer = "container:PrebidMobile.xcodeproj">
+               BuildableName = "PrebidMobileFS.framework"
+               BlueprintName = "PrebidMobileFS"
+               ReferencedContainer = "container:PrebidMobileFS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C2B16E1A1EE1BE69006304C0"
-            BuildableName = "PrebidMobile.framework"
-            BlueprintName = "PrebidMobile"
-            ReferencedContainer = "container:PrebidMobile.xcodeproj">
+            BuildableName = "PrebidMobileFS.framework"
+            BlueprintName = "PrebidMobileFS"
+            ReferencedContainer = "container:PrebidMobileFS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -60,9 +60,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C2B16E1A1EE1BE69006304C0"
-            BuildableName = "PrebidMobile.framework"
-            BlueprintName = "PrebidMobile"
-            ReferencedContainer = "container:PrebidMobile.xcodeproj">
+            BuildableName = "PrebidMobileFS.framework"
+            BlueprintName = "PrebidMobileFS"
+            ReferencedContainer = "container:PrebidMobileFS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

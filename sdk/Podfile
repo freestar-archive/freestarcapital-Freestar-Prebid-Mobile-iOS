@@ -2,10 +2,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-target "PrebidMobile" do
+target "PrebidMobileFS" do
   pod 'FSCache'
 
-  target "PrebidMobileTests" do
+  target "PrebidMobileFSTests" do
     inherit! :search_paths
   end
 end
