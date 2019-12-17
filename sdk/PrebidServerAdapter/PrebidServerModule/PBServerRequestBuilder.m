@@ -32,7 +32,7 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.6.2";
+static NSString *const kPrebidMobileVersion = @"0.6.6";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
 static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
