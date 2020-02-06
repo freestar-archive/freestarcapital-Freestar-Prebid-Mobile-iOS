@@ -32,7 +32,7 @@
 
 @end
 
-static NSString *const kPrebidMobileVersion = @"0.6.6";
+static NSString *const kPrebidMobileVersion = @"0.6.4";
 static NSString *const kAPNPrebidServerUrl = @"https://prebid.adnxs.com/pbs/v1/openrtb2/auction";
 static NSString *const kRPPrebidServerUrl = @"https://prebid-server.rubiconproject.com/openrtb2/auction";
 static NSString *const kFSPrebidServerUrl = @"https://prebid.pub.network/openrtb2/auction";
@@ -59,7 +59,7 @@ static NSString *const kFSPrebidServerUrlDev = @"https://dev-prebid.pub.network/
     _accountId = accountID;
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:self.hostURL
                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                   timeoutInterval:1000];
+                                                                   timeoutInterval:10];
     [mutableRequest setHTTPMethod:@"POST"];
     NSDictionary *requestBody = [self openRTBRequestBodyForAdUnits:adUnits withAccountId:accountID withSecureParams:isSecure];
     NSError *error;
