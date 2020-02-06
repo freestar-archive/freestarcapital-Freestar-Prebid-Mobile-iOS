@@ -29,8 +29,18 @@ Pod::Spec.new do |s|
   s.author       = { "Prebid.org, Inc." => "info@prebid.org" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/freestarcapital/Freestar-Prebid-Mobile-iOS.git",  :tag => s.version.to_s }
-  s.ios.vendored_frameworks = "sdk/build/PrebidMobile.framework"
+  s.source_files = "sdk/PrebidMobile", "sdk/PrebidMobile/**/*.{h,m}", "sdk/PrebidServerAdapter/**/*.{h,m}"
+  s.public_header_files = "sdk/PrebidServerAdapter/PBServerAdapter.h", "sdk/PrebidMobile/*.h", "sdk/PrebidMobile/Logging/*.h", "sdk/PrebidMobile/Analytics/*.h"
+  s.exclude_files = "sdk/PrebidMobile/Analytics/Services/*.{h,m}", "sdk/PrebidMobile/**/PrebidMobile-umbrella.h"
   s.dependency  "FSCache"
   s.framework  = ['CoreTelephony', 'SystemConfiguration', 'UIKit', 'Foundation']
+  s.requires_arc = true
+  s.xcconfig = {
+    :LIBRARY_SEARCH_PATHS => '$(inherited)',
+    :OTHER_CFLAGS => '$(inherited)',
+    :OTHER_LDFLAGS => '$(inherited)',
+    :HEADER_SEARCH_PATHS => '$(inherited)',
+    :FRAMEWORK_SEARCH_PATHS => '$(inherited)'
+  }
 
 end
