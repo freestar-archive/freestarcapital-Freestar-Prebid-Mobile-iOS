@@ -30,18 +30,18 @@
 		052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C13AA2134A62400C09AE6 /* PBAnalyticsManager.m */; };
 		054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 054FAAAF209D6D74003BC6C4 /* PBBidManager+FSAdditions.h */; };
 		054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054FAAB0209D6D74003BC6C4 /* PBBidManager+FSAdditions.m */; };
-		0565FFB5216692F90086811A /* PBAnalyticsNSURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB3216692F90086811A /* PBAnalyticsNSURLProtocol.h */; };
+		0565FFB5216692F90086811A /* PBAnalyticsNSURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB3216692F90086811A /* PBAnalyticsNSURLProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0565FFB6216692F90086811A /* PBAnalyticsNSURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFB4216692F90086811A /* PBAnalyticsNSURLProtocol.m */; };
-		0565FFB9216696B60086811A /* PBNSURLSessionDemux.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB7216696B60086811A /* PBNSURLSessionDemux.h */; };
+		0565FFB9216696B60086811A /* PBNSURLSessionDemux.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFB7216696B60086811A /* PBNSURLSessionDemux.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0565FFBA216696B60086811A /* PBNSURLSessionDemux.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFB8216696B60086811A /* PBNSURLSessionDemux.m */; };
-		0565FFBD2166B55D0086811A /* PBCanonicalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFBB2166B55D0086811A /* PBCanonicalRequest.h */; };
+		0565FFBD2166B55D0086811A /* PBCanonicalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0565FFBB2166B55D0086811A /* PBCanonicalRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0565FFBE2166B55D0086811A /* PBCanonicalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0565FFBC2166B55D0086811A /* PBCanonicalRequest.m */; };
 		057EAD372167E011005EBBBB /* NSURL+Query.h in Headers */ = {isa = PBXBuildFile; fileRef = 057EAD352167E011005EBBBB /* NSURL+Query.h */; };
 		057EAD382167E011005EBBBB /* NSURL+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 057EAD362167E011005EBBBB /* NSURL+Query.m */; };
 		606A4299202005C400492433 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 606A4298202005C400492433 /* ReadMe.md */; };
 		606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A42A22020FD4600492433 /* PBServerRequestBuilder.h */; };
 		606A42A52020FD4600492433 /* PBServerRequestBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 606A42A32020FD4600492433 /* PBServerRequestBuilder.m */; };
-		C210FE381FC3375D0010B588 /* PrebidCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C210FE361FC3375D0010B588 /* PrebidCache.h */; };
+		C210FE381FC3375D0010B588 /* PrebidCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C210FE361FC3375D0010B588 /* PrebidCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C210FE391FC3375D0010B588 /* PrebidCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C210FE371FC3375D0010B588 /* PrebidCache.m */; };
 		C22E7CE61EE70E19007B31F4 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B16E501EE1BEC4006304C0 /* NSTimer+Extension.m */; };
 		C23386D21EE5DBFB002FD404 /* PrebidMobile.h in Headers */ = {isa = PBXBuildFile; fileRef = C23386D01EE5DBFB002FD404 /* PrebidMobile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -100,8 +100,9 @@
 		C2B1747A1EE1E3C3006304C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B174791EE1E3C3006304C0 /* UIKit.framework */; };
 		C2B1747C1EE1E3C9006304C0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B1747B1EE1E3C9006304C0 /* SystemConfiguration.framework */; };
 		C2B1747E1EE1E3CE006304C0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B1747D1EE1E3CE006304C0 /* QuartzCore.framework */; };
-		FD10BDF823A88AA50015CE70 /* PrebidMobile-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A4352202BC98100492433 /* PrebidMobile-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD10BDF823A88AA50015CE70 /* PrebidMobileFS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A4352202BC98100492433 /* PrebidMobileFS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD10BDF923A88AC30015CE70 /* PBHost.h in Headers */ = {isa = PBXBuildFile; fileRef = B40B92AD1FCCC5E300A676A8 /* PBHost.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD727DF92458DDD400358F01 /* PBGlobalFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD8C3B122335787B001C563C /* PBBidManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B16E281EE1BEA6006304C0 /* PBBidManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -140,7 +141,7 @@
 		606A4298202005C400492433 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		606A42A22020FD4600492433 /* PBServerRequestBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBServerRequestBuilder.h; sourceTree = "<group>"; };
 		606A42A32020FD4600492433 /* PBServerRequestBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBServerRequestBuilder.m; sourceTree = "<group>"; };
-		606A4352202BC98100492433 /* PrebidMobile-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PrebidMobile-umbrella.h"; sourceTree = "<group>"; };
+		606A4352202BC98100492433 /* PrebidMobileFS-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PrebidMobileFS-umbrella.h"; sourceTree = "<group>"; };
 		A8103139F71302FD20B57026 /* Pods-PrebidMobileFSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFSTests.debug.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFSTests/Pods-PrebidMobileFSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40B92AD1FCCC5E300A676A8 /* PBHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBHost.h; sourceTree = "<group>"; };
 		B5562743A69BED5A50B6F428 /* Pods-PrebidMobileFS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFS.release.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFS/Pods-PrebidMobileFS.release.xcconfig"; sourceTree = "<group>"; };
@@ -374,7 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				052C13A52134A62400C09AE6 /* Analytics */,
-				606A4352202BC98100492433 /* PrebidMobile-umbrella.h */,
+				606A4352202BC98100492433 /* PrebidMobileFS-umbrella.h */,
 				C2B16E4A1EE1BEC4006304C0 /* Categories */,
 				C2B16E5F1EE1BECA006304C0 /* Logging */,
 				C2B16E1F1EE1BE69006304C0 /* Info.plist */,
@@ -493,7 +494,7 @@
 				C2B16E481EE1BEB6006304C0 /* PBBidResponse.h in Headers */,
 				C2B16E381EE1BEA6006304C0 /* PBBidResponseDelegate.h in Headers */,
 				052C13AE2134A62400C09AE6 /* PBAnalyticsManager.h in Headers */,
-				FD10BDF823A88AA50015CE70 /* PrebidMobile-umbrella.h in Headers */,
+				FD10BDF823A88AA50015CE70 /* PrebidMobileFS-umbrella.h in Headers */,
 				C2B16E3F1EE1BEA6006304C0 /* PBTargetingParams.h in Headers */,
 				054FAAB1209D6D74003BC6C4 /* PBBidManager+FSAdditions.h in Headers */,
 				FD8C3B122335787B001C563C /* PBBidManager.h in Headers */,
@@ -503,6 +504,7 @@
 				C23386D61EE5DC95002FD404 /* PBAdUnit.h in Headers */,
 				052C13B02134A62400C09AE6 /* PBAnalyticsService.h in Headers */,
 				052C13B12134A62400C09AE6 /* PBAnalyticsEvent.h in Headers */,
+				FD727DF92458DDD400358F01 /* PBGlobalFunctions.h in Headers */,
 				0565FFB5216692F90086811A /* PBAnalyticsNSURLProtocol.h in Headers */,
 				C2B16E3D1EE1BEA6006304C0 /* PBKeywordsManager.h in Headers */,
 				C23FCCEE1EE5E41E00CFFEF0 /* PBLogManager.h in Headers */,
