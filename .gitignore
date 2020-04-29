@@ -117,3 +117,4 @@ sdk/PrebidMobile.xcodeproj/project.xcworkspace/xcshareddata
 examples/PrebidMobileDemo/PrebidMobileDemo.xcworkspace/xcshareddata
 *.swp
 IDEWorkspaceChecks.plist
+build.log

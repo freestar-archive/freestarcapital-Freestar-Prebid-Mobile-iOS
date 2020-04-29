@@ -1,6 +1,7 @@
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 platform :ios, '8.0'
 use_frameworks!
+install! 'cocoapods', :integrate_targets => false
 
 target "PrebidMobileFS" do
   pod 'FSCache'

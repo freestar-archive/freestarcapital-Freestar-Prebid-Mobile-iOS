@@ -215,7 +215,7 @@
 		C2B174791EE1E3C3006304C0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C2B1747B1EE1E3C9006304C0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C2B1747D1EE1E3CE006304C0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		E6BF995E1F7167B0001016FD /* PrebidMobile-umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidMobile-umbrella.h"; sourceTree = "<group>"; };
+		E6BF995E1F7167B0001016FD /* PrebidMobile-umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidMobile-umbrella.h"; sourceTree = SOURCE_ROOT; };
 		E81BBA38F13B097253139726 /* Pods-PrebidMobileFSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFSTests.release.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFSTests/Pods-PrebidMobileFSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -286,14 +286,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		606A4351202BC90800492433 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E6BF995E1F7167B0001016FD /* PrebidMobile-umbrella.h */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,7 +349,6 @@
 				C281E17D1EE5EAF700F2F4A9 /* PrebidMobileTests */,
 				C2B16EA21EE1BF8A006304C0 /* Frameworks */,
 				C2B16E1C1EE1BE69006304C0 /* Products */,
-				606A4351202BC90800492433 /* Recovered References */,
 				0DF0EB73201C93451EC73F55 /* Pods */,
 			);
 			sourceTree = "<group>";
@@ -404,6 +395,7 @@
 				050ACAEC208A5E4C003F8F1B /* PBConstants.h */,
 				050ACAED208A5E4C003F8F1B /* PBConstants.m */,
 				05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */,
+				E6BF995E1F7167B0001016FD /* PrebidMobile-umbrella.h */,
 			);
 			path = PrebidMobile;
 			sourceTree = "<group>";
