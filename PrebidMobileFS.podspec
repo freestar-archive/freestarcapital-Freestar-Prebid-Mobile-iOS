@@ -28,8 +28,10 @@ Pod::Spec.new do |s|
 
   s.author       = { "Prebid.org, Inc." => "info@prebid.org" }
   s.platform     = :ios, "8.0"
-  s.source       = { :http => 'https://storage.googleapis.com/freestar-sdk/PrebidMobileFS/Freestar-Prebid-Mobile-iOS-#{version}#.tar.gz' }
-  s.ios.vendored_frameworks = "sdk/PrebidMobile.framework"
+  s.source       = { :http => 'https://storage.googleapis.com/freestar-sdk/PrebidMobileFS/Freestar-Prebid-Mobile-iOS-#{version}#.tar.gz' } 
+  s.source_files = 'sdk/PrebidMobile.framework/Headers/*.{h}'
+  s.vendored_frameworks = 'sdk/PrebidMobile.framework'
+  s.preserve_paths =  'sdk/PrebidMobile.framework/*'
   s.dependency  "FSCache"
   s.framework  = ['CoreTelephony', 'SystemConfiguration', 'UIKit', 'Foundation']
   s.requires_arc = true
