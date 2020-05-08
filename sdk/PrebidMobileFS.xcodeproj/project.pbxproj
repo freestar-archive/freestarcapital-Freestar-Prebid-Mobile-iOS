@@ -928,7 +928,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				MODULEMAP_FILE = PrebidMobile/PrebidMobileFS.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
@@ -959,7 +959,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				MODULEMAP_FILE = PrebidMobile/PrebidMobileFS.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
