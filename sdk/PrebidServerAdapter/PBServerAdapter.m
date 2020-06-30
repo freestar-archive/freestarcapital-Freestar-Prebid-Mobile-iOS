@@ -14,7 +14,6 @@
  */
 
 #import <AdSupport/AdSupport.h>
-#import "PrebidCache.h"
 #import <sys/utsname.h>
 #import <UIKit/UIKit.h>
 

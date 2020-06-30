@@ -17,6 +17,8 @@
 #import <AdSupport/AdSupport.h>
 #import <UIKit/UIKit.h>
 #import <sys/utsname.h>
+#import <WebKit/WebKit.h>
+#import "PBUserAgentBuilder.h"
 
 static NSString *const kIFASentinelValue = @"00000000-0000-0000-0000-000000000000";
 
@@ -24,18 +26,37 @@ NSString *PBSUserAgent() {
     static NSString *userAgent = nil;
     if (userAgent == nil) {
         if ([NSThread isMainThread]) {
-            UIWebView *webview = [[UIWebView alloc] init];
-            userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
-            webview.delegate = nil;
-            [webview stopLoading];
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds];
+            [webView setHidden:YES];
+            [window addSubview:webView];
+            [webView loadHTMLString:@"<html></html>" baseURL:nil];
+            [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                NSCAssert(result != nil, @"Could not retrieve user agent.");
+                if (userAgent != nil && [userAgent length] > 0) {
+                    userAgent = result;
+                }
+                [webView stopLoading];
+                [webView removeFromSuperview];
+            }];
+            userAgent = [PBUserAgentBuilder getUserAgent];
         } else {
             dispatch_semaphore_t lock = dispatch_semaphore_create(0);
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIWebView *webview = [[UIWebView alloc] init];
-                userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
-                webview.delegate = nil;
-                [webview stopLoading];
-                dispatch_semaphore_signal(lock);
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds];
+                [webView setHidden:YES];
+                [window addSubview:webView];
+                [webView loadHTMLString:@"<html></html>" baseURL:nil];
+                [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                    NSCAssert(result != nil, @"Could not retrieve user agent.");
+                    if (userAgent != nil && [userAgent length] > 0) {
+                        userAgent = result;
+                    }
+                    [webView stopLoading];
+                    [webView removeFromSuperview];
+                    dispatch_semaphore_signal(lock);
+                }];
             });
             dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
         }

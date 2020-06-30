@@ -23,7 +23,6 @@
 #import "PBInterstitialAdUnit.h"
 #import "PBKeywordsManager.h"
 #import "PBTargetingParams.h"
-#import "PrebidCache.h"
 #import "PrebidMobile.h"
 #import "PBLogging.h"
 #import "PBLogManager.h"

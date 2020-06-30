@@ -41,8 +41,6 @@
 		606A4299202005C400492433 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 606A4298202005C400492433 /* ReadMe.md */; };
 		606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A42A22020FD4600492433 /* PBServerRequestBuilder.h */; };
 		606A42A52020FD4600492433 /* PBServerRequestBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 606A42A32020FD4600492433 /* PBServerRequestBuilder.m */; };
-		C210FE381FC3375D0010B588 /* PrebidCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C210FE361FC3375D0010B588 /* PrebidCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C210FE391FC3375D0010B588 /* PrebidCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C210FE371FC3375D0010B588 /* PrebidCache.m */; };
 		C22E7CE61EE70E19007B31F4 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B16E501EE1BEC4006304C0 /* NSTimer+Extension.m */; };
 		C23386D21EE5DBFB002FD404 /* PrebidMobile.h in Headers */ = {isa = PBXBuildFile; fileRef = C23386D01EE5DBFB002FD404 /* PrebidMobile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C23386D31EE5DBFB002FD404 /* PrebidMobile.m in Sources */ = {isa = PBXBuildFile; fileRef = C23386D11EE5DBFB002FD404 /* PrebidMobile.m */; };
@@ -103,6 +101,8 @@
 		FD10BDF823A88AA50015CE70 /* PrebidMobileFS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 606A4352202BC98100492433 /* PrebidMobileFS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD10BDF923A88AC30015CE70 /* PBHost.h in Headers */ = {isa = PBXBuildFile; fileRef = B40B92AD1FCCC5E300A676A8 /* PBHost.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD727DF92458DDD400358F01 /* PBGlobalFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD7877B524ABACB400F0D96F /* PBUserAgentBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = FD7877B324ABACB400F0D96F /* PBUserAgentBuilder.h */; };
+		FD7877B624ABACB400F0D96F /* PBUserAgentBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7877B424ABACB400F0D96F /* PBUserAgentBuilder.m */; };
 		FD8C3B122335787B001C563C /* PBBidManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B16E281EE1BEA6006304C0 /* PBBidManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -145,8 +145,6 @@
 		A8103139F71302FD20B57026 /* Pods-PrebidMobileFSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFSTests.debug.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFSTests/Pods-PrebidMobileFSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40B92AD1FCCC5E300A676A8 /* PBHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBHost.h; sourceTree = "<group>"; };
 		B5562743A69BED5A50B6F428 /* Pods-PrebidMobileFS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFS.release.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFS/Pods-PrebidMobileFS.release.xcconfig"; sourceTree = "<group>"; };
-		C210FE361FC3375D0010B588 /* PrebidCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrebidCache.h; sourceTree = "<group>"; };
-		C210FE371FC3375D0010B588 /* PrebidCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrebidCache.m; sourceTree = "<group>"; };
 		C23386D01EE5DBFB002FD404 /* PrebidMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrebidMobile.h; sourceTree = "<group>"; };
 		C23386D11EE5DBFB002FD404 /* PrebidMobile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrebidMobile.m; sourceTree = "<group>"; };
 		C23386D41EE5DC95002FD404 /* PBAdUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBAdUnit.h; sourceTree = "<group>"; };
@@ -217,6 +215,8 @@
 		C2B1747D1EE1E3CE006304C0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E6BF995E1F7167B0001016FD /* PrebidMobile-umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidMobile-umbrella.h"; sourceTree = SOURCE_ROOT; };
 		E81BBA38F13B097253139726 /* Pods-PrebidMobileFSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidMobileFSTests.release.xcconfig"; path = "Target Support Files/Pods-PrebidMobileFSTests/Pods-PrebidMobileFSTests.release.xcconfig"; sourceTree = "<group>"; };
+		FD7877B324ABACB400F0D96F /* PBUserAgentBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBUserAgentBuilder.h; sourceTree = "<group>"; };
+		FD7877B424ABACB400F0D96F /* PBUserAgentBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBUserAgentBuilder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,8 +390,6 @@
 				B40B92AD1FCCC5E300A676A8 /* PBHost.h */,
 				C23386D01EE5DBFB002FD404 /* PrebidMobile.h */,
 				C23386D11EE5DBFB002FD404 /* PrebidMobile.m */,
-				C210FE361FC3375D0010B588 /* PrebidCache.h */,
-				C210FE371FC3375D0010B588 /* PrebidCache.m */,
 				050ACAEC208A5E4C003F8F1B /* PBConstants.h */,
 				050ACAED208A5E4C003F8F1B /* PBConstants.m */,
 				05C8099C2183D98F00C5FACE /* PBGlobalFunctions.h */,
@@ -452,6 +450,8 @@
 				C2B16E941EE1BF1A006304C0 /* PBServerReachability.m */,
 				606A42A22020FD4600492433 /* PBServerRequestBuilder.h */,
 				606A42A32020FD4600492433 /* PBServerRequestBuilder.m */,
+				FD7877B324ABACB400F0D96F /* PBUserAgentBuilder.h */,
+				FD7877B424ABACB400F0D96F /* PBUserAgentBuilder.m */,
 			);
 			path = PrebidServerModule;
 			sourceTree = "<group>";
@@ -493,6 +493,7 @@
 				C23FCCEA1EE5E3F500CFFEF0 /* PBLogging.h in Headers */,
 				606A42A42020FD4600492433 /* PBServerRequestBuilder.h in Headers */,
 				057EAD372167E011005EBBBB /* NSURL+Query.h in Headers */,
+				FD7877B524ABACB400F0D96F /* PBUserAgentBuilder.h in Headers */,
 				C23386D61EE5DC95002FD404 /* PBAdUnit.h in Headers */,
 				052C13B02134A62400C09AE6 /* PBAnalyticsService.h in Headers */,
 				052C13B12134A62400C09AE6 /* PBAnalyticsEvent.h in Headers */,
@@ -510,7 +511,6 @@
 				C2B16E9D1EE1BF1A006304C0 /* PBServerLocation.h in Headers */,
 				C2B16E981EE1BF1A006304C0 /* PBServerFetcher.h in Headers */,
 				0565FFB9216696B60086811A /* PBNSURLSessionDemux.h in Headers */,
-				C210FE381FC3375D0010B588 /* PrebidCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +718,6 @@
 				C23FCCEB1EE5E3F500CFFEF0 /* PBLogging.m in Sources */,
 				052C13B22134A62400C09AE6 /* PBAnalyticsManager.m in Sources */,
 				054FAAB2209D6D74003BC6C4 /* PBBidManager+FSAdditions.m in Sources */,
-				C210FE391FC3375D0010B588 /* PrebidCache.m in Sources */,
 				C2B16E401EE1BEA6006304C0 /* PBTargetingParams.m in Sources */,
 				C2B16E9E1EE1BF1A006304C0 /* PBServerLocation.m in Sources */,
 				C2B16E351EE1BEA6006304C0 /* PBBannerAdUnit.m in Sources */,
@@ -733,6 +732,7 @@
 				C23FCCEF1EE5E41E00CFFEF0 /* PBLogManager.m in Sources */,
 				C2B16E371EE1BEA6006304C0 /* PBBidManager.m in Sources */,
 				C2B16E3E1EE1BEA6006304C0 /* PBKeywordsManager.m in Sources */,
+				FD7877B624ABACB400F0D96F /* PBUserAgentBuilder.m in Sources */,
 				C2B16E991EE1BF1A006304C0 /* PBServerFetcher.m in Sources */,
 				050ACAEF208A5E4C003F8F1B /* PBConstants.m in Sources */,
 				052C13AF2134A62400C09AE6 /* PBAnalyticsEvent.m in Sources */,
@@ -928,7 +928,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.6;
 				MODULEMAP_FILE = PrebidMobile/PrebidMobileFS.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
@@ -959,7 +959,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/lib/DFPSDK $(PROJECT_DIR)/lib/MoPubSDK";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.6;
 				MODULEMAP_FILE = PrebidMobile/PrebidMobileFS.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = Freestar.PrebidMobile;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
